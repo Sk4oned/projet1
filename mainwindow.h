@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -50,9 +49,7 @@ private slots:
 
     void on_pushButton_13_clicked();
 
-    void on_textBrowser_textChanged();
-
-    void on_textEdit_textChanged();
+    void on_pushButton_11_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -61,67 +58,3 @@ private:
 };
 
 #endif // MAINWINDOW_H
-=======
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include <QMainWindow>
-#include <controleur.h>
-#include <QLabel>
-
-namespace Ui {
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    explicit MainWindow(Controleur c,QWidget *parent = 0);
-    ~MainWindow();
-
-
-private slots:
-    void on_pushButton_17_clicked();
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_6_clicked();
-
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_5_clicked();
-
-    void on_pushButton_7_clicked();
-
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_8_clicked();
-
-    void on_pushButton_9_clicked();
-
-    void on_pushButton_10_clicked();
-
-    void on_pushButton_14_clicked();
-
-    void on_pushButton_16_clicked();
-
-    void on_pushButton_18_clicked();
-
-    void on_pushButton_13_clicked();
-
-    void on_textBrowser_textChanged();
-
-    void on_textEdit_textChanged();
-
-private:
-    Ui::MainWindow *ui;
-    Controleur control;
-
-};
-
-#endif // MAINWINDOW_H
->>>>>>> 27ec7a26d1e2ce76f677f5c149eec5b761192262
