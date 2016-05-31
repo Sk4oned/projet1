@@ -18,6 +18,7 @@ public:
     void contructionchaine(QString a);
 	
 	//ok toi
+	//ok moi
 };
 
 
