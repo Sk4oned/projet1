@@ -16,6 +16,8 @@ public:
     QString affiche();
     QString affiche2();
     void contructionchaine(QString a);
+	
+	//ok toi
 };
 
 
