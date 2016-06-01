@@ -5,14 +5,19 @@
 #include "expression.h"
 #include <sstream>
 #include <QString>
+#include "maths.h"
 
 using namespace std;
 using namespace Exp;
 
 Fraction::Fraction(int n, int d)
 {
+    reduc_frac(n,d);
+
     m_numerateur=n;
     m_denominateur=d;
+
+
 
     if(isValide()!=true)
     {
@@ -204,6 +209,8 @@ LitteralExpression* LitteralExpression::getType(string entree)
 
 }
 */
+
+/*
 Entier* Entier::operator+(Exp::Entier* a)
  {
         return (new Entier(a->getEntier()+this->getEntier()));
@@ -240,6 +247,7 @@ Reel* Reel::operator-(Reel* a)
 
 }
 
+*/
 
 Fraction* Entier::operator/(Exp::Entier* a)
  {
@@ -252,4 +260,431 @@ Fraction* Reel::operator/(Reel* a)
     return (new Fraction(a->getReel(),this->getReel()));
 
 }
+
+// OPERATOR +
+//
+//
+//
+
+
+LitteralExpression* Entier::operator+(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Entier(my_b->getEntier()+this->getEntier()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()+this->getEntier()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getEntier()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()+this->getEntier()));
+    }
+    return 0;
+}
+
+LitteralExpression* Reel::operator+(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Reel(my_b->getEntier()+this->getReel()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()+this->getReel()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getReel()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Reel(my_b->getAtome()+this->getReel()));
+    }
+    return 0;
+}
+
+LitteralExpression* Atome::operator+(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Atome(my_b->getEntier()+this->getAtome()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Atome(my_b->getReel()+this->getAtome()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getAtome()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()+this->getAtome()));
+    }
+    return 0;
+}
+
+LitteralExpression* Fraction::operator+(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(this->getNumerateur()+this->getDenominateur()*my_b->getEntier(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(this->getNumerateur()+this->getDenominateur()*my_b->getReel(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getDenominateur()+this->getDenominateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(this->getNumerateur()+this->getDenominateur()*my_b->getAtome(),this->getDenominateur()));
+    }
+    return 0;
+}
+
+// OPERATOR -
+//
+//
+//
+
+LitteralExpression* Entier::operator-(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Entier(my_b->getEntier()-this->getEntier()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()-this->getEntier()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getEntier()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()-this->getEntier()));
+    }
+    return 0;
+}
+
+LitteralExpression* Reel::operator-(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Reel(my_b->getEntier()-this->getReel()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()-this->getReel()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getReel()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Reel(my_b->getAtome()-this->getReel()));
+    }
+    return 0;
+}
+
+LitteralExpression* Atome::operator-(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Atome(my_b->getEntier()-this->getAtome()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Atome(my_b->getReel()-this->getAtome()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getAtome()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()-this->getAtome()));
+    }
+    return 0;
+}
+
+LitteralExpression* Fraction::operator-(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(this->getNumerateur()-this->getDenominateur()*my_b->getEntier(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(this->getNumerateur()-this->getDenominateur()*my_b->getReel(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getDenominateur()-this->getDenominateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(this->getNumerateur()-this->getDenominateur()*my_b->getAtome(),this->getDenominateur()));
+    }
+
+    return 0;
+}
+
+// OPERATOR *
+//
+//
+//
+
+LitteralExpression* Entier::operator*(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Entier(my_b->getEntier()*this->getEntier()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()*this->getEntier()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getEntier()*my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()*this->getEntier()));
+    }
+    return 0;
+}
+
+LitteralExpression* Reel::operator*(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Reel(my_b->getEntier()*this->getReel()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Reel(my_b->getReel()*this->getReel()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getReel()*my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Reel(my_b->getAtome()*this->getReel()));
+    }
+    return 0;
+}
+
+LitteralExpression* Atome::operator*(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Atome(my_b->getEntier()*this->getAtome()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Atome(my_b->getReel()*this->getAtome()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getAtome()*my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Atome(my_b->getAtome()*this->getAtome()));
+    }
+    return 0;
+}
+
+LitteralExpression* Fraction::operator*(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getEntier(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getReel(),this->getDenominateur()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getAtome(),this->getDenominateur()));
+    }
+
+    return 0;
+}
+
+
+// OPERATOR /
+//
+//
+//
+
+LitteralExpression* Entier::operator/(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(my_b->getEntier(),this->getEntier()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(my_b->getReel(),this->getEntier()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getEntier()*my_b->getDenominateur(),my_b->getNumerateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(my_b->getAtome(),this->getEntier()));
+    }
+    return 0;
+}
+
+LitteralExpression* Reel::operator/(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(my_b->getEntier(),this->getReel()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(my_b->getReel(),this->getReel()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getReel()*my_b->getDenominateur(),my_b->getNumerateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(my_b->getAtome(),this->getReel()));
+    }
+    return 0;
+}
+
+LitteralExpression* Atome::operator/(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(my_b->getEntier(),this->getAtome()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(my_b->getReel(),this->getAtome()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getAtome()*my_b->getDenominateur(),my_b->getNumerateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(my_b->getAtome(),this->getAtome()));
+    }
+    return 0;
+}
+
+LitteralExpression* Fraction::operator/(LitteralExpression* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Fraction(this->getNumerateur(),this->getDenominateur()*my_b->getEntier()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Fraction(this->getNumerateur(),this->getDenominateur()*my_b->getReel()));
+    }
+    else if(b->getType()=="Fraction" )
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getNumerateur()*my_b->getDenominateur(),this->getDenominateur()*my_b->getNumerateur()));
+    }
+    else if(b->getType()=="Atome" )
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Fraction(this->getNumerateur(),this->getDenominateur()*my_b->getAtome()));
+    }
+
+    return 0;
+}
+
+
 

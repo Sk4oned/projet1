@@ -12,6 +12,24 @@ void Controleur::checkString()
         chaine="";
 
 
+    if(q[0]=='+')
+    {
+        plus();
+    }
+    else if(q[0]=='-')
+    {
+        moins();
+    }
+    else if(q[0]=='*')
+    {
+        multiplier();
+    }
+    else if(q[0]=='/')
+    {
+        diviser();
+    }
+    else{
+
         for(int i=0; i<q.size(); i++)
         {
             if(q[i]=='.')
@@ -55,7 +73,7 @@ void Controleur::checkString()
             cout << p;
 
 
-
+    }
 }
 
 
@@ -64,11 +82,35 @@ void Controleur::plus()
     if(p.taille() >= 2)
     {
 
-    LitteralExpression* a= p.pop();
-    LitteralExpression* b= p.pop();
+        LitteralExpression* a= p.pop();
+        LitteralExpression* b= p.pop();
 
+        if(a->getType()=="Entier" )
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralExpression* c= my_a->operator+(b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralExpression* c= my_a->operator+(b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralExpression* c= my_a->operator+(b);
+           p.push(c);
+        }
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralExpression* c= my_a->operator+(b);
+           p.push(c);
+        }
 
-
+ /*
     if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
     {
         Entier* my_a =dynamic_cast<Entier*>(a);
@@ -99,7 +141,7 @@ void Controleur::plus()
     }
 
     cout << p;
-
+*/
     }
     else
     {
@@ -114,46 +156,149 @@ void Controleur::moins()
     if(p.taille() >= 2)
     {
 
-    LitteralExpression* a= p.pop();
-    LitteralExpression* b= p.pop();
+        LitteralExpression* a= p.pop();
+        LitteralExpression* b= p.pop();
+
+        if(a->getType()=="Entier" )
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralExpression* c= my_a->operator-(b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralExpression* c= my_a->operator-(b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralExpression* c= my_a->operator-(b);
+           p.push(c);
+        }
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralExpression* c= my_a->operator-(b);
+           p.push(c);
+        }
+
+       /*
+        if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            Entier* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+*/
+
+        cout << p;
+    }
 
 
-
-    if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
-    {
-        Entier* my_a =dynamic_cast<Entier*>(a);
-        Entier* my_b =dynamic_cast<Entier*>(b);
-        Entier* c= my_a->operator-(my_b);
-        p.push(c);
-    }
-    else if((a->getType()=="Reel") & (b->getType()=="Reel"))
-    {
-        Reel* my_a =dynamic_cast<Reel*>(a);
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        Reel* c= my_a->operator-(my_b);
-        p.push(c);
-    }
-    else if((a->getType()=="Entier") & (b->getType()=="Reel"))
-    {
-        Reel* my_a =dynamic_cast<Reel*>(a);
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        Reel* c= my_a->operator-(my_b);
-        p.push(c);
-    }
-    else if((a->getType()=="Reel") & (b->getType()=="Entier"))
-    {
-        Reel* my_a =dynamic_cast<Reel*>(a);
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        Reel* c= my_a->operator-(my_b);
-        p.push(c);
-    }
-
-    cout << p;
-
-    }
     else
     {
-        throw PileException("Pas Assez d'argument");
+            throw PileException("Pas Assez d'argument");
+    }
+
+
+}
+
+
+void Controleur::multiplier()
+{
+    if(p.taille() >= 2)
+    {
+
+        LitteralExpression* a= p.pop();
+        LitteralExpression* b= p.pop();
+
+        if(a->getType()=="Entier" )
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralExpression* c= my_a->operator*(b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralExpression* c= my_a->operator*(b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralExpression* c= my_a->operator*(b);
+           p.push(c);
+        }
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralExpression* c= my_a->operator*(b);
+           p.push(c);
+        }
+
+       /*
+        if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            Entier* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+*/
+
+        cout << p;
+    }
+
+
+    else
+    {
+            throw PileException("Pas Assez d'argument");
     }
 
 
@@ -161,15 +306,41 @@ void Controleur::moins()
 
 
 
+
 void Controleur::diviser()
 {
     if(p.taille() >= 2)
     {
-    LitteralExpression* a= p.pop();
-    LitteralExpression* b= p.pop();
 
+        LitteralExpression* a= p.pop();
+        LitteralExpression* b= p.pop();
 
+        if(a->getType()=="Entier" )
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralExpression* c= my_a->operator/(b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralExpression* c= my_a->operator/(b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralExpression* c= my_a->operator/(b);
+           p.push(c);
+        }
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralExpression* c= my_a->operator/(b);
+           p.push(c);
+        }
 
+ /*
     if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
     {
         Entier* my_a =dynamic_cast<Entier*>(a);
@@ -198,7 +369,7 @@ void Controleur::diviser()
         Fraction* c= my_a->operator/(my_b);
         p.push(c);
     }
-
+*/
     cout << p;
     }
     else
@@ -226,5 +397,12 @@ void Controleur::contructionchaine(QString a)
     chaine =chaine + a;
 
 }
+
+void Controleur::contructionchaine2(QString arg1)
+{
+    chaine =arg1;
+
+}
+
 
 

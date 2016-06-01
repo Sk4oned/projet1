@@ -19,7 +19,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     controleur.h \
-    expression.h
+    expression.h \
+    maths.h
 
 FORMS    += \
     mainwindow.ui

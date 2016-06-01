@@ -32,6 +32,7 @@ void MainWindow::on_pushButton_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -42,6 +43,7 @@ void MainWindow::on_pushButton_2_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_6_clicked()
@@ -52,6 +54,7 @@ void MainWindow::on_pushButton_6_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 
@@ -64,6 +67,7 @@ void MainWindow::on_pushButton_3_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -74,6 +78,7 @@ void MainWindow::on_pushButton_5_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_7_clicked()
@@ -84,6 +89,7 @@ void MainWindow::on_pushButton_7_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 
@@ -96,6 +102,7 @@ void MainWindow::on_pushButton_4_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_8_clicked()
@@ -106,6 +113,7 @@ void MainWindow::on_pushButton_8_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_9_clicked()
@@ -116,6 +124,7 @@ void MainWindow::on_pushButton_9_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_10_clicked()
@@ -126,6 +135,7 @@ void MainWindow::on_pushButton_10_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_14_clicked()
@@ -136,6 +146,7 @@ void MainWindow::on_pushButton_14_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
     }catch(Exp::PileException& a)
     {
         ui->textEdit_2->append(a.affiche());
@@ -151,6 +162,7 @@ void MainWindow::on_pushButton_16_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_18_clicked()
@@ -161,6 +173,7 @@ void MainWindow::on_pushButton_18_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
 }
 
 void MainWindow::on_pushButton_13_clicked()
@@ -171,6 +184,7 @@ void MainWindow::on_pushButton_13_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
     }catch(Exp::PileException& a)
     {
         ui->textEdit_2->append(a.affiche());
@@ -185,6 +199,53 @@ void MainWindow::on_pushButton_11_clicked()
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
+    }catch(Exp::PileException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+}
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    try{
+    control.multiplier();
+    ui->textEdit->clear();
+    ui->textEdit->append(control.affiche());
+    ui->textEdit_2->clear();
+    ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
+    }catch(Exp::PileException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+}
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    try{
+
+    control.contructionchaine2(arg1);
+    ui->textEdit_2->clear();
+    ui->textEdit_2->append(control.affiche2());
+
+    }catch(Exp::PileException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+}
+
+void MainWindow::on_lineEdit_editingFinished()
+{
+    try{
+
+    control.checkString();
+    ui->textEdit->clear();
+    ui->textEdit->append(control.affiche());
+    ui->textEdit_2->clear();
+    ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
+
     }catch(Exp::PileException& a)
     {
         ui->textEdit_2->append(a.affiche());

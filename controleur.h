@@ -13,10 +13,12 @@ public:
     void checkString();
     void plus();
     void moins();
+    void multiplier();
     void diviser();
     QString affiche();
     QString affiche2();
     void contructionchaine(QString a);
+    void contructionchaine2(QString arg1);
 };
 
 

@@ -29,17 +29,18 @@ public:
 
 class LitteralExpression{
 
-    LitteralExpression* element;
-    string type;
-
 public:
 
     virtual bool isValide()const=0;
+
     virtual void affiche(ostream& flux)const=0;
     virtual QString& affiche(QString& flux)const=0;
     //LitteralExpression(string entree){};
     virtual string getType()=0;
-    //virtual LitteralExpression* operator+(LitteralExpression* b);
+    virtual LitteralExpression* operator+(LitteralExpression* b)=0;
+    virtual LitteralExpression* operator-(LitteralExpression* b)=0;
+    virtual LitteralExpression* operator*(LitteralExpression* b)=0;
+    virtual LitteralExpression* operator/(LitteralExpression* b)=0;
 
 
 };
@@ -61,7 +62,11 @@ public:
     int getNumerateur(){return m_numerateur;}
     int getDenominateur(){return m_denominateur;}
     string getType(){return type;}
-    virtual Fraction* operator+(Fraction* a);
+    //virtual Fraction* operator+(Fraction* a);
+    virtual LitteralExpression* operator+(LitteralExpression* b);
+    virtual LitteralExpression* operator-(LitteralExpression* b);
+    virtual LitteralExpression* operator*(LitteralExpression* b);
+    virtual LitteralExpression* operator/(LitteralExpression* b);
 
 };
 
@@ -77,7 +82,11 @@ public:
     virtual QString& affiche(QString& flux)const;
     int getAtome(){return m_atome;}
     string getType(){return type;}
-    virtual Atome* operator+(Atome* a);
+    //virtual Atome* operator+(Atome* a);
+    virtual LitteralExpression* operator+(LitteralExpression* b);
+    virtual LitteralExpression* operator-(LitteralExpression* b);
+    virtual LitteralExpression* operator*(LitteralExpression* b);
+    virtual LitteralExpression* operator/(LitteralExpression* b);
 
 };
 
@@ -95,9 +104,13 @@ public:
     virtual QString& affiche(QString& flux)const;
     float getReel(){return m_r;}
     string getType(){return type;}
-    virtual Reel* operator+(Reel* a);
-    virtual Reel* operator-(Reel* a);
+    //virtual Reel* operator+(Reel* a);
+    //virtual Reel* operator-(Reel* a);
     virtual Fraction* operator/(Reel* a);
+    virtual LitteralExpression* operator+(LitteralExpression* b);
+    virtual LitteralExpression* operator-(LitteralExpression* b);
+    virtual LitteralExpression* operator*(LitteralExpression* b);
+    virtual LitteralExpression* operator/(LitteralExpression* b);
 
 
 
@@ -116,10 +129,14 @@ public:
     virtual QString& affiche(QString& flux)const;
     int getEntier(){return m_entier;}
     string getType(){return type;}
-    virtual Entier* operator+(Entier* a);
-    virtual Entier* operator-(Entier* a);
+    //virtual Entier* operator+(Entier* a);
+    //virtual Entier* operator-(Entier* a);
     virtual Fraction* operator/(Entier* a);
     void setEntier(int a){this->m_entier=a;}
+    virtual LitteralExpression* operator+(LitteralExpression* b);
+    virtual LitteralExpression* operator-(LitteralExpression* b);
+    virtual LitteralExpression* operator*(LitteralExpression* b);
+    virtual LitteralExpression* operator/(LitteralExpression* b);
 };
 
 class Pile {
