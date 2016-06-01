@@ -1,0 +1,69 @@
+//nouveautés expression.cpp
+(ne pas oublier de déclarer dans le .h)
+
+Exp::Fraction Fraction::operator+(Exp::Fraction* a)
+ {
+        int num1 = this->getNumerateur();
+        int num2 = a->getNumerateur();
+        int den1 = this->getDenominateur();
+        int den2 = a->getDenominateur();
+        return Fraction(num1*den2+den1*num2,den1*den2);
+ }
+
+Exp::Fraction Fraction::operator-(Exp::Fraction* a)
+ {
+        int num1 = this->getNumerateur();
+        int num2 = a->getNumerateur();
+        int den1 = this->getDenominateur();
+        int den2 = a->getDenominateur();
+        return Fraction(num1*den2-den1*num2,den1*den2);
+ }
+
+Exp::Fraction Fraction::operator*(Exp::Fraction* a)
+ {
+        int num1 = this->getNumerateur();
+        int num2 = a->getNumerateur();
+        int den1 = this->getDenominateur();
+        int den2 = a->getDenominateur();
+        return Fraction(num1*num2,den1*den2);
+ }
+
+
+Exp::Fraction Fraction::operator/(Exp::Fraction* a)
+ {
+        int num1 = this->getNumerateur();
+        int num2 = a->getNumerateur();
+        int den1 = this->getDenominateur();
+        int den2 = a->getDenominateur();
+        return Fraction(num1*den2,den1*num2);
+ }
+
+Exp::Reel Reel::operator+(Exp::Reel* a)
+ {
+        return Reel(a->getReel()+this->getReel());
+ }
+
+
+//Nouveau fichier maths.h
+#ifndef MATHS_H
+#define MATHS_H
+#include <string>
+#include <iostream>
+
+int PGCD(int a, int b){
+    while(b!=0){
+        int c=a%b;
+        a=b;
+        b=c;
+    }
+    return a;
+}
+
+void reduc_frac(int &n, int &d)
+{
+    int pgcd=PGCD(n,d);
+    n/=pgcd;
+    d/=pgcd;
+}
+
+#endif // EXPRESSION_H
