@@ -122,7 +122,7 @@ ostream& operator<<(ostream& flux,Exp::Pile& m)
     return flux;
 }
 
-void Pile::push(LitteralExpression* e)
+void Pile::push(LitteralNumerique* e)
 {
     tab[current]=e;
     current++;
@@ -130,7 +130,7 @@ void Pile::push(LitteralExpression* e)
 
 }
 
-LitteralExpression* Pile::pop()
+LitteralNumerique* Pile::pop()
 {
     return tab[--current];
     tab[current]=nullptr;
@@ -174,7 +174,7 @@ QString& operator<<(QString& flux,string a)
 
 
 /*
-LitteralExpression* LitteralExpression::getType(string entree)
+LitteralNumerique* LitteralNumerique::getType(string entree)
 {
     int n;
     int d;
@@ -231,7 +231,7 @@ Reel* Reel::operator-(Reel* a)
 
 }
 
-*/
+
 
 Fraction* Entier::operator/(Exp::Entier* a)
  {
@@ -245,13 +245,15 @@ Fraction* Reel::operator/(Reel* a)
 
 }
 
+*/
+
 // OPERATOR +
 //
 //
 //
 
 
-LitteralExpression* Entier::operator+(LitteralExpression* b)
+LitteralNumerique* Entier::operator+(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -276,7 +278,7 @@ LitteralExpression* Entier::operator+(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Reel::operator+(LitteralExpression* b)
+LitteralNumerique* Reel::operator+(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -301,7 +303,7 @@ LitteralExpression* Reel::operator+(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Atome::operator+(LitteralExpression* b)
+LitteralNumerique* Atome::operator+(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -326,7 +328,7 @@ LitteralExpression* Atome::operator+(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Fraction::operator+(LitteralExpression* b)
+LitteralNumerique* Fraction::operator+(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -356,7 +358,7 @@ LitteralExpression* Fraction::operator+(LitteralExpression* b)
 //
 //
 
-LitteralExpression* Entier::operator-(LitteralExpression* b)
+LitteralNumerique* Entier::operator-(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -381,7 +383,7 @@ LitteralExpression* Entier::operator-(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Reel::operator-(LitteralExpression* b)
+LitteralNumerique* Reel::operator-(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -406,7 +408,7 @@ LitteralExpression* Reel::operator-(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Atome::operator-(LitteralExpression* b)
+LitteralNumerique* Atome::operator-(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -431,7 +433,7 @@ LitteralExpression* Atome::operator-(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Fraction::operator-(LitteralExpression* b)
+LitteralNumerique* Fraction::operator-(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -462,7 +464,7 @@ LitteralExpression* Fraction::operator-(LitteralExpression* b)
 //
 //
 
-LitteralExpression* Entier::operator*(LitteralExpression* b)
+LitteralNumerique* Entier::operator*(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -487,7 +489,7 @@ LitteralExpression* Entier::operator*(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Reel::operator*(LitteralExpression* b)
+LitteralNumerique* Reel::operator*(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -512,7 +514,7 @@ LitteralExpression* Reel::operator*(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Atome::operator*(LitteralExpression* b)
+LitteralNumerique* Atome::operator*(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -537,7 +539,7 @@ LitteralExpression* Atome::operator*(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Fraction::operator*(LitteralExpression* b)
+LitteralNumerique* Fraction::operator*(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -569,7 +571,7 @@ LitteralExpression* Fraction::operator*(LitteralExpression* b)
 //
 //
 
-LitteralExpression* Entier::operator/(LitteralExpression* b)
+LitteralNumerique* Entier::operator/(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -624,7 +626,7 @@ LitteralExpression* Entier::operator/(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Reel::operator/(LitteralExpression* b)
+LitteralNumerique* Reel::operator/(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -649,7 +651,7 @@ LitteralExpression* Reel::operator/(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Atome::operator/(LitteralExpression* b)
+LitteralNumerique* Atome::operator/(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {
@@ -674,7 +676,7 @@ LitteralExpression* Atome::operator/(LitteralExpression* b)
     return 0;
 }
 
-LitteralExpression* Fraction::operator/(LitteralExpression* b)
+LitteralNumerique* Fraction::operator/(LitteralNumerique* b)
 {
     if(b->getType()=="Entier" )
     {

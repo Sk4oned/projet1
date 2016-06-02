@@ -98,31 +98,31 @@ void Controleur::plus()
     if(p.taille() >= 2)
     {
 
-        LitteralExpression* a= p.pop();
-        LitteralExpression* b= p.pop();
+        LitteralNumerique* a= p.pop();
+        LitteralNumerique* b= p.pop();
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralExpression* c= my_a->operator+(b);
+            LitteralNumerique* c= my_a->operator+(b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralExpression* c= my_a->operator+(b);
+            LitteralNumerique* c= my_a->operator+(b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralExpression* c= my_a->operator+(b);
+           LitteralNumerique* c= my_a->operator+(b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralExpression* c= my_a->operator+(b);
+           LitteralNumerique* c= my_a->operator+(b);
            p.push(c);
         }
 
@@ -172,31 +172,31 @@ void Controleur::moins()
     if(p.taille() >= 2)
     {
 
-        LitteralExpression* a= p.pop();
-        LitteralExpression* b= p.pop();
+        LitteralNumerique* a= p.pop();
+        LitteralNumerique* b= p.pop();
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralExpression* c= my_a->operator-(b);
+            LitteralNumerique* c= my_a->operator-(b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralExpression* c= my_a->operator-(b);
+            LitteralNumerique* c= my_a->operator-(b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralExpression* c= my_a->operator-(b);
+           LitteralNumerique* c= my_a->operator-(b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralExpression* c= my_a->operator-(b);
+           LitteralNumerique* c= my_a->operator-(b);
            p.push(c);
         }
 
@@ -249,31 +249,31 @@ void Controleur::multiplier()
     if(p.taille() >= 2)
     {
 
-        LitteralExpression* a= p.pop();
-        LitteralExpression* b= p.pop();
+        LitteralNumerique* a= p.pop();
+        LitteralNumerique* b= p.pop();
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralExpression* c= my_a->operator*(b);
+            LitteralNumerique* c= my_a->operator*(b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralExpression* c= my_a->operator*(b);
+            LitteralNumerique* c= my_a->operator*(b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralExpression* c= my_a->operator*(b);
+           LitteralNumerique* c= my_a->operator*(b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralExpression* c= my_a->operator*(b);
+           LitteralNumerique* c= my_a->operator*(b);
            p.push(c);
         }
 
@@ -328,31 +328,31 @@ void Controleur::diviser()
     if(p.taille() >= 2)
     {
 
-        LitteralExpression* a= p.pop();
-        LitteralExpression* b= p.pop();
+        LitteralNumerique* a= p.pop();
+        LitteralNumerique* b= p.pop();
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralExpression* c= my_a->operator/(b);
+            LitteralNumerique* c= my_a->operator/(b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralExpression* c= my_a->operator/(b);
+            LitteralNumerique* c= my_a->operator/(b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralExpression* c= my_a->operator/(b);
+           LitteralNumerique* c= my_a->operator/(b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralExpression* c= my_a->operator/(b);
+           LitteralNumerique* c= my_a->operator/(b);
            p.push(c);
         }
 
@@ -424,7 +424,7 @@ void Controleur::contructionchaine2(QString arg1)
 
 void Controleur::neg()
 {
-    LitteralExpression*  a=p.pop();
+    LitteralNumerique*  a=p.pop();
 
 
     if(a->getType()=="Entier" )

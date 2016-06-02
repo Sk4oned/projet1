@@ -27,7 +27,7 @@ public:
 
 
 
-class LitteralExpression{
+class LitteralNumerique{
 
 public:
 
@@ -35,18 +35,18 @@ public:
 
     virtual void affiche(ostream& flux)const=0;
     virtual QString& affiche(QString& flux)const=0;
-    //LitteralExpression(string entree){};
+    //LitteralNumerique(string entree){};
     virtual string getType()=0;
-    virtual LitteralExpression* operator+(LitteralExpression* b)=0;
-    virtual LitteralExpression* operator-(LitteralExpression* b)=0;
-    virtual LitteralExpression* operator*(LitteralExpression* b)=0;
-    virtual LitteralExpression* operator/(LitteralExpression* b)=0;
+    virtual LitteralNumerique* operator+(LitteralNumerique* b)=0;
+    virtual LitteralNumerique* operator-(LitteralNumerique* b)=0;
+    virtual LitteralNumerique* operator*(LitteralNumerique* b)=0;
+    virtual LitteralNumerique* operator/(LitteralNumerique* b)=0;
 
 
 };
 
 
-class Fraction: public LitteralExpression{
+class Fraction: public LitteralNumerique{
 
     int m_numerateur;
     int m_denominateur;
@@ -63,14 +63,14 @@ public:
     int getDenominateur(){return m_denominateur;}
     string getType(){return type;}
     //virtual Fraction* operator+(Fraction* a);
-    virtual LitteralExpression* operator+(LitteralExpression* b);
-    virtual LitteralExpression* operator-(LitteralExpression* b);
-    virtual LitteralExpression* operator*(LitteralExpression* b);
-    virtual LitteralExpression* operator/(LitteralExpression* b);
+    virtual LitteralNumerique* operator+(LitteralNumerique* b);
+    virtual LitteralNumerique* operator-(LitteralNumerique* b);
+    virtual LitteralNumerique* operator*(LitteralNumerique* b);
+    virtual LitteralNumerique* operator/(LitteralNumerique* b);
 
 };
 
-class Atome: public LitteralExpression{
+class Atome: public LitteralNumerique{
 
     int m_atome;
     string type="Atome";
@@ -83,15 +83,15 @@ public:
     int getAtome(){return m_atome;}
     string getType(){return type;}
     //virtual Atome* operator+(Atome* a);
-    virtual LitteralExpression* operator+(LitteralExpression* b);
-    virtual LitteralExpression* operator-(LitteralExpression* b);
-    virtual LitteralExpression* operator*(LitteralExpression* b);
-    virtual LitteralExpression* operator/(LitteralExpression* b);
+    virtual LitteralNumerique* operator+(LitteralNumerique* b);
+    virtual LitteralNumerique* operator-(LitteralNumerique* b);
+    virtual LitteralNumerique* operator*(LitteralNumerique* b);
+    virtual LitteralNumerique* operator/(LitteralNumerique* b);
 
 };
 
 
-class Reel: public LitteralExpression{
+class Reel: public LitteralNumerique{
 
     float m_r;
     string type="Reel";
@@ -106,17 +106,17 @@ public:
     string getType(){return type;}
     //virtual Reel* operator+(Reel* a);
     //virtual Reel* operator-(Reel* a);
-    virtual Fraction* operator/(Reel* a);
-    virtual LitteralExpression* operator+(LitteralExpression* b);
-    virtual LitteralExpression* operator-(LitteralExpression* b);
-    virtual LitteralExpression* operator*(LitteralExpression* b);
-    virtual LitteralExpression* operator/(LitteralExpression* b);
+    //virtual Fraction* operator/(Reel* a);
+    virtual LitteralNumerique* operator+(LitteralNumerique* b);
+    virtual LitteralNumerique* operator-(LitteralNumerique* b);
+    virtual LitteralNumerique* operator*(LitteralNumerique* b);
+    virtual LitteralNumerique* operator/(LitteralNumerique* b);
 
 
 
 };
 
-class Entier: public LitteralExpression{
+class Entier: public LitteralNumerique{
 
     int m_entier;
     string type="Entier";
@@ -131,13 +131,14 @@ public:
     string getType(){return type;}
     //virtual Entier* operator+(Entier* a);
     //virtual Entier* operator-(Entier* a);
-    virtual Fraction* operator/(Entier* a);
+    //virtual Fraction* operator/(Entier* a);
     void setEntier(int a){this->m_entier=a;}
-    virtual LitteralExpression* operator+(LitteralExpression* b);
-    virtual LitteralExpression* operator-(LitteralExpression* b);
-    virtual LitteralExpression* operator*(LitteralExpression* b);
-    virtual LitteralExpression* operator/(LitteralExpression* b);
+    virtual LitteralNumerique* operator+(LitteralNumerique* b);
+    virtual LitteralNumerique* operator-(LitteralNumerique* b);
+    virtual LitteralNumerique* operator*(LitteralNumerique* b);
+    virtual LitteralNumerique* operator/(LitteralNumerique* b);
 };
+
 
 class Pile {
     unsigned int nb;
@@ -145,12 +146,12 @@ class Pile {
     string message;
 	void agrandissementCapacite();
 	unsigned int nbAffiche;
-	LitteralExpression* tab [100];
+    LitteralNumerique* tab [100];
 	int current=0;
 public:
 	Pile():nb(0),nbMax(0),message(""),nbAffiche(4){}
-	void push(LitteralExpression* e);
-    LitteralExpression* pop();
+    void push(LitteralNumerique* e);
+    LitteralNumerique* pop();
 	bool estVide() const { return nb==0; }
     unsigned int taille() const { return current; }
 	void affiche(ostream& flux);
