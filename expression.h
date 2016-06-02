@@ -9,12 +9,12 @@ using namespace std;
 namespace Exp{
 
 class FractionException{
-    string m_phrase;
+    QString m_phrase;
 
 public:
-    FractionException(string p):m_phrase(p){};
+    FractionException(QString p):m_phrase(p){};
     void affiche(ostream& flux);
-    QString& affiche()const;
+    QString& affiche();
 };
 
 class PileException{

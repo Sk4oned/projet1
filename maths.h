@@ -1,4 +1,3 @@
-//Nouveau fichier maths.h
 #ifndef MATHS_H
 #define MATHS_H
 #include <string>

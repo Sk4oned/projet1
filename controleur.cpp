@@ -3,6 +3,7 @@
 #include <sstream>
 #include "controleur.h"
 
+
 using namespace Exp;
 
 
@@ -54,8 +55,19 @@ void Controleur::checkString()
             {   int n=5;
                 int d=5;
 
-                Fraction* v = new Fraction(n,d);
-                p.push(v);
+
+                if(d==1)
+                {
+                    Entier* v=new Entier(n);
+                    p.push(v);
+                }
+                else
+                {
+                    Fraction* v = new Fraction(n,d);
+                    p.push(v);
+                }
+
+
             }
         }
 

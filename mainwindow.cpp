@@ -151,6 +151,10 @@ void MainWindow::on_pushButton_14_clicked()
     {
         ui->textEdit_2->append(a.affiche());
     }
+    catch(Exp::FractionException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
 }
 
 
@@ -189,6 +193,10 @@ void MainWindow::on_pushButton_13_clicked()
     {
         ui->textEdit_2->append(a.affiche());
     }
+    catch(Exp::FractionException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
 }
 
 void MainWindow::on_pushButton_11_clicked()
@@ -204,6 +212,11 @@ void MainWindow::on_pushButton_11_clicked()
     {
         ui->textEdit_2->append(a.affiche());
     }
+    catch(Exp::FractionException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+
 }
 
 void MainWindow::on_pushButton_12_clicked()
@@ -216,6 +229,10 @@ void MainWindow::on_pushButton_12_clicked()
     ui->textEdit_2->append(control.affiche2());
     ui->lineEdit->setText(control.affiche2());
     }catch(Exp::PileException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+    catch(Exp::FractionException& a)
     {
         ui->textEdit_2->append(a.affiche());
     }
@@ -233,6 +250,10 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
     {
         ui->textEdit_2->append(a.affiche());
     }
+    catch(Exp::FractionException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
 }
 
 void MainWindow::on_lineEdit_editingFinished()
@@ -247,6 +268,10 @@ void MainWindow::on_lineEdit_editingFinished()
     ui->lineEdit->setText(control.affiche2());
 
     }catch(Exp::PileException& a)
+    {
+        ui->textEdit_2->append(a.affiche());
+    }
+    catch(Exp::FractionException& a)
     {
         ui->textEdit_2->append(a.affiche());
     }

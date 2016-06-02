@@ -12,12 +12,9 @@ using namespace Exp;
 
 Fraction::Fraction(int n, int d)
 {
-    reduc_frac(n,d);
 
     m_numerateur=n;
     m_denominateur=d;
-
-
 
     if(isValide()!=true)
     {
@@ -51,11 +48,6 @@ void Reel::affiche(ostream& flux) const
     flux << m_r;
 }
 
-void FractionException::affiche(ostream& flux)
-{
-        flux << m_phrase;
-}
-
 
 //VERSION QSTRING
 
@@ -83,10 +75,9 @@ QString& Reel::affiche(QString& flux) const
     return flux;
 }
 
-QString& FractionException::affiche() const
+QString& FractionException::affiche()
 {
-        QString flux =QString::fromStdString(m_phrase);
-        return flux;
+        return m_phrase;
 }
 
 QString& PileException::affiche()
@@ -123,13 +114,6 @@ ostream& operator<<(ostream& flux,Exp::Reel& m)
     return flux;
 }
 
-
-ostream& operator<<(ostream& flux,Exp::FractionException& m)
-{
-    m.affiche(flux);
-
-    return flux;
-}
 
 ostream& operator<<(ostream& flux,Exp::Pile& m)
 {
@@ -590,7 +574,17 @@ LitteralExpression* Entier::operator/(LitteralExpression* b)
     if(b->getType()=="Entier" )
     {
         Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Fraction(my_b->getEntier(),this->getEntier()));
+        int c=my_b->getEntier();
+        int d=this->getEntier();
+        reduc_frac(c,d);
+        if(d==1)
+        {
+            return(new Entier(c));
+        }
+        else
+        {
+            return (new Fraction(c,d));
+        }
     }
     else if(b->getType()=="Reel" )
     {
@@ -600,12 +594,32 @@ LitteralExpression* Entier::operator/(LitteralExpression* b)
     else if(b->getType()=="Fraction" )
     {
         Fraction* my_b =dynamic_cast<Fraction*>(b);
-        return (new Fraction(this->getEntier()*my_b->getDenominateur(),my_b->getNumerateur()));
+        int c=this->getEntier()*my_b->getDenominateur();
+        int d=my_b->getNumerateur();
+        reduc_frac(c,d);
+        if(d==1)
+        {
+            return(new Entier(c));
+        }
+        else
+        {
+            return (new Fraction(c,d));
+        }
     }
     else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Fraction(my_b->getAtome(),this->getEntier()));
+        int c=my_b->getAtome();
+        int d=this->getEntier();
+        reduc_frac(c,d);
+        if(d==1)
+        {
+            return(new Entier(c));
+        }
+        else
+        {
+            return (new Fraction(c,d));
+        }
     }
     return 0;
 }
@@ -665,7 +679,17 @@ LitteralExpression* Fraction::operator/(LitteralExpression* b)
     if(b->getType()=="Entier" )
     {
         Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Fraction(this->getNumerateur(),this->getDenominateur()*my_b->getEntier()));
+        int c=this->getNumerateur();
+        int d=this->getDenominateur()*my_b->getEntier();
+        reduc_frac(c,d);
+        if(d==1)
+        {
+            return(new Entier(c));
+        }
+        else
+        {
+            return (new Fraction(c,d));
+        }
     }
     else if(b->getType()=="Reel" )
     {
