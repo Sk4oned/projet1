@@ -16,6 +16,16 @@ public:
     void multiplier();
     void diviser();
     void neg();
+    int num();
+    int den();
+    void complexe();
+    int re();
+    void im();
+    void dup();
+    void drop();
+    void swap();
+    void clear();
+    void edit();
     QString affiche();
     QString affiche2();
     void contructionchaine(QString a);

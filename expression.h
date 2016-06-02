@@ -141,7 +141,7 @@ public:
 
 
 class Pile {
-    unsigned int nb;
+    int nb;
 	unsigned int nbMax;
     string message;
 	void agrandissementCapacite();
@@ -153,7 +153,7 @@ public:
     void push(LitteralNumerique* e);
     LitteralNumerique* pop();
 	bool estVide() const { return nb==0; }
-    unsigned int taille() const { return current; }
+    unsigned int taille() const { return nb; }
 	void affiche(ostream& flux);
 	Reel& top() const;
 	unsigned int getNbItemsToAffiche()const { return nbAffiche; }

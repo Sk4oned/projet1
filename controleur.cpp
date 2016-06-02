@@ -33,6 +33,47 @@ void Controleur::checkString()
     {
         neg();
     }
+    else if(q=="NUM")
+    {
+        p.push(new Entier(num()));
+
+    }
+    else if(q=="DEN")
+    {
+        p.push(new Entier (den()));
+    }
+    else if(q=="$")
+    {
+        complexe();
+    }
+    else if(q=="RE")
+    {
+        re();
+    }
+    else if(q=="IM")
+    {
+        im();
+    }
+    else if(q=="DUP")
+    {
+        dup();
+    }
+    else if(q=="DROP")
+    {
+        drop();
+    }
+    else if(q=="SWAP")
+    {
+        swap();
+    }
+    else if(q=="CLEAR")
+    {
+        clear();
+    }
+    else if(q=="EDIT")
+    {
+
+    }
     else{
 
         for(int i=0; i<q.size(); i++)
@@ -447,5 +488,174 @@ void Controleur::neg()
        Atome* my_a =dynamic_cast<Atome*>(a);
        p.push(new Atome(- my_a->getAtome()));
     }
+}
+
+
+//NUM
+
+int Controleur::num()
+{
+    LitteralNumerique*  a=p.pop();
+
+
+    if(a->getType()=="Entier" )
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        p.push(my_a);
+        return my_a->getEntier();
+    }
+    else if(a->getType()=="Reel")
+    {
+        throw PileException("Erreur NUM ne peut pas etre utilise sur un Reel");
+    }
+    else if(a->getType()=="Fraction")
+    {
+       Fraction* my_a =dynamic_cast<Fraction*>(a);
+       p.push(my_a);
+       return my_a->getNumerateur();
+    }
+    else if(a->getType()=="Atome")
+    {
+       throw PileException("Erreur NUM ne peut pas etre utilise sur un Atome");
+    }
+
+    return 0;
+
+}
+
+//DEN
+
+int Controleur::den()
+{
+    LitteralNumerique*  a=p.pop();
+
+
+    if(a->getType()=="Entier" )
+    {
+        return 1;
+    }
+    else if(a->getType()=="Reel")
+    {
+        throw PileException("Erreur DEN ne peut pas etre utilise sur un Reel");
+    }
+    else if(a->getType()=="Fraction")
+    {
+       Fraction* my_a =dynamic_cast<Fraction*>(a);
+       p.push(my_a);
+       return my_a->getDenominateur();
+    }
+    else if(a->getType()=="Atome")
+    {
+       throw PileException("Erreur DEN ne peut pas etre utilise sur un Atome");
+    }
+
+    return 0;
+}
+
+void Controleur::complexe()
+{
+
+}
+
+int Controleur::re()
+{
+    LitteralNumerique*  a=p.pop();
+
+
+    if(a->getType()=="Entier" )
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        p.push(my_a);
+        return my_a->getEntier();
+    }
+    else if(a->getType()=="Reel")
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        p.push(my_a);
+        return my_a->getReel();
+    }
+    else if(a->getType()=="Fraction")
+    {
+       Fraction* my_a =dynamic_cast<Fraction*>(a);
+       p.push(my_a);
+       return my_a->getNumerateur();
+    }
+    else if(a->getType()=="Atome")
+    {
+       throw PileException("Erreur RE ne peut pas etre utilise sur un Atome");
+    }
+    else if(a->getType()=="Complexe")
+    {
+       throw PileException("Erreur RE ne peut pas etre utilise sur un Complexe");
+    }
+
+    return 0;
+}
+
+void Controleur::im()
+{
+
+}
+
+void Controleur::dup()
+{
+    LitteralNumerique*  a=p.pop();
+
+    if(a->getType()=="Entier" )
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        p.push(my_a);
+        p.push(new Entier(my_a->getEntier()));
+    }
+    else if(a->getType()=="Reel")
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        p.push(my_a);
+        p.push(new Entier(my_a->getReel()));
+    }
+    else if(a->getType()=="Fraction")
+    {
+       Fraction* my_a =dynamic_cast<Fraction*>(a);
+       p.push(my_a);
+       p.push(new Fraction(my_a->getNumerateur(),my_a->getDenominateur()));
+    }
+    else if(a->getType()=="Atome")
+    {
+        Atome* my_a =dynamic_cast<Atome*>(a);
+        p.push(my_a);
+        p.push(new Entier(my_a->getAtome()));
+    }
+    else if(a->getType()=="Complexe")
+    {
+       throw PileException("Erreur RE ne peut pas etre utilise sur un Complexe");
+    }
+}
+
+void Controleur::drop()
+{
+    p.pop();
+}
+
+void Controleur::swap()
+{
+    LitteralNumerique*  a=p.pop();
+    LitteralNumerique*  b=p.pop();
+
+    p.push(a);
+    p.push(b);
+}
+
+void Controleur::clear()
+{
+    for(int i=0; i<p.taille();i++)
+    {
+        p.pop();
+    }
+
+}
+
+void Controleur::edit()
+{
+
 }
 
