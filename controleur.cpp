@@ -28,6 +28,10 @@ void Controleur::checkString()
     {
         diviser();
     }
+    else if(q=="NEG")
+    {
+        neg();
+    }
     else{
 
         for(int i=0; i<q.size(); i++)
@@ -404,5 +408,32 @@ void Controleur::contructionchaine2(QString arg1)
 
 }
 
+//NEG
 
+void Controleur::neg()
+{
+    LitteralExpression*  a=p.pop();
+
+
+    if(a->getType()=="Entier" )
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        p.push(new Entier(- my_a->getEntier()));
+    }
+    else if(a->getType()=="Reel")
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        p.push(new Reel(- my_a->getReel()));
+    }
+    else if(a->getType()=="Fraction")
+    {
+       Fraction* my_a =dynamic_cast<Fraction*>(a);
+       p.push(new Fraction(- my_a->getNumerateur(),my_a->getDenominateur()));
+    }
+    else if(a->getType()=="Atome")
+    {
+       Atome* my_a =dynamic_cast<Atome*>(a);
+       p.push(new Atome(- my_a->getAtome()));
+    }
+}
 

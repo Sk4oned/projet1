@@ -15,6 +15,7 @@ public:
     void moins();
     void multiplier();
     void diviser();
+    void neg();
     QString affiche();
     QString affiche2();
     void contructionchaine(QString a);
