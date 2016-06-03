@@ -712,5 +712,115 @@ LitteralNumerique* Fraction::operator/(LitteralNumerique* b)
     return 0;
 }
 
+Complexe::Complexe(LitteralNumerique* a, LitteralNumerique* b)
+{
+    p_reelle=a;
+    p_imaginaire=b;
+};
+
+QString& Complexe::affiche(QString& flux) const
+{
+    QString a;
+    QString b;
+
+    if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Entier" )
+    {
+        Entier* my_a =dynamic_cast<Entier*>(p_reelle);
+        Entier* my_b =dynamic_cast<Entier*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Reel")
+    {
+        Entier* my_a =dynamic_cast<Entier*>(p_reelle);
+        Reel* my_b =dynamic_cast<Reel*>(p_imaginaire);
 
 
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Fraction")
+    {
+       Entier* my_a =dynamic_cast<Entier*>(p_reelle);
+       Fraction* my_b =dynamic_cast<Fraction*>(p_imaginaire);
+
+       flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+       return flux;
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Entier" )
+    {
+        Reel* my_a =dynamic_cast<Reel*>(p_reelle);
+        Entier* my_b =dynamic_cast<Entier*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Reel")
+    {
+        Reel* my_a =dynamic_cast<Reel*>(p_reelle);
+        Reel* my_b =dynamic_cast<Reel*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Fraction")
+    {
+       Reel* my_a =dynamic_cast<Reel*>(p_reelle);
+       Fraction* my_b =dynamic_cast<Fraction*>(p_imaginaire);
+
+       flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+       return flux;
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Entier" )
+    {
+        Fraction* my_a =dynamic_cast<Fraction*>(p_reelle);
+        Entier* my_b =dynamic_cast<Entier*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Reel")
+    {
+        Fraction* my_a =dynamic_cast<Fraction*>(p_reelle);
+        Reel* my_b =dynamic_cast<Reel*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Fraction")
+    {
+        Fraction* my_a =dynamic_cast<Fraction*>(p_reelle);
+        Fraction* my_b =dynamic_cast<Fraction*>(p_imaginaire);
+
+        flux+= my_a->affiche(a) + QString::fromStdString("+") +  my_b->affiche(b) + QString::fromStdString("i");
+        return flux;
+    }
+}
+
+/*  FAUX A CHANGER
+ * LitteralNumerique* Complexe::operator+(LitteralNumerique* b)
+{
+    if(b->getType()=="Entier" )
+    {
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        return (new Complexe(my_b->getP_reelle()+this->getP_reelle(),this->getP_imaginaire()));
+    }
+    else if(b->getType()=="Reel" )
+    {
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        return (new Complexe(my_b->getP_reelle()+this->getP_reelle(),this->getP_imaginaire()));
+    }
+    else if(b->getType()=="Fraction" ) //somme fraction
+    {
+        Fraction* my_b =dynamic_cast<Fraction*>(b);
+        return (new Fraction(this->getReel()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
+    }
+    else if(b->getType()=="Atome" ) //WTF is atom
+    {
+        Atome* my_b =dynamic_cast<Atome*>(b);
+        return (new Reel(my_b->getAtome()+this->getReel()));
+    }
+    return 0;
+}
+*/
