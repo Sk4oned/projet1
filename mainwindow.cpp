@@ -3,7 +3,6 @@
 #include "controleur.h"
 #include <QString>
 #include "expression.h"
-#include <QDialog>
 
 using namespace Exp;
 
@@ -276,11 +275,4 @@ void MainWindow::on_lineEdit_editingFinished()
     {
         ui->textEdit_2->append(a.affiche());
     }
-}
-
-void MainWindow::on_pushButton_21_clicked()
-{
-    QDialog* dialog=new QDialog();
-    dialog->show();
-    dialog->exec();
 }

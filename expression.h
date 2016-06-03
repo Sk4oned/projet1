@@ -141,7 +141,7 @@ public:
 
 
 class Pile {
-    int nb;
+    unsigned int nb;
 	unsigned int nbMax;
     string message;
 	void agrandissementCapacite();
@@ -153,7 +153,7 @@ public:
     void push(LitteralNumerique* e);
     LitteralNumerique* pop();
 	bool estVide() const { return nb==0; }
-    unsigned int taille() const { return nb; }
+    unsigned int taille() const { return current; }
 	void affiche(ostream& flux);
 	Reel& top() const;
 	unsigned int getNbItemsToAffiche()const { return nbAffiche; }
@@ -165,6 +165,28 @@ public:
 
 };
 
+
+//ADDITIONEL
+
+class Complexe: public LitteralNumerique{
+
+    LitteralNumerique* p_reelle;
+    LitteralNumerique* p_imaginaire;
+    string type="Complexe";
+
+public:
+
+    Complexe(LitteralNumerique* a, LitteralNumerique* b);
+    virtual bool isValide()const;
+    virtual void affiche(ostream& flux)const;
+    virtual QString& affiche(QString& flux)const;
+    string getType(){return type;}
+    //virtual LitteralNumerique* operator+(LitteralNumerique* b);
+    //virtual LitteralNumerique* operator-(LitteralNumerique* b);
+    //virtual LitteralNumerique* operator*(LitteralNumerique* b);
+    //virtual LitteralNumerique* operator/(LitteralNumerique* b);
+
+};
 
 
 
@@ -226,6 +248,7 @@ T division(T& a,T& b)
      return a/b;
  }
 */
+
 
 
 

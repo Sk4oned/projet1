@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <controleur.h>
 #include <QLabel>
-#include <QDialog>
-
 
 namespace Ui {
 class MainWindow;
@@ -59,13 +57,9 @@ private slots:
 
     void on_lineEdit_editingFinished();
 
-    void on_pushButton_21_clicked();
-
 private:
+    Ui::MainWindow *ui;
     Controleur control;
-    Ui::MainWindow* ui;
-
-
 
 };
 
