@@ -166,6 +166,12 @@ void Controleur::plus()
            LitteralNumerique* c= my_a->operator+(b);
            p.push(c);
         }
+        else if(a->getType()=="Complexe")
+        {
+           Complexe* my_a =dynamic_cast<Complexe*>(a);
+           LitteralNumerique* c= my_a->operator+(b);
+           p.push(c);
+        }
 
  /*
     if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
@@ -552,10 +558,6 @@ int Controleur::den()
     return 0;
 }
 
-void Controleur::complexe()
-{
-
-}
 
 int Controleur::re()
 {
@@ -658,4 +660,27 @@ void Controleur::edit()
 {
 
 }
+
+// Complexe
+
+void Controleur::complexe()
+{
+    LitteralNumerique* a = p.pop();
+    LitteralNumerique* b = p.pop();
+
+    if(a->getType()=="Atome" || a->getType()=="Complexe" || b->getType()=="Atome" || b->getType()=="Complexe")
+    {
+        throw PileException("Erreur création complexe");
+        p.push(b);
+        p.push(a);
+    }
+    else
+    {
+        p.push(new Complexe(a,b));
+    }
+
+}
+
+
+
 
