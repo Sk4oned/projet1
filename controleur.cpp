@@ -1,7 +1,12 @@
 #include <QString>
-#include "expression.h"
 #include <sstream>
 #include "controleur.h"
+#include "expression.h"
+#include "entier.h"
+#include "reel.h"
+#include "fraction.h"
+#include "atome.h"
+#include "complexe.h"
 
 
 using namespace Exp;

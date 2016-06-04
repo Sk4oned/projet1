@@ -2,10 +2,8 @@
 #include "ui_mainwindow.h"
 #include "controleur.h"
 #include <QString>
-#include "expression.h"
 #include <QDialog>
-
-using namespace Exp;
+#include "fraction.h"
 
 MainWindow::MainWindow(Controleur c,QWidget *parent) : control(c),
     QMainWindow(parent),

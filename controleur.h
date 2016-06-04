@@ -2,6 +2,7 @@
 #define CONTROLEUR_H
 #include <QString>
 #include "expression.h"
+#include "pile.h"
 
 using namespace Exp;
 

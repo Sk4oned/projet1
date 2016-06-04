@@ -1,22 +1,8 @@
 #ifndef MATHS_H
 #define MATHS_H
-#include <string>
-#include <iostream>
 
-int PGCD(int a, int b){
-    while(b!=0){
-        int c=a%b;
-        a=b;
-        b=c;
-    }
-    return a;
-}
+int PGCD(int a, int b);
 
-void reduc_frac(int &n, int &d)
-{
-    int pgcd=PGCD(n,d);
-    n/=pgcd;
-    d/=pgcd;
-}
+void reduc_frac(int &n, int &d);
 
 #endif // MATHS_H
