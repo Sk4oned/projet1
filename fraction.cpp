@@ -75,11 +75,11 @@ LitteralNumerique* Fraction::operator+(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getNumerateur()*my_b->getDenominateur()+this->getDenominateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+ /*   else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Fraction(this->getNumerateur()+this->getDenominateur()*my_b->getAtome(),this->getDenominateur()));
-    }
+    } */
     else if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);
@@ -110,12 +110,12 @@ LitteralNumerique* Fraction::operator-(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getNumerateur()*my_b->getDenominateur()-this->getDenominateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+   /* else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Fraction(this->getNumerateur()-this->getDenominateur()*my_b->getAtome(),this->getDenominateur()));
     }
-
+*/
     return 0;
 }
 
@@ -138,12 +138,12 @@ LitteralNumerique* Fraction::operator*(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getNumerateur()*my_b->getNumerateur(),this->getDenominateur()*my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+  /*  else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Fraction(this->getNumerateur()*my_b->getAtome(),this->getDenominateur()));
     }
-
+*/
     return 0;
 }
 
@@ -175,11 +175,11 @@ LitteralNumerique* Fraction::operator/(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getNumerateur()*my_b->getDenominateur(),this->getDenominateur()*my_b->getNumerateur()));
     }
-    else if(b->getType()=="Atome" )
+/*    else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Fraction(this->getNumerateur(),this->getDenominateur()*my_b->getAtome()));
-    }
+    }*/
 
     return 0;
 }

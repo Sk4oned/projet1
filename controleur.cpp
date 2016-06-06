@@ -1,4 +1,5 @@
 #include <QString>
+#include <QStringList>
 #include <sstream>
 #include "controleur.h"
 #include "expression.h"
@@ -7,6 +8,8 @@
 #include "fraction.h"
 #include "atome.h"
 #include "complexe.h"
+#include "programme.h"
+#include "pile.h"
 
 
 using namespace Exp;
@@ -79,63 +82,86 @@ void Controleur::checkString()
     {
 
     }
-    else{
+    else if(q.contains('.'))
+    {
+        float b;
+        //istringstream
+        b=q.toFloat();
 
-        for(int i=0; i<q.size(); i++)
-        {
-            if(q[i]=='.')
-            {
+        Reel* v = new Reel(b);
+        p.push(v);
+    }
+    else if(q.contains('/'))
+    {
+        QStringList l;
+        l=q.split("/");
+        Entier* l1= new Entier(l[0].toInt());
+        Entier* l2= new Entier(l[1].toInt());
+        p.push(l1);
+        p.push(l2);
+        diviser();
+    }
+    else if(q.contains(" "))
+    {
+        QStringList l;
+        l=q.split(" ");
 
-                float b;
-                //istringstream
-                b=q.toFloat();
-
-                Reel* v = new Reel(b);
-                p.push(v);
-            }
-        }
-
-        for(int i=0; i<q.size(); i++)
-        {
-            if(q[i]=='/')
-            {   int n=5;
-                int d=5;
-
-
-                if(d==1)
+            if(l[1].contains('.'))
                 {
-                    Entier* v=new Entier(n);
+                    float b;
+                    //istringstream
+                    b=l[1].toFloat();
+
+                    Reel* v = new Reel(b);
                     p.push(v);
+                }
+                else if(l[1].contains('/'))
+                {
+                    QStringList m;
+                    m=l[1].split("/");
+                    Entier* m1= new Entier(m[0].toInt());
+                    Entier* m2= new Entier(m[1].toInt());
+                    p.push(m1);
+                    p.push(m2);
+                    diviser();
                 }
                 else
                 {
-                    Fraction* v = new Fraction(n,d);
-                    p.push(v);
+                            int c;
+                            //istringstream
+                            c=l[1].toInt();
+                            Entier* v = new Entier(c);
+                            p.push(v);
+
                 }
 
+            if(l[0].isSimpleText())
+            {
+
+                LitteralNumerique* data=p.pop();
+                Atome* at= new Atome(l[0], data);
+                p.push(at);
 
             }
-        }
 
-        int j=0;
-        for(int i=0; i<q.size(); i++)
-            if (q[i]=='.')
-                j++;
+    }
+    else if(q.isSimpleText())
+    {
+        Atome* at= new Atome(q);
+        p.push(at);
 
-            if(j==0)
-            {
+    }
+    else
+    {
                 int c;
                 //istringstream
                 c=q.toInt();
                 Entier* v = new Entier(c);
                 p.push(v);
 
-            }
+   }
 
             cout << p;
-
-
-    }
 }
 
 
@@ -168,7 +194,7 @@ void Controleur::plus()
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator+(b);
+           LitteralNumerique* c= my_a->operator +(b);
            p.push(c);
         }
         else if(a->getType()=="Complexe")
@@ -248,7 +274,7 @@ void Controleur::moins()
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator-(b);
+           LitteralNumerique* c= my_a->getVariable()->operator-(b);
            p.push(c);
         }
 
@@ -325,7 +351,7 @@ void Controleur::multiplier()
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator*(b);
+           LitteralNumerique* c= my_a->getVariable()->operator*(b);
            p.push(c);
         }
 
@@ -404,7 +430,7 @@ void Controleur::diviser()
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator/(b);
+           LitteralNumerique* c= my_a->getVariable()->operator/(b);
            p.push(c);
         }
 
@@ -494,11 +520,11 @@ void Controleur::neg()
        Fraction* my_a =dynamic_cast<Fraction*>(a);
        p.push(new Fraction(- my_a->getNumerateur(),my_a->getDenominateur()));
     }
-    else if(a->getType()=="Atome")
+  /*  else if(a->getType()=="Atome")
     {
        Atome* my_a =dynamic_cast<Atome*>(a);
-       p.push(new Atome(- my_a->getAtome()));
-    }
+       p.push(new Atome(my_a->getAtome(),((Entier(-1)).operator*(my_a->getVariable()))));
+    }*/
 }
 
 
@@ -626,13 +652,13 @@ void Controleur::dup()
        p.push(my_a);
        p.push(new Fraction(my_a->getNumerateur(),my_a->getDenominateur()));
     }
-    else if(a->getType()=="Atome")
+  /*  else if(a->getType()=="Atome")
     {
         Atome* my_a =dynamic_cast<Atome*>(a);
         p.push(my_a);
-        p.push(new Entier(my_a->getAtome()));
+        p.push(new Atome(my_a->getAtome(),my_a->getVariable(),my_a->getProgramme()));
     }
-    else if(a->getType()=="Complexe")
+  */  else if(a->getType()=="Complexe")
     {
        throw PileException("Erreur RE ne peut pas etre utilise sur un Complexe");
     }

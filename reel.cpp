@@ -47,11 +47,11 @@ LitteralNumerique* Reel::operator+(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getReel()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+  /*  else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Reel(my_b->getAtome()+this->getReel()));
-    }
+    } */
     else if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);
@@ -80,11 +80,11 @@ LitteralNumerique* Reel::operator-(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getReel()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+ /*   else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Reel(my_b->getAtome()-this->getReel()));
-    }
+    } */
     return 0;
 }
 
@@ -107,11 +107,11 @@ LitteralNumerique* Reel::operator*(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getReel()*my_b->getNumerateur(),my_b->getDenominateur()));
     }
-    else if(b->getType()=="Atome" )
+ /*   else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Reel(my_b->getAtome()*this->getReel()));
-    }
+    } */
     return 0;
 }
 
@@ -133,11 +133,11 @@ LitteralNumerique* Reel::operator/(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getReel()*my_b->getDenominateur(),my_b->getNumerateur()));
     }
-    else if(b->getType()=="Atome" )
+ /*   else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         return (new Fraction(my_b->getAtome(),this->getReel()));
-    }
+    } */
     return 0;
 }
 

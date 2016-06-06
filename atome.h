@@ -3,31 +3,35 @@
 #include "expression.h"
 #include <string>
 #include <QString>
+#include "programme.h"
 
 using namespace std;
-using namespace Exp;
 
 namespace Exp{
 
 
     class Atome: public LitteralNumerique{
 
-        int m_atome;
+        QString m_atome;
         string type="Atome";
+        LitteralNumerique* variable;
+        LitteralProgramme* programme;
 
     public:
-        Atome(int atome): m_atome(atome){};
-        virtual bool isValide()const{return (m_atome!=0);};
+        Atome(QString atome, LitteralNumerique* var=nullptr, LitteralProgramme* prog=nullptr);
+        virtual bool isValide()const{return (m_atome.isEmpty());};
         virtual void affiche(ostream& flux)const;
         virtual QString& affiche(QString& flux)const;
-        int getAtome(){return m_atome;}
+        QString getAtome(){return m_atome;}
         string getType(){return type;}
-        //virtual Atome* operator+(Atome* a);
+        virtual bool isVariableValide()const{return (variable!=nullptr);};
+        virtual bool isProgrammeValide()const{return (programme!=nullptr);};
+        LitteralNumerique* getVariable(){if(isVariableValide())return variable;};
+        LitteralProgramme* getProgramme(){if(isProgrammeValide())return programme;};
         virtual LitteralNumerique* operator+(LitteralNumerique* b);
-        virtual LitteralNumerique* operator-(LitteralNumerique* b);
-        virtual LitteralNumerique* operator*(LitteralNumerique* b);
-        virtual LitteralNumerique* operator/(LitteralNumerique* b);
-
+        virtual LitteralNumerique* operator-(LitteralNumerique* b){};
+        virtual LitteralNumerique* operator*(LitteralNumerique* b){};
+        virtual LitteralNumerique* operator/(LitteralNumerique* b){};
     };
 
 

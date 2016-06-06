@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     reel.cpp \
     atome.cpp \
     pile.cpp \
-    maths.cpp
+    maths.cpp \
+    programme.cpp
 
 HEADERS  += mainwindow.h \
     controleur.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     entier.h \
     reel.h \
     atome.h \
-    pile.h
+    pile.h \
+    programme.h
 
 FORMS    += \
     mainwindow.ui
