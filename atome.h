@@ -1,16 +1,17 @@
 #ifndef ATOME_H
 #define ATOME_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
 #include "programme.h"
+#include "litteral.h"
 
 using namespace std;
 
 namespace Exp{
 
 
-    class Atome: public LitteralNumerique{
+    class Atome: public Litteral{
 
         QString m_atome;
         string type="Atome";

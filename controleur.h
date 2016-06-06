@@ -1,7 +1,7 @@
 #ifndef CONTROLEUR_H
 #define CONTROLEUR_H
 #include <QString>
-#include "expression.h"
+#include "numerique.h"
 #include "pile.h"
 
 using namespace Exp;
@@ -31,6 +31,9 @@ public:
     QString affiche2();
     void contructionchaine(QString a);
     void contructionchaine2(QString arg1);
+    void enregistrePile();
+    void chargePile();
+    void ChangeNombrePileAffiche(int n);
 };
 
 

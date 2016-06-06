@@ -1,8 +1,9 @@
 #ifndef PROGRAMME_H
 #define PROGRAMME_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
+#include "litteral.h"
 
 using namespace std;
 using namespace Exp;
@@ -10,7 +11,7 @@ using namespace Exp;
 namespace Exp{
 
 
-    class LitteralProgramme{
+    class LitteralProgramme: public Litteral{
 
         QString m_programme;
         string type="LitteralProgramme";

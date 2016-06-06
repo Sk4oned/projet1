@@ -3,7 +3,7 @@
 #include "controleur.h"
 #include <sstream>
 #include <QString>
-#include "expression.h"
+#include "numerique.h"
 #include "entier.h"
 #include "reel.h"
 #include "fraction.h"

@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "controleur.h"
-#include "expression.h"
+#include "numerique.h"
 #include <sstream>
 
 
@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w(control);
     w.show();
+
 
     return a.exec();
 

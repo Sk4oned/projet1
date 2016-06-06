@@ -1,6 +1,6 @@
 #ifndef COMPLEXE_H
 #define COMPLEXE_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
 

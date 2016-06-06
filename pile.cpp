@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "expression.h"
+#include "numerique.h"
 #include "controleur.h"
 #include <sstream>
 #include <QString>
@@ -22,7 +22,7 @@ ostream& operator<<(ostream& flux,Exp::Pile& m)
 }
 
 
-void Pile::push(LitteralNumerique* e)
+void Pile::push(Litteral* e)
 {
     tab[current]=e;
     current++;
@@ -30,7 +30,7 @@ void Pile::push(LitteralNumerique* e)
 
 }
 
-LitteralNumerique* Pile::pop()
+Litteral* Pile::pop()
 {
     return tab[--current];
     tab[current]=nullptr;
@@ -53,13 +53,39 @@ void Pile::affiche(ostream& flux)
 QString Pile::affiche()
 {
     QString a("Application So Fucking Fonctionnelle \n");
-    for(int i=0; i<(current); i++)
+
+
+
+    if(current < nbAffiche)
     {
-        a += QString::fromStdString(tab[i]->getType());
-        a += QString::fromStdString(" : ");
-        a=tab[i]->affiche(a);
-        a += QString::fromStdString("\n");
+        for(int i=0; i<current; i++)
+        {
+
+                a += QString::fromStdString(tab[i]->getType());
+                a += QString::fromStdString(" : ");
+                a=tab[i]->affiche(a);
+                a += QString::fromStdString("\n");
+
+
+         }
     }
+    else
+    {
+            for(int i=current-nbAffiche; i<current; i++)
+            {
+
+                    a += QString::fromStdString(tab[i]->getType());
+                    a += QString::fromStdString(" : ");
+                    a=tab[i]->affiche(a);
+                    a += QString::fromStdString("\n");
+             }
+            if(current==nbAffiche+1)
+            {
+                a += QString::fromStdString("...");
+            }
+
+    }
+
     return a;
 }
 
@@ -70,4 +96,5 @@ QString& operator<<(QString& flux,string a)
     return flux;
 
 }
+
 

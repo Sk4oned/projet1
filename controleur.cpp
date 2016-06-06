@@ -2,7 +2,7 @@
 #include <QStringList>
 #include <sstream>
 #include "controleur.h"
-#include "expression.h"
+#include "numerique.h"
 #include "entier.h"
 #include "reel.h"
 #include "fraction.h"
@@ -10,6 +10,9 @@
 #include "complexe.h"
 #include "programme.h"
 #include "pile.h"
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
+#include <QFile>
 
 
 using namespace Exp;
@@ -138,17 +141,12 @@ void Controleur::checkString()
             if(l[0].isSimpleText())
             {
 
-                LitteralNumerique* data=p.pop();
-                Atome* at= new Atome(l[0], data);
+                Litteral* data=p.pop();
+                LitteralNumerique* m_data= dynamic_cast<LitteralNumerique*>(data);
+                Atome* at= new Atome(l[0], m_data);
                 p.push(at);
 
             }
-
-    }
-    else if(q.isSimpleText())
-    {
-        Atome* at= new Atome(q);
-        p.push(at);
 
     }
     else
@@ -170,39 +168,43 @@ void Controleur::plus()
     if(p.taille() >= 2)
     {
 
-        LitteralNumerique* a= p.pop();
-        LitteralNumerique* b= p.pop();
+        Litteral* a= p.pop();
+        Litteral* b= p.pop();
 
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralNumerique* c= my_a->operator+(b);
+            LitteralNumerique* c= my_a->operator+(my_b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralNumerique* c= my_a->operator+(b);
+            LitteralNumerique* c= my_a->operator+(my_b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralNumerique* c= my_a->operator+(b);
+           LitteralNumerique* c= my_a->operator+(my_b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator +(b);
+           LitteralNumerique* c= my_a->operator +(my_b);
            p.push(c);
         }
         else if(a->getType()=="Complexe")
         {
            Complexe* my_a =dynamic_cast<Complexe*>(a);
-           LitteralNumerique* c= my_a->operator+(b);
+           LitteralNumerique* c= my_a->operator+(my_b);
            p.push(c);
         }
+ }
 
  /*
     if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
@@ -250,33 +252,39 @@ void Controleur::moins()
     if(p.taille() >= 2)
     {
 
-        LitteralNumerique* a= p.pop();
-        LitteralNumerique* b= p.pop();
+        Litteral* a= p.pop();
+        Litteral* b= p.pop();
+
+ if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralNumerique* c= my_a->operator-(b);
+            LitteralNumerique* c= my_a->operator-(my_b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralNumerique* c= my_a->operator-(b);
+            LitteralNumerique* c= my_a->operator-(my_b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralNumerique* c= my_a->operator-(b);
+           LitteralNumerique* c= my_a->operator-(my_b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator-(b);
+           LitteralNumerique* c= my_a->getVariable()->operator-(my_b);
            p.push(c);
         }
+
+ }
 
        /*
         if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
@@ -327,33 +335,38 @@ void Controleur::multiplier()
     if(p.taille() >= 2)
     {
 
-        LitteralNumerique* a= p.pop();
-        LitteralNumerique* b= p.pop();
+        Litteral* a= p.pop();
+        Litteral* b= p.pop();
+
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralNumerique* c= my_a->operator*(b);
+            LitteralNumerique* c= my_a->operator*(my_b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralNumerique* c= my_a->operator*(b);
+            LitteralNumerique* c= my_a->operator*(my_b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralNumerique* c= my_a->operator*(b);
+           LitteralNumerique* c= my_a->operator*(my_b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator*(b);
+           LitteralNumerique* c= my_a->getVariable()->operator*(my_b);
            p.push(c);
         }
+}
 
        /*
         if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
@@ -406,33 +419,39 @@ void Controleur::diviser()
     if(p.taille() >= 2)
     {
 
-        LitteralNumerique* a= p.pop();
-        LitteralNumerique* b= p.pop();
+        Litteral* a= p.pop();
+        Litteral* b= p.pop();
+
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
 
         if(a->getType()=="Entier" )
         {
             Entier* my_a =dynamic_cast<Entier*>(a);
-            LitteralNumerique* c= my_a->operator/(b);
+            LitteralNumerique* c= my_a->operator/(my_b);
             p.push(c);
          }
         else if(a->getType()=="Reel")
         {
             Reel* my_a =dynamic_cast<Reel*>(a);
-            LitteralNumerique* c= my_a->operator/(b);
+            LitteralNumerique* c= my_a->operator/(my_b);
             p.push(c);
         }
         else if(a->getType()=="Fraction")
         {
            Fraction* my_a =dynamic_cast<Fraction*>(a);
-           LitteralNumerique* c= my_a->operator/(b);
+           LitteralNumerique* c= my_a->operator/(my_b);
            p.push(c);
         }
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator/(b);
+           LitteralNumerique* c= my_a->getVariable()->operator/(my_b);
            p.push(c);
         }
+}
+
 
  /*
     if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
@@ -502,7 +521,7 @@ void Controleur::contructionchaine2(QString arg1)
 
 void Controleur::neg()
 {
-    LitteralNumerique*  a=p.pop();
+    Litteral*  a=p.pop();
 
 
     if(a->getType()=="Entier" )
@@ -532,7 +551,7 @@ void Controleur::neg()
 
 int Controleur::num()
 {
-    LitteralNumerique*  a=p.pop();
+    Litteral*  a=p.pop();
 
 
     if(a->getType()=="Entier" )
@@ -564,7 +583,7 @@ int Controleur::num()
 
 int Controleur::den()
 {
-    LitteralNumerique*  a=p.pop();
+    Litteral*  a=p.pop();
 
 
     if(a->getType()=="Entier" )
@@ -592,7 +611,7 @@ int Controleur::den()
 
 int Controleur::re()
 {
-    LitteralNumerique*  a=p.pop();
+    Litteral*  a=p.pop();
 
 
     if(a->getType()=="Entier" )
@@ -632,7 +651,7 @@ void Controleur::im()
 
 void Controleur::dup()
 {
-    LitteralNumerique*  a=p.pop();
+    Litteral*  a=p.pop();
 
     if(a->getType()=="Entier" )
     {
@@ -671,8 +690,8 @@ void Controleur::drop()
 
 void Controleur::swap()
 {
-    LitteralNumerique*  a=p.pop();
-    LitteralNumerique*  b=p.pop();
+    Litteral*  a=p.pop();
+    Litteral*  b=p.pop();
 
     p.push(a);
     p.push(b);
@@ -696,8 +715,8 @@ void Controleur::edit()
 
 void Controleur::complexe()
 {
-    LitteralNumerique* a = p.pop();
-    LitteralNumerique* b = p.pop();
+    Litteral* a = p.pop();
+    Litteral* b = p.pop();
 
     if(a->getType()=="Atome" || a->getType()=="Complexe" || b->getType()=="Atome" || b->getType()=="Complexe")
     {
@@ -707,11 +726,57 @@ void Controleur::complexe()
     }
     else
     {
-        p.push(new Complexe(a,b));
+        LitteralNumerique* my_a= dynamic_cast<LitteralNumerique*>(a);
+        LitteralNumerique* my_b= dynamic_cast<LitteralNumerique*>(b);
+        p.push(new Complexe(my_a,my_b));
     }
 
 }
 
+
+
+void Controleur::enregistrePile()
+{
+    QString fileName = "D:/Documents/LO21/projet1/sauvegarde.xml";
+    QFile fileXml(fileName);
+
+    if(!fileXml.open(QFile::WriteOnly | QFile::Text))
+        throw PileException("Erreur fichier XML");
+    QXmlStreamWriter writer(&fileXml);
+
+       // Active l'indentation automatique du fichier XML pour une meilleur visibilité
+       writer.setAutoFormatting(true);
+
+       // Insert la norme de codification du fichier XML :
+       writer.writeStartDocument();
+
+
+
+       writer.writeTextElement("Pile",p.affiche());
+
+
+       // Finalise le document XML
+       writer.writeEndDocument();
+
+       // Fermer le fichier pour bien enregistrer le document et ferme l'élément root
+       fileXml.close();
+
+
+}
+
+void Controleur::chargePile()
+{
+
+
+
+}
+
+void Controleur::ChangeNombrePileAffiche(int n)
+{
+
+    p.setNbItemsToAffiche(n);
+
+}
 
 
 

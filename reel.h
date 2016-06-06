@@ -1,6 +1,6 @@
 #ifndef REEL_H
 #define REEL_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
 

@@ -1,6 +1,6 @@
 #ifndef ENTIER_H
 #define ENTIER_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
 

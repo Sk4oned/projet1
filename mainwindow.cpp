@@ -19,6 +19,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_17_clicked()
 {
+    control.enregistrePile();
     close();
 }
 
@@ -281,4 +282,34 @@ void MainWindow::on_pushButton_21_clicked()
     QDialog* dialog=new QDialog();
     dialog->show();
     dialog->exec();
+}
+
+void MainWindow::on_pushButton_22_clicked()
+{
+    if(ui->gridLayoutWidget->isHidden()== true)
+    {
+        ui->gridLayoutWidget->show();
+    }
+    else
+    {
+        ui->gridLayoutWidget->hide();
+    }
+
+}
+
+void MainWindow::on_lineEdit_5_textChanged(const QString &arg1)
+{
+    if(arg1!=0)
+    {
+        control.ChangeNombrePileAffiche(arg1.toInt());
+    }
+
+
+}
+
+void MainWindow::on_lineEdit_5_editingFinished()
+{
+    ui->lineEdit_5->clear();
+    ui->textEdit->clear();
+    ui->textEdit->append(control.affiche());
 }

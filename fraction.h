@@ -1,6 +1,6 @@
 #ifndef FRACTION_H
 #define FRACTION_H
-#include "expression.h"
+#include "numerique.h"
 #include <string>
 #include <QString>
 
