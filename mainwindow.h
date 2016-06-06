@@ -61,6 +61,12 @@ private slots:
 
     void on_pushButton_21_clicked();
 
+    void on_pushButton_22_clicked();
+
+    void on_lineEdit_5_textChanged(const QString &arg1);
+
+    void on_lineEdit_5_editingFinished();
+
 private:
     Controleur control;
     Ui::MainWindow* ui;
