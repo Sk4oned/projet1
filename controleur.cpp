@@ -13,7 +13,8 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QFile>
-
+#include <vector>
+#include <iterator>
 
 using namespace Exp;
 
@@ -85,79 +86,102 @@ void Controleur::checkString()
     {
 
     }
-    else if(q.contains('.'))
-    {
-        float b;
-        //istringstream
-        b=q.toFloat();
-
-        Reel* v = new Reel(b);
-        p.push(v);
-    }
-    else if(q.contains('/'))
-    {
-        QStringList l;
-        l=q.split("/");
-        Entier* l1= new Entier(l[0].toInt());
-        Entier* l2= new Entier(l[1].toInt());
-        p.push(l1);
-        p.push(l2);
-        diviser();
-    }
-    else if(q.contains(" "))
+    else if(q.contains("STO"))
     {
         QStringList l;
         l=q.split(" ");
-
-            if(l[1].contains('.'))
-                {
-                    float b;
-                    //istringstream
-                    b=l[1].toFloat();
-
-                    Reel* v = new Reel(b);
-                    p.push(v);
-                }
-                else if(l[1].contains('/'))
-                {
-                    QStringList m;
-                    m=l[1].split("/");
-                    Entier* m1= new Entier(m[0].toInt());
-                    Entier* m2= new Entier(m[1].toInt());
-                    p.push(m1);
-                    p.push(m2);
-                    diviser();
-                }
-                else
-                {
-                            int c;
-                            //istringstream
-                            c=l[1].toInt();
-                            Entier* v = new Entier(c);
-                            p.push(v);
-
-                }
-
-            if(l[0].isSimpleText())
-            {
-
-                Litteral* data=p.pop();
-                LitteralNumerique* m_data= dynamic_cast<LitteralNumerique*>(data);
-                Atome* at= new Atome(l[0], m_data);
-                p.push(at);
-
-            }
+        Atome* at= new Atome(l[1], new Entier(l[0].toInt()));
+        ajouterVariable(at);
 
     }
-    else
+    else if(q.isSimpleText())
     {
-                int c;
-                //istringstream
-                c=q.toInt();
-                Entier* v = new Entier(c);
-                p.push(v);
+        QString a("");
+        int j=0;
 
-   }
+        for(unsigned int i=0; i< variable.size(); i++)
+        {
+            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+
+            if( q == my_var->getAtome() )
+            {
+                p.push(my_var);
+            }
+            else if(q.contains('.'))
+            {
+                float b;
+                //istringstream
+                b=q.toFloat();
+
+                Reel* v = new Reel(b);
+                p.push(v);
+            }
+            else if(q.contains('/'))
+            {
+                QStringList l;
+                l=q.split("/");
+                Entier* l1= new Entier(l[0].toInt());
+                Entier* l2= new Entier(l[1].toInt());
+                p.push(l1);
+                p.push(l2);
+                diviser();
+            }
+            else if(q.contains(" "))
+            {
+                QStringList l;
+                l=q.split(" ");
+
+                    if(l[1].contains('.'))
+                        {
+                            float b;
+                            //istringstream
+                            b=l[1].toFloat();
+
+                            Reel* v = new Reel(b);
+                            p.push(v);
+                        }
+                        else if(l[1].contains('/'))
+                        {
+                            QStringList m;
+                            m=l[1].split("/");
+                            Entier* m1= new Entier(m[0].toInt());
+                            Entier* m2= new Entier(m[1].toInt());
+                            p.push(m1);
+                            p.push(m2);
+                            diviser();
+                        }
+                        else
+                        {
+                                    int c;
+                                    //istringstream
+                                    c=l[1].toInt();
+                                    Entier* v = new Entier(c);
+                                    p.push(v);
+
+                        }
+
+                    if(l[0].isSimpleText())
+                    {
+
+                        Litteral* data=p.pop();
+                        Atome* at= new Atome(l[0], data);
+                        p.push(at);
+
+                    }
+
+            }
+            else
+            {
+                        int c;
+                        //istringstream
+                        c=q.toInt();
+                        Entier* v = new Entier(c);
+                        p.push(v);
+
+           }
+        }
+    }
+
 
             cout << p;
 }
@@ -195,8 +219,13 @@ if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b-
         else if(a->getType()=="Atome")
         {
            Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->operator +(my_b);
-           p.push(c);
+           if(my_a->isVariableValide())
+           {             
+               LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
+               LitteralNumerique* c= my_b->operator +(my_a2);
+               p.push(c);
+           }
+
         }
         else if(a->getType()=="Complexe")
         {
@@ -279,9 +308,13 @@ void Controleur::moins()
         }
         else if(a->getType()=="Atome")
         {
-           Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator-(my_b);
-           p.push(c);
+            Atome* my_a =dynamic_cast<Atome*>(a);
+            if(my_a->isVariableValide())
+            {
+                LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
+                LitteralNumerique* c= my_b->operator -(my_a2);
+                p.push(c);
+            }
         }
         else if(a->getType()=="Complexe")
         {
@@ -368,9 +401,14 @@ if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b-
         }
         else if(a->getType()=="Atome")
         {
-           Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator*(my_b);
-           p.push(c);
+            Atome* my_a =dynamic_cast<Atome*>(a);
+            if(my_a->isVariableValide())
+            {
+
+                LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
+                LitteralNumerique* c= my_b->operator *(my_a2);
+                p.push(c);
+            }
         }
 }
 
@@ -452,9 +490,14 @@ if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b-
         }
         else if(a->getType()=="Atome")
         {
-           Atome* my_a =dynamic_cast<Atome*>(a);
-           LitteralNumerique* c= my_a->getVariable()->operator/(my_b);
-           p.push(c);
+            Atome* my_a =dynamic_cast<Atome*>(a);
+            if(my_a->isVariableValide())
+            {
+
+                LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
+                LitteralNumerique* c= my_b->operator *(my_a2);
+                p.push(c);
+            }
         }
 }
 
@@ -509,6 +552,49 @@ QString Controleur::affiche()
 QString Controleur::affiche2()
 {
     return chaine;
+}
+
+QString Controleur::afficheVariable()
+{
+
+    QString a("");
+    int j=0;
+
+    for(unsigned int i=0; i< variable.size(); i++)
+    {
+        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+        my_var->affiche(a);
+
+       /* if(variable[j]->   getType()=="Entier")
+        {
+            Entier* my_var =dynamic_cast<Entier*>(variable[j]);
+            a+= my_var->affiche(a);
+            j++;
+        }
+        else if(variable[j]->getType()=="Reel")
+        {
+            Reel* my_var =dynamic_cast<Reel*>(variable[j]);
+            a+= my_var->affiche(a);
+            j++;
+        }
+        else if(variable[j]->getType()=="Fraction")
+        {
+            Fraction* my_var =dynamic_cast<Fraction*>(variable[j]);
+            a+= my_var->affiche(a);
+            j++;
+        }
+        else if(variable[j]->getType()=="Complexe")
+        {
+            Complexe* my_var =dynamic_cast<Complexe*>(variable[j]);
+            a+= my_var->affiche(a);
+            j++;
+        }*/
+
+
+
+
+    }
+    return a;
 }
 
 void Controleur::contructionchaine(QString a)
@@ -758,7 +844,7 @@ void Controleur::enregistrePile()
 
 
 
-       writer.writeTextElement("Pile",p.affiche());
+       writer.writeTextElement("Pile",p.afficheall());
 
 
        // Finalise le document XML
@@ -772,7 +858,32 @@ void Controleur::enregistrePile()
 
 void Controleur::chargePile()
 {
+    QString fileName = "D:/Documents/LO21/projet1/sauvegarde.xml";
+    QFile fileXml(fileName);
 
+    if(!fileXml.open(QFile::ReadOnly | QFile::Text))
+        throw PileException("Erreur fichier XML");
+    QXmlStreamReader reader(&fileXml);
+    QString text("");
+    QXmlStreamWriter writer(&text);
+
+
+
+
+       reader.readElementText();
+
+       reader.readNext();
+
+       fileXml.close();
+
+       writer.writeCurrentToken(reader);
+
+       for(int i=0; i< text.size(); i++)
+       {
+            QStringList l=text.split(":");
+            //if(l[1].isSimpleText())
+            //p.push(new Entier(l[0].toInt()));
+       }
 
 
 }
@@ -785,4 +896,7 @@ void Controleur::ChangeNombrePileAffiche(int n)
 }
 
 
-
+void Controleur::ajouterVariable(Litteral* v)
+{
+    variable.push_back(v);
+}

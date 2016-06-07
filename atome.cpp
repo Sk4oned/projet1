@@ -12,7 +12,7 @@
 #include "atome.h"
 #include "complexe.h"
 
-Atome::Atome(QString atome, LitteralNumerique* var, LitteralProgramme* prog): m_atome(atome), variable(var), programme(prog)
+Atome::Atome(QString atome, Litteral* var): m_atome(atome), variable(var)
  {
 
  };
@@ -21,12 +21,44 @@ void Atome::affiche(ostream& flux) const
 {
     flux << m_atome.toStdString();
 }
-
-
+/*
+QString& Atome::affiche(QString& flux) const
+{
+    return affiche2(flux);
+}
+*/
 QString& Atome::affiche(QString& flux) const
 {
     flux+= m_atome;
-    return flux;
+    flux+= " : ";
+
+
+
+    if(variable->getType()== "Entier")
+    {
+        Entier* my_var = dynamic_cast<Entier*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Reel")
+    {
+        Reel* my_var = dynamic_cast<Reel*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Fraction")
+    {
+        Fraction* my_var = dynamic_cast<Fraction*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Complexe")
+    {
+        Complexe* my_var = dynamic_cast<Complexe*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+
 }
 
 ostream& operator<<(ostream& flux,Exp::Atome& m)
@@ -37,7 +69,7 @@ ostream& operator<<(ostream& flux,Exp::Atome& m)
 }
 
 
-LitteralNumerique* Atome::operator+(LitteralNumerique* b)
+LitteralNumerique* Atome::operator+(Litteral* b)
 {
     /*
     if(b->getType()=="Entier" )
@@ -63,25 +95,26 @@ LitteralNumerique* Atome::operator+(LitteralNumerique* b)
         Atome* my_b =dynamic_cast<Atome*>(b);
         if(this->isVariableValide() && my_b->isVariableValide())
         {
+            LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
             if(my_b->getVariable()->getType()=="Entier" )
             {
                 Entier* my_b2 =dynamic_cast<Entier*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
             if(my_b->getVariable()->getType()=="Reel" )
             {
                 Reel* my_b2 =dynamic_cast<Reel*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
             if(my_b->getVariable()->getType()=="Fraction" )
             {
                 Fraction* my_b2 =dynamic_cast<Fraction*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
             if(my_b->getVariable()->getType()=="Complexe" )
             {
                 Complexe* my_b2 =dynamic_cast<Complexe*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
 
 

@@ -10,6 +10,7 @@ MainWindow::MainWindow(Controleur c,QWidget *parent) : control(c),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -257,23 +258,26 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 }
 
 void MainWindow::on_lineEdit_editingFinished()
-{
-    try{
-
-    control.checkString();
-    ui->textEdit->clear();
-    ui->textEdit->append(control.affiche());
-    ui->textEdit_2->clear();
-    ui->textEdit_2->append(control.affiche2());
-    ui->lineEdit->setText(control.affiche2());
-
-    }catch(Exp::PileException& a)
+{   if(control.chaineIsValide() != 0)
     {
-        ui->textEdit_2->append(a.affiche());
-    }
-    catch(Exp::FractionException& a)
-    {
-        ui->textEdit_2->append(a.affiche());
+        try{
+
+
+        control.checkString();
+        ui->textEdit->clear();
+        ui->textEdit->append(control.affiche());
+        ui->textEdit_2->clear();
+        ui->textEdit_2->append(control.affiche2());
+        ui->lineEdit->setText(control.affiche2());
+
+        }catch(Exp::PileException& a)
+        {
+            ui->textEdit_2->append(a.affiche());
+        }
+        catch(Exp::FractionException& a)
+        {
+            ui->textEdit_2->append(a.affiche());
+        }
     }
 }
 
@@ -293,6 +297,7 @@ void MainWindow::on_pushButton_22_clicked()
     else
     {
         ui->gridLayoutWidget->hide();
+
     }
 
 }
@@ -312,4 +317,12 @@ void MainWindow::on_lineEdit_5_editingFinished()
     ui->lineEdit_5->clear();
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
+}
+
+void MainWindow::on_lineEdit_2_editingFinished()
+{
+    ui->lineEdit_2->clear();
+    ui->textEdit_3->clear();
+    ui->textEdit_3->append(control.afficheVariable());
+
 }
