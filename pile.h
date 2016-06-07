@@ -44,6 +44,7 @@ namespace Exp{
         void setMessage(const string& m) { message=m; }
         string getMessage() const { return message; }
         QString affiche();
+        QString afficheall();
 
     };
 
