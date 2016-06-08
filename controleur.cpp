@@ -13,8 +13,7 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QFile>
-#include <vector>
-#include <iterator>
+
 
 using namespace Exp;
 
@@ -29,11 +28,6 @@ void Controleur::checkString()
     {
         plus();
     }
-    else if(q[0]=='[')
-    {
-        LitteralProgramme* v = new LitteralProgramme(q);
-        p.push(v);
-    }
     else if(q[0]=='-')
     {
         moins();
@@ -45,10 +39,6 @@ void Controleur::checkString()
     else if(q[0]=='/')
     {
         diviser();
-    }
-    else if(q=="EVAL")
-    {
-        evaluer();
     }
     else if(q=="NEG")
     {
@@ -95,111 +85,99 @@ void Controleur::checkString()
     {
 
     }
-    else if(q.contains("STO"))
+    else if(q.contains('.'))
+    {
+        float b;
+        int b2;
+        //istringstream
+        b=q.toFloat();
+        b2=b;
+        if (b-b2==0)
+        {
+            Entier* v = new Entier(b2);
+            p.push(v);
+        }
+        else
+        {
+            Reel* v = new Reel(b);
+            p.push(v);
+        }
+    }
+    else if(q.contains('/'))
+    {
+        QStringList l;
+        l=q.split("/");
+        Entier* l1= new Entier(l[0].toInt());
+        Entier* l2= new Entier(l[1].toInt());
+        p.push(l1);
+        p.push(l2);
+        diviser();
+    }
+    else if(q.contains(" "))
     {
         QStringList l;
         l=q.split(" ");
 
-        if(l[0].contains('.'))
-            {
-                float b;
-                //istringstream
-                b=l[0].toFloat();
-                Reel* v = new Reel(b);
-                Atome* at= new Atome(l[1], v);
-                ajouterVariable(at);
-            }
-            else if(l[0].contains('/'))
-            {
-                QStringList m;
-                m=l[0].split("/");
-                Entier* m1= new Entier(m[0].toInt());
-                Entier* m2= new Entier(m[1].toInt());
-                p.push(m1);
-                p.push(m2);
-                diviser();
-                Atome* at= new Atome(l[1], p.pop());
-                ajouterVariable(at);
-            }
-            else
-            {
-                        int c;
-                        //istringstream
-                        c=l[0].toInt();
-                        Entier* v = new Entier(c);
-                        Atome* at= new Atome(l[1], v);
-                        ajouterVariable(at);
-
-            }
-
-
-
-    }
-    else if(q.isSimpleText())
-    {
-        QString a("");
-        int j=0;
-
-                    if(q.contains('.'))
+            if(l[1].contains('.'))
+                {
+                    float b;
+                    int b2;
+                    //istringstream
+                    b=l[1].toFloat();
+                    b2=b;
+                    if (b-b2==0)
                     {
-                        float b;
-                        //istringstream
-                        b=q.toFloat();
-
+                        Entier* v = new Entier(b2);
+                        p.push(v);
+                    }
+                    else
+                    {
                         Reel* v = new Reel(b);
                         p.push(v);
                     }
-                    else if(q.contains('/'))
-                    {
-                        QStringList l;
-                        l=q.split("/");
-                        Entier* l1= new Entier(l[0].toInt());
-                        Entier* l2= new Entier(l[1].toInt());
-                        p.push(l1);
-                        p.push(l2);
-                        diviser();
-                    }
-                     else if(q != "")
-                     {
-                           int c;
-                           //istringstream
-                           c=q.toInt();
 
-                           if(q=="0")
-                           {
-                               Entier* v = new Entier(0);
-                               p.push(v);
-                           }
-                           else
-                           {
-                               if(c!=0)
-                               {
-                               Entier* v = new Entier(c);
-                               p.push(v);
-                               }
+                }
+                else if(l[1].contains('/'))
+                {
+                    QStringList m;
+                    m=l[1].split("/");
+                    Entier* m1= new Entier(m[0].toInt());
+                    Entier* m2= new Entier(m[1].toInt());
+                    p.push(m1);
+                    p.push(m2);
+                    diviser();
+                }
+                else
+                {
+                            int c;
+                            //istringstream
+                            c=l[1].toInt();
+                            Entier* v = new Entier(c);
+                            p.push(v);
 
-                            }
+                }
 
-                        }
-
-
-        for(unsigned int i=0; i< variable.size(); i++)
-        {
-            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
-            j++;
-            if( q == my_var->getAtome() )
+            if(l[0].isSimpleText())
             {
-                p.push(my_var);
-            }
-            else
-            {
-                p.push(new Atome(q));
-            }
 
-        }
+                Litteral* data=p.pop();
+                Atome* at= new Atome(l[0], data);
+                p.push(at);
 
+            }
 
     }
+    else
+    {
+                int c;
+                //istringstream
+                c=q.toInt();
+                Entier* v = new Entier(c);
+                p.push(v);
+
+   }
+
+            cout << p;
 }
 
 
@@ -211,54 +189,73 @@ void Controleur::plus()
         Litteral* a= p.pop();
         Litteral* b= p.pop();
 
-        if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
+        if(a->getType()=="Entier" )
         {
-            LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
-            if(a->getType()=="Entier" )
-            {
-                Entier* my_a =dynamic_cast<Entier*>(a);
-                LitteralNumerique* c= my_a->operator+(my_b);
-                p.push(c);
-             }
-            else if(a->getType()=="Reel")
-            {
-                Reel* my_a =dynamic_cast<Reel*>(a);
-                LitteralNumerique* c= my_a->operator+(my_b);
-                p.push(c);
-            }
-            else if(a->getType()=="Fraction")
-            {
-               Fraction* my_a =dynamic_cast<Fraction*>(a);
-               LitteralNumerique* c= my_a->operator+(my_b);
-               p.push(c);
-            }
-            else if(a->getType()=="Atome")
-            {
-               Atome* my_a =dynamic_cast<Atome*>(a);
-               if(my_a->isVariableValide())
-               {
-                   LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
-                   LitteralNumerique* c= my_a2->operator +(my_b);
-                   p.push(c);
-               }
-
-            }
-            else if(a->getType()=="Complexe")
-            {
-               Complexe* my_a =dynamic_cast<Complexe*>(a);
-               LitteralNumerique* c= my_a->operator+(my_b);
-               p.push(c);
-            }
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralNumerique* c= my_a->operator+(my_b);
+            p.push(c);
          }
-        else if(b->getType()=="Atome")
+        else if(a->getType()=="Reel")
         {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            LitteralNumerique* c= my_b->operator +(a);
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralNumerique* c= my_a->operator+(my_b);
             p.push(c);
         }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralNumerique* c= my_a->operator+(my_b);
+           p.push(c);
+        }
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralNumerique* c= my_a->operator +(my_b);
+           p.push(c);
+        }
+        else if(a->getType()=="Complexe")
+        {
+           Complexe* my_a =dynamic_cast<Complexe*>(a);
+           LitteralNumerique* c= my_a->operator+(my_b);
+           p.push(c);
+        }
+ }
 
-        cout << p;
+ /*
+    if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        Entier* c= my_a->operator+(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Reel* c= my_a->operator+(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Reel* c= my_a->operator+(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Reel* c= my_a->operator+(my_b);
+        p.push(c);
+    }
 
+    cout << p;
+*/
     }
     else
     {
@@ -276,57 +273,79 @@ void Controleur::moins()
         Litteral* a= p.pop();
         Litteral* b= p.pop();
 
-         if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+ if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
+
+        if(a->getType()=="Entier" )
         {
-                LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
-
-                if(a->getType()=="Entier" )
-                {
-                    Entier* my_a =dynamic_cast<Entier*>(a);
-                    LitteralNumerique* c= my_a->operator-(my_b);
-                    p.push(c);
-                 }
-                else if(a->getType()=="Reel")
-                {
-                    Reel* my_a =dynamic_cast<Reel*>(a);
-                    LitteralNumerique* c= my_a->operator-(my_b);
-                    p.push(c);
-                }
-                else if(a->getType()=="Fraction")
-                {
-                   Fraction* my_a =dynamic_cast<Fraction*>(a);
-                   LitteralNumerique* c= my_a->operator-(my_b);
-                   p.push(c);
-                }
-                else if(a->getType()=="Atome")
-                {
-                   Atome* my_a =dynamic_cast<Atome*>(a);
-                   if(my_a->isVariableValide())
-                   {
-                       LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
-                       LitteralNumerique* c= my_a2->operator -(my_b);
-                       p.push(c);
-                   }
-
-                }
-                else if(a->getType()=="Complexe")
-                {
-                  Complexe* my_a =dynamic_cast<Complexe*>(a);
-                  LitteralNumerique* c= my_a->operator-(my_b);
-                  p.push(c);
-                }
-         }
-         else if(b->getType()=="Atome")
-         {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-             LitteralNumerique* c= my_b->operator +(a);
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralNumerique* c= my_a->operator-(my_b);
             p.push(c);
          }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralNumerique* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralNumerique* c= my_a->operator-(my_b);
+           p.push(c);
+        }
+        /*else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           Entier* my_a2 =dynamic_cast<Entier*>(my_a->getVariable());
+           LitteralNumerique* c= my_a2->getEntier()->operator-(my_b);
+           p.push(c);
+        }*/
+        else if(a->getType()=="Complexe")
+        {
+          Complexe* my_a =dynamic_cast<Complexe*>(a);
+          LitteralNumerique* c= my_a->operator-(my_b);
+          p.push(c);
+        }
 
+ }
 
+       /*
+        if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            Entier* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+*/
 
-         cout << p;
+        cout << p;
     }
+
+
     else
     {
             throw PileException("Pas Assez d'argument");
@@ -344,56 +363,87 @@ void Controleur::multiplier()
         Litteral* a= p.pop();
         Litteral* b= p.pop();
 
-        if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
+{
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
+
+        if(a->getType()=="Entier" )
         {
-                LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
-
-                if(a->getType()=="Entier" )
-                {
-                    Entier* my_a =dynamic_cast<Entier*>(a);
-                    LitteralNumerique* c= my_a->operator*(my_b);
-                    p.push(c);
-                 }
-                else if(a->getType()=="Reel")
-                {
-                    Reel* my_a =dynamic_cast<Reel*>(a);
-                    LitteralNumerique* c= my_a->operator*(my_b);
-                    p.push(c);
-                }
-                else if(a->getType()=="Fraction")
-                {
-                   Fraction* my_a =dynamic_cast<Fraction*>(a);
-                   LitteralNumerique* c= my_a->operator*(my_b);
-                   p.push(c);
-                }
-                else if(a->getType()=="Atome")
-                {
-                    Atome* my_a =dynamic_cast<Atome*>(a);
-                    if(my_a->isVariableValide())
-                    {
-
-                        LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
-                        LitteralNumerique* c= my_b->operator *(my_a2);
-                        p.push(c);
-                    }
-                }
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralNumerique* c= my_a->operator*(my_b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralNumerique* c= my_a->operator*(my_b);
+            p.push(c);
         }
-        else if(b->getType()=="Atome")
+        else if(a->getType()=="Fraction")
         {
-           Atome* my_b =dynamic_cast<Atome*>(b);
-            LitteralNumerique* c= my_b->operator +(a);
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralNumerique* c= my_a->operator*(my_b);
            p.push(c);
         }
+       /* else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralNumerique* c= my_a->getVariable()->operator*(my_b);
+           p.push(c);
+        }
+*/
+        else if(a->getType()=="Complexe")
+        {
+          Complexe* my_a =dynamic_cast<Complexe*>(a);
+          LitteralNumerique* c= my_a->operator*(my_b);
+          p.push(c);
+        }
+}
+
+       /*
+        if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            Entier* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+        else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            Reel* c= my_a->operator-(my_b);
+            p.push(c);
+        }
+*/
 
         cout << p;
     }
+
+
     else
     {
-       throw PileException("Pas Assez d'argument");
+            throw PileException("Pas Assez d'argument");
     }
 
 
 }
+
+
 
 
 void Controleur::diviser()
@@ -404,57 +454,83 @@ void Controleur::diviser()
         Litteral* a= p.pop();
         Litteral* b= p.pop();
 
-        if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
-        {
-                LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
-
-                if(a->getType()=="Entier" )
-                {
-                    Entier* my_a =dynamic_cast<Entier*>(a);
-                    LitteralNumerique* c= my_a->operator/(my_b);
-                    p.push(c);
-                 }
-                else if(a->getType()=="Reel")
-                {
-                    Reel* my_a =dynamic_cast<Reel*>(a);
-                    LitteralNumerique* c= my_a->operator/(my_b);
-                    p.push(c);
-                }
-                else if(a->getType()=="Fraction")
-                {
-                   Fraction* my_a =dynamic_cast<Fraction*>(a);
-                   LitteralNumerique* c= my_a->operator/(my_b);
-                   p.push(c);
-                }
-                else if(a->getType()=="Atome")
-                {
-                    Atome* my_a =dynamic_cast<Atome*>(a);
-                    if(my_a->isVariableValide())
-                    {
-
-                        LitteralNumerique* my_a2 =dynamic_cast<LitteralNumerique*>(my_a->getVariable());
-                        LitteralNumerique* c= my_b->operator *(my_a2);
-                        p.push(c);
-                    }
-                }
-        }
-        else if(b->getType()=="Atome")
-        {
-           Atome* my_b =dynamic_cast<Atome*>(b);
-            LitteralNumerique* c= my_b->operator +(a);
-           p.push(c);
-        }
-
-        cout << p;
-}
-else
+if(b->getType()=="Entier" ||b->getType()=="Fraction" ||b->getType()=="Reel" ||b->getType()=="Complexe" )
 {
-throw PileException("Pas Assez d'argument");
+        LitteralNumerique* my_b =dynamic_cast<LitteralNumerique*>(b);
+
+        if(a->getType()=="Entier" )
+        {
+            Entier* my_a =dynamic_cast<Entier*>(a);
+            LitteralNumerique* c= my_a->operator/(my_b);
+            p.push(c);
+         }
+        else if(a->getType()=="Reel")
+        {
+            Reel* my_a =dynamic_cast<Reel*>(a);
+            LitteralNumerique* c= my_a->operator/(my_b);
+            p.push(c);
+        }
+        else if(a->getType()=="Fraction")
+        {
+           Fraction* my_a =dynamic_cast<Fraction*>(a);
+           LitteralNumerique* c= my_a->operator/(my_b);
+           p.push(c);
+        }/*
+        else if(a->getType()=="Atome")
+        {
+           Atome* my_a =dynamic_cast<Atome*>(a);
+           LitteralNumerique* c= my_a->getVariable()->operator/(my_b);
+           p.push(c);
+        }*/
+
+        else if(a->getType()=="Complexe")
+        {
+          Complexe* my_a =dynamic_cast<Complexe*>(a);
+          LitteralNumerique* c= my_a->operator/(my_b);
+          p.push(c);
+        }
 }
 
 
-}
+ /*
+    if((a->getType()=="Entier" ) & (b->getType()=="Entier"))
+    {
+        Entier* my_a =dynamic_cast<Entier*>(a);
+        Entier* my_b =dynamic_cast<Entier*>(b);
+        Fraction* c= my_a->operator/(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Reel") & (b->getType()=="Reel"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Fraction* c= my_a->operator/(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Entier") & (b->getType()=="Reel"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Fraction* c= my_a->operator/(my_b);
+        p.push(c);
+    }
+    else if((a->getType()=="Reel") & (b->getType()=="Entier"))
+    {
+        Reel* my_a =dynamic_cast<Reel*>(a);
+        Reel* my_b =dynamic_cast<Reel*>(b);
+        Fraction* c= my_a->operator/(my_b);
+        p.push(c);
+    }
+*/
+    cout << p;
+    }
+    else
+    {
+        throw PileException("Pas Assez d'argument");
+    }
 
+
+}
 
 QString Controleur::affiche()
 {
@@ -468,32 +544,13 @@ QString Controleur::affiche2()
     return chaine;
 }
 
-QString Controleur::afficheVariable()
-{
-
-    QString a("");
-    int j=0;
-
-    for(unsigned int i=0; i< variable.size(); i++)
-    {
-        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
-        if(my_var->getVariable()->getType()!= "LitteralProgramme")
-        {
-            my_var->affiche(a);
-            a+="\n";
-            j++;
-        }
-    }
-    return a;
-}
-
-void Controleur::constructionchaine(QString a)
+void Controleur::contructionchaine(QString a)
 {
     chaine =chaine + a;
 
 }
 
-void Controleur::constructionchaine2(QString arg1)
+void Controleur::contructionchaine2(QString arg1)
 {
     chaine =arg1;
 
@@ -697,6 +754,7 @@ void Controleur::edit()
 
 void Controleur::complexe()
 {
+    if(p.taille() >= 2) {
     Litteral* a = p.pop();
     Litteral* b = p.pop();
 
@@ -710,8 +768,15 @@ void Controleur::complexe()
     {
         LitteralNumerique* my_a= dynamic_cast<LitteralNumerique*>(a);
         LitteralNumerique* my_b= dynamic_cast<LitteralNumerique*>(b);
-        p.push(new Complexe(my_a,my_b));
+        p.push(new Complexe(my_b,my_a));
     }
+    }
+
+    else
+    {
+            throw PileException("Pas Assez d'argument");
+    }
+
 
 }
 
@@ -734,7 +799,7 @@ void Controleur::enregistrePile()
 
 
 
-       writer.writeTextElement("Pile",p.afficheall());
+       writer.writeTextElement("Pile",p.affiche());
 
 
        // Finalise le document XML
@@ -748,32 +813,7 @@ void Controleur::enregistrePile()
 
 void Controleur::chargePile()
 {
-    QString fileName = "D:/Documents/LO21/projet1/sauvegarde.xml";
-    QFile fileXml(fileName);
 
-    if(!fileXml.open(QFile::ReadOnly | QFile::Text))
-        throw PileException("Erreur fichier XML");
-    QXmlStreamReader reader(&fileXml);
-    QString text("");
-    QXmlStreamWriter writer(&text);
-
-
-
-
-       reader.readElementText();
-
-       reader.readNext();
-
-       fileXml.close();
-
-       writer.writeCurrentToken(reader);
-
-       for(int i=0; i< text.size(); i++)
-       {
-            QStringList l=text.split(":");
-            //if(l[1].isSimpleText())
-            //p.push(new Entier(l[0].toInt()));
-       }
 
 
 }
@@ -786,93 +826,4 @@ void Controleur::ChangeNombrePileAffiche(int n)
 }
 
 
-void Controleur::ajouterVariable(Litteral* v)
-{
-    variable.push_back(v);
-}
 
-void Controleur::evaluer()
-{
-    Litteral* a = p.pop();
-
-    if(a->getType()=="LitteralProgramme")
-    {
-
-        LitteralProgramme* my_a= dynamic_cast<LitteralProgramme*>(a);
-
-        QStringList l;
-        l=my_a->getProg().split(" ");
-
-        for(int i=1; i< l.size() ; i++)
-        {
-            editChaine(l[i]);
-            checkString();
-        }
-    }
-    else if(a->getType()=="Atome")
-    {
-        Atome* my_a= dynamic_cast<Atome*>(a);
-        if(my_a->getVariable()->getType()=="LitteralProgramme")
-        {
-            LitteralProgramme* my_a2= dynamic_cast<LitteralProgramme*>(my_a->getVariable());
-            p.push(my_a2);
-            evaluer();
-        }
-    }
-}
-
-void Controleur::editChaine(QString m_chaine)
-{
-
-    chaine=m_chaine;
-
-}
-
-QString Controleur::afficheProgramme()
-{
-    QString a("");
-    int j=0;
-
-    for(unsigned int i=0; i< variable.size(); i++)
-    {
-        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
-        if(my_var->getVariable()->getType()== "LitteralProgramme")
-        {
-            my_var->affiche(a);
-            a+="\n";
-            j++;
-        }
-
-    }
-
-    return a;
-}
-
-QString Controleur::afficheNomProgramme()
-{
-    QString a("");
-    int j=0;
-
-    for(unsigned int i=0; i< variable.size(); i++)
-    {
-        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
-        if(my_var->getVariable()->getType()== "LitteralProgramme")
-        {
-            a+=my_var->getAtome();
-            a+="\n";
-            j++;
-        }
-
-    }
-
-    return a;
-}
-
-void Controleur::creerProgramme(QString nom, QString programme)
-{
-    Atome* prog=new Atome(nom,new LitteralProgramme(programme));
-
-    variable.push_back(prog);
-
-
-}

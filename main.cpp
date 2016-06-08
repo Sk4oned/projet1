@@ -13,10 +13,6 @@ int main(int argc, char *argv[])
     Pile p;
 
     Controleur control(p);
-    control.chargePile();
-
-
-
     /*
     try{
 
@@ -70,7 +66,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w(control);
     w.show();
-
 
 
     return a.exec();

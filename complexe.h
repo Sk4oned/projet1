@@ -22,6 +22,8 @@ public:
     virtual void affiche(ostream& flux)const;
     virtual QString& affiche(QString& flux)const;
     string getType(){return type;}
+    LitteralNumerique* getP_reelle(){ return p_reelle; }
+    LitteralNumerique* getP_imaginaire(){ return p_imaginaire; }
     virtual LitteralNumerique* operator+(LitteralNumerique* b);
     virtual LitteralNumerique* operator-(LitteralNumerique* b);
     virtual LitteralNumerique* operator*(LitteralNumerique* b);

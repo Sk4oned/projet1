@@ -18,11 +18,12 @@ namespace Exp{
 
     public:
         LitteralProgramme(QString programme);
-        virtual bool isValide() const;
-        virtual void affiche(ostream& flux)const;
-        virtual QString& affiche(QString& flux)const;
+        virtual bool isValide();
+        virtual void affiche(ostream& flux);
+        virtual QString& affiche(QString& flux);
         QString& getProg(){return m_programme;}
         string getType(){return type;}
+        LitteralNumerique* evaluer();
 
     };
 

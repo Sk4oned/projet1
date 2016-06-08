@@ -482,12 +482,12 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
@@ -515,23 +515,23 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
             return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
-        else if(b->getType()=="Atome" ) //WTF is atom
+       /* else if(b->getType()=="Atome" ) //WTF is atom
         {
             Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
-        }
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
+        }*/
 
 
 
@@ -545,23 +545,23 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
        if(b->getType()=="Entier" )
        {
            Entier* my_b =dynamic_cast<Entier*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
        else if(b->getType()=="Reel" )
        {
            Reel* my_b =dynamic_cast<Reel*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+          return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
        else if(b->getType()=="Fraction" )
        {
            Fraction* my_b =dynamic_cast<Fraction*>(b);
-           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
+          return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
-       else if(b->getType()=="Atome" ) //WTF is atom
+      /* else if(b->getType()=="Atome" ) //WTF is atom
        {
            Atome* my_b =dynamic_cast<Atome*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
-       }
+          return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
+       }*/
 
 
     }
@@ -574,12 +574,12 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
@@ -603,23 +603,23 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
             return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
-        else if(b->getType()=="Atome" ) //WTF is atom
+        /*else if(b->getType()=="Atome" ) //WTF is atom
         {
             Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
-        }
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
+        }*/
 
 
     }
@@ -631,23 +631,24 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
        if(b->getType()=="Entier" )
        {
            Entier* my_b =dynamic_cast<Entier*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
        else if(b->getType()=="Reel" )
        {
            Reel* my_b =dynamic_cast<Reel*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+          return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
        else if(b->getType()=="Fraction" )
        {
            Fraction* my_b =dynamic_cast<Fraction*>(b);
            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
        }
-       else if(b->getType()=="Atome" ) //WTF is atom
+       /*
+         else if(b->getType()=="Atome" ) //WTF is atom
        {
            Atome* my_b =dynamic_cast<Atome*>(b);
-           return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
-       }
+           return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
+       }*/
 
 
     }
@@ -660,12 +661,12 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
@@ -689,12 +690,12 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
@@ -718,22 +719,17 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
             return (new Complexe(my_p_reelle->operator-(my_b),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator-(my_p_reelle),my_p_imaginaire));
         }
 
 
@@ -748,14 +744,14 @@ LitteralNumerique* Complexe::operator-(LitteralNumerique* b)
 //COMPLEXE OPERATOR *
 
 
-
 LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
 {
 
     if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);
-        return (new Complexe(my_b->p_reelle->operator*(p_reelle),my_b->p_imaginaire->operator*(p_imaginaire)));
+
+        return (new Complexe(my_b->p_imaginaire->operator*(p_imaginaire)->operator-(my_b->p_reelle->operator*(p_reelle)),my_b->p_reelle->operator*(p_imaginaire)->operator+(my_b->p_imaginaire->operator*(p_reelle))));
     }
     else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Entier" )
     {
@@ -765,28 +761,19 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator*(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
-        }
+
 
     }
     else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Reel")
@@ -798,24 +785,18 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
-        }
-
 
 
     }
@@ -828,22 +809,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
        if(b->getType()=="Entier" )
        {
            Entier* my_b =dynamic_cast<Entier*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
        else if(b->getType()=="Reel" )
        {
            Reel* my_b =dynamic_cast<Reel*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
        else if(b->getType()=="Fraction" )
        {
            Fraction* my_b =dynamic_cast<Fraction*>(b);
-           return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-       }
-       else if(b->getType()=="Atome" ) //WTF is atom
-       {
-           Atome* my_b =dynamic_cast<Atome*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
 
 
@@ -857,22 +833,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
 
 
@@ -886,22 +857,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
 
 
@@ -914,22 +880,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
        if(b->getType()=="Entier" )
        {
            Entier* my_b =dynamic_cast<Entier*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
        else if(b->getType()=="Reel" )
        {
            Reel* my_b =dynamic_cast<Reel*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
        else if(b->getType()=="Fraction" )
        {
            Fraction* my_b =dynamic_cast<Fraction*>(b);
-           return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-       }
-       else if(b->getType()=="Atome" ) //WTF is atom
-       {
-           Atome* my_b =dynamic_cast<Atome*>(b);
-           return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+           return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
        }
 
 
@@ -943,22 +904,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
 
 
@@ -972,22 +928,17 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
-        }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
 
 
@@ -1001,24 +952,18 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
         if(b->getType()=="Entier" )
         {
             Entier* my_b =dynamic_cast<Entier*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Reel" )
         {
             Reel* my_b =dynamic_cast<Reel*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
         else if(b->getType()=="Fraction" )
         {
             Fraction* my_b =dynamic_cast<Fraction*>(b);
-            return (new Complexe(my_p_reelle->operator+(my_b),my_p_imaginaire));
+            return (new Complexe(my_p_reelle->operator*(my_b),my_p_imaginaire->operator*(my_b)));
         }
-        else if(b->getType()=="Atome" ) //WTF is atom
-        {
-            Atome* my_b =dynamic_cast<Atome*>(b);
-            return (new Complexe(my_b->operator+(my_p_reelle),my_p_imaginaire));
-        }
-
 
     }
 
@@ -1027,8 +972,256 @@ LitteralNumerique* Complexe::operator*(LitteralNumerique* b)
  }
 
 
+//COMPLEXE OPERATOR /
+
+
 LitteralNumerique* Complexe::operator/(LitteralNumerique* b)
 {
-    return b;
-}
 
+    if(b->getType()=="Complexe" )
+    {
+        Complexe* my_b =dynamic_cast<Complexe*>(b);
+        return (new Complexe(((p_reelle->operator*(p_reelle))->operator+(p_imaginaire->operator*(p_imaginaire)))->operator/(((my_b->p_reelle->operator*(p_reelle)))->operator+((my_b->p_imaginaire->operator*(p_imaginaire)))),((p_reelle->operator*(p_reelle))->operator+(p_imaginaire->operator*(p_imaginaire)))->operator/(((my_b->p_reelle->operator*(p_imaginaire)))->operator-((my_b->p_imaginaire->operator*(p_reelle))))));
+    }
+    else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Entier" )
+    {
+        Entier* my_p_reelle =dynamic_cast<Entier*>(p_reelle);
+        Entier* my_p_imaginaire =dynamic_cast<Entier*>(p_imaginaire);
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Reel")
+    {
+        Entier* my_p_reelle =dynamic_cast<Entier*>(p_reelle);
+        Reel* my_p_imaginaire =dynamic_cast<Reel*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Entier" && p_imaginaire->getType()=="Fraction")
+    {
+       Entier* my_p_reelle =dynamic_cast<Entier*>(p_reelle);
+       Fraction* my_p_imaginaire =dynamic_cast<Fraction*>(p_imaginaire);
+
+
+       if(b->getType()=="Entier" )
+       {
+           Entier* my_b =dynamic_cast<Entier*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+       else if(b->getType()=="Reel" )
+       {
+           Reel* my_b =dynamic_cast<Reel*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+       else if(b->getType()=="Fraction" )
+       {
+           Fraction* my_b =dynamic_cast<Fraction*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+
+
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Entier" )
+    {
+        Reel* my_p_reelle =dynamic_cast<Reel*>(p_reelle);
+        Entier* my_p_imaginaire =dynamic_cast<Entier*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Reel")
+    {
+        Reel* my_p_reelle =dynamic_cast<Reel*>(p_reelle);
+        Reel* my_p_imaginaire =dynamic_cast<Reel*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Reel" && p_imaginaire->getType()=="Fraction")
+    {
+       Reel* my_p_reelle =dynamic_cast<Reel*>(p_reelle);
+       Fraction* my_p_imaginaire =dynamic_cast<Fraction*>(p_imaginaire);
+
+       if(b->getType()=="Entier" )
+       {
+           Entier* my_b =dynamic_cast<Entier*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+       else if(b->getType()=="Reel" )
+       {
+           Reel* my_b =dynamic_cast<Reel*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+       else if(b->getType()=="Fraction" )
+       {
+           Fraction* my_b =dynamic_cast<Fraction*>(b);
+           return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+       }
+
+
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Entier" )
+    {
+        Fraction* my_p_reelle =dynamic_cast<Fraction*>(p_reelle);
+        Entier* my_p_imaginaire =dynamic_cast<Entier*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Reel")
+    {
+        Fraction* my_p_reelle =dynamic_cast<Fraction*>(p_reelle);
+        Reel* my_p_imaginaire =dynamic_cast<Reel*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+
+    }
+    else if(p_reelle->getType()=="Fraction" && p_imaginaire->getType()=="Fraction")
+    {
+        Fraction* my_p_reelle =dynamic_cast<Fraction*>(p_reelle);
+        Fraction* my_p_imaginaire =dynamic_cast<Fraction*>(p_imaginaire);
+
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return (new Complexe(((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_reelle))),((my_p_reelle->operator*(my_p_reelle))->operator+(my_p_imaginaire->operator*(my_p_imaginaire)))->operator/((my_b->operator *(my_p_imaginaire->operator *(new Entier(-1)))))));
+
+        }
+
+    }
+
+    return 0;
+
+ }

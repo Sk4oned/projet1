@@ -67,29 +67,6 @@ private slots:
 
     void on_lineEdit_5_editingFinished();
 
-    void on_lineEdit_2_editingFinished();
-
-    void on_lineEdit_3_editingFinished();
-
-    void on_textEdit_5_textChanged();
-
-    void on_lineEdit_6_selectionChanged();
-
-    void on_lineEdit_6_textEdited(const QString &arg1);
-
-
-    void on_lineEdit_3_textEdited(const QString &arg1);
-
-    void afficheProgramme();
-
-    void on_lineEdit_6_editingFinished();
-
-    void on_tabWidget_tabBarClicked(int index);
-
-    void on_BarreSaisieVariable_editingFinished();
-
-    void on_pushButton_19_clicked();
-
 private:
     Controleur control;
     Ui::MainWindow* ui;
