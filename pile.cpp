@@ -49,6 +49,22 @@ void Pile::affiche(ostream& flux)
     }
 }
 
+QString Pile::afficheall()
+{
+    QString a("\n");
+
+    for(int i=0; i<current; i++)
+    {
+
+            a += QString::fromStdString(tab[i]->getType());
+            a += QString::fromStdString(" : ");
+            a=tab[i]->affiche(a);
+            a += QString::fromStdString("\n");
+
+
+     }
+    return a;
+}
 
 QString Pile::affiche()
 {

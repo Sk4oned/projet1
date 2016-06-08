@@ -52,11 +52,11 @@ LitteralNumerique* Entier::operator+(LitteralNumerique* b)
         Fraction* my_b =dynamic_cast<Fraction*>(b);
         return (new Fraction(this->getEntier()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
     }
- /*   else if(b->getType()=="Atome" )
+    else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Atome(my_b->getAtome()+this->getEntier()));
-    }*/
+        return (my_b->operator +(this));
+    }
     else if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);

@@ -12,7 +12,7 @@
 #include "atome.h"
 #include "complexe.h"
 
-Atome::Atome(QString atome, LitteralNumerique* var, LitteralProgramme* prog): m_atome(atome), variable(var), programme(prog)
+Atome::Atome(QString atome, Litteral* var): m_atome(atome), variable(var)
  {
 
  };
@@ -21,12 +21,52 @@ void Atome::affiche(ostream& flux) const
 {
     flux << m_atome.toStdString();
 }
-
-
+/*
+QString& Atome::affiche(QString& flux) const
+{
+    return affiche2(flux);
+}
+*/
 QString& Atome::affiche(QString& flux) const
 {
     flux+= m_atome;
-    return flux;
+    flux+= " : ";
+
+
+
+    if(variable->getType()== "Entier")
+    {
+        Entier* my_var = dynamic_cast<Entier*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Reel")
+    {
+        Reel* my_var = dynamic_cast<Reel*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Fraction")
+    {
+        Fraction* my_var = dynamic_cast<Fraction*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Complexe")
+    {
+        Complexe* my_var = dynamic_cast<Complexe*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
+    else if(variable->getType()== "Atome")
+    {
+        Atome* my_var = dynamic_cast<Atome*>(variable);
+        my_var->getVariable()->affiche(flux);
+        return flux;
+    }
+
+    return flux="Erreur";
+
 }
 
 ostream& operator<<(ostream& flux,Exp::Atome& m)
@@ -37,146 +77,299 @@ ostream& operator<<(ostream& flux,Exp::Atome& m)
 }
 
 
-LitteralNumerique* Atome::operator+(LitteralNumerique* b)
+LitteralNumerique* Atome::operator+(Litteral* b)
 {
-    /*
-    if(b->getType()=="Entier" )
+    if(b->getType()!="Atome" )
     {
-        Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Atome(my_b->getEntier()+this->getAtome()));
-    }
-    else if(b->getType()=="Reel" )
-    {
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        return (new Atome(my_b->getReel()+this->getAtome()));
-    }
-    else if(b->getType()=="Fraction" )
-    {
-        Fraction* my_b =dynamic_cast<Fraction*>(b);
-        return (new Fraction(this->getAtome()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
-    }
-    else
+        LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
 
-     */
-    if(b->getType()=="Atome" )
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return my_b->operator +(a);
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return my_b->operator +(a);
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return my_b->operator +(a);
+        }
+        else if(b->getType()=="Complexe" )
+        {
+            Complexe* my_b =dynamic_cast<Complexe*>(b);
+            return my_b->operator +(a);
+        }
+        else if(b->getType()=="Atome" )
+        {
+            Atome* my_b =dynamic_cast<Atome*>(b);
+            return my_b->operator +(a);
+        }
+
+    }
+    else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
         if(this->isVariableValide() && my_b->isVariableValide())
         {
+            LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
             if(my_b->getVariable()->getType()=="Entier" )
             {
                 Entier* my_b2 =dynamic_cast<Entier*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
-            if(my_b->getVariable()->getType()=="Reel" )
+            else if(my_b->getVariable()->getType()=="Reel" )
             {
                 Reel* my_b2 =dynamic_cast<Reel*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
-            if(my_b->getVariable()->getType()=="Fraction" )
+            else if(my_b->getVariable()->getType()=="Fraction" )
             {
                 Fraction* my_b2 =dynamic_cast<Fraction*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
             }
-            if(my_b->getVariable()->getType()=="Complexe" )
+            else if(my_b->getVariable()->getType()=="Complexe" )
             {
                 Complexe* my_b2 =dynamic_cast<Complexe*>(my_b->getVariable());
-                return my_b2->operator +(this->getVariable());
+                return my_b2->operator +(a);
+            }
+            else if(my_b->getVariable()->getType()=="Atome" )
+            {
+                Atome* my_b2 =dynamic_cast<Atome*>(my_b->getVariable());
+                return my_b2->operator +(a);
             }
 
 
         }
 
     }
-    /*
-    else if(b->getType()=="Complexe" )
-    {
-        Complexe* my_b =dynamic_cast<Complexe*>(b);
-        return my_b->operator +(this);
-    }
 
     return 0;
 
-    */
 }
 
-/*
 
-LitteralNumerique* Atome::operator-(LitteralNumerique* b)
+LitteralNumerique* Atome::operator-(Litteral* b)
 {
-    if(b->getType()=="Entier" )
+    if(b->getType()!="Atome" )
     {
-        Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Atome(my_b->getEntier()-this->getAtome()));
-    }
-    else if(b->getType()=="Reel" )
-    {
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        return (new Atome(my_b->getReel()-this->getAtome()));
-    }
-    else if(b->getType()=="Fraction" )
-    {
-        Fraction* my_b =dynamic_cast<Fraction*>(b);
-        return (new Fraction(this->getAtome()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
+        LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return my_b->operator -(a);
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return my_b->operator -(a);
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return my_b->operator -(a);
+        }
+        else if(b->getType()=="Complexe" )
+        {
+            Complexe* my_b =dynamic_cast<Complexe*>(b);
+            return my_b->operator -(a);
+        }
+        else if(b->getType()=="Atome" )
+        {
+            Atome* my_b =dynamic_cast<Atome*>(b);
+            return my_b->operator -(a);
+        }
+
     }
     else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Atome(my_b->getAtome()-this->getAtome()));
+        if(this->isVariableValide() && my_b->isVariableValide())
+        {
+            LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+            if(my_b->getVariable()->getType()=="Entier" )
+            {
+                Entier* my_b2 =dynamic_cast<Entier*>(my_b->getVariable());
+                return my_b2->operator -(a);
+            }
+            else if(my_b->getVariable()->getType()=="Reel" )
+            {
+                Reel* my_b2 =dynamic_cast<Reel*>(my_b->getVariable());
+                return my_b2->operator -(a);
+            }
+            else if(my_b->getVariable()->getType()=="Fraction" )
+            {
+                Fraction* my_b2 =dynamic_cast<Fraction*>(my_b->getVariable());
+                return my_b2->operator -(a);
+            }
+            else if(my_b->getVariable()->getType()=="Complexe" )
+            {
+                Complexe* my_b2 =dynamic_cast<Complexe*>(my_b->getVariable());
+                return my_b2->operator -(a);
+            }
+            else if(my_b->getVariable()->getType()=="Atome" )
+            {
+                Atome* my_b2 =dynamic_cast<Atome*>(my_b->getVariable());
+                return my_b2->operator -(a);
+            }
+
+
+        }
+
     }
+
     return 0;
 }
 
-
-LitteralNumerique* Atome::operator*(LitteralNumerique* b)
+LitteralNumerique* Atome::operator*(Litteral* b)
 {
-    if(b->getType()=="Entier" )
+    if(b->getType()!="Atome" )
     {
-        Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Atome(my_b->getEntier()*this->getAtome()));
-    }
-    else if(b->getType()=="Reel" )
-    {
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        return (new Atome(my_b->getReel()*this->getAtome()));
-    }
-    else if(b->getType()=="Fraction" )
-    {
-        Fraction* my_b =dynamic_cast<Fraction*>(b);
-        return (new Fraction(this->getAtome()*my_b->getNumerateur(),my_b->getDenominateur()));
+        LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return my_b->operator *(a);
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return my_b->operator *(a);
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return my_b->operator *(a);
+        }
+        else if(b->getType()=="Complexe" )
+        {
+            Complexe* my_b =dynamic_cast<Complexe*>(b);
+            return my_b->operator *(a);
+        }
+        else if(b->getType()=="Atome" )
+        {
+            Atome* my_b =dynamic_cast<Atome*>(b);
+            return my_b->operator *(a);
+        }
+
     }
     else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Atome(my_b->getAtome()*this->getAtome()));
+        if(this->isVariableValide() && my_b->isVariableValide())
+        {
+            LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+            if(my_b->getVariable()->getType()=="Entier" )
+            {
+                Entier* my_b2 =dynamic_cast<Entier*>(my_b->getVariable());
+                return my_b2->operator *(a);
+            }
+            else if(my_b->getVariable()->getType()=="Reel" )
+            {
+                Reel* my_b2 =dynamic_cast<Reel*>(my_b->getVariable());
+                return my_b2->operator *(a);
+            }
+            else if(my_b->getVariable()->getType()=="Fraction" )
+            {
+                Fraction* my_b2 =dynamic_cast<Fraction*>(my_b->getVariable());
+                return my_b2->operator *(a);
+            }
+            else if(my_b->getVariable()->getType()=="Complexe" )
+            {
+                Complexe* my_b2 =dynamic_cast<Complexe*>(my_b->getVariable());
+                return my_b2->operator *(a);
+            }
+            else if(my_b->getVariable()->getType()=="Atome" )
+            {
+                Atome* my_b2 =dynamic_cast<Atome*>(my_b->getVariable());
+                return my_b2->operator *(a);
+            }
+
+
+        }
+
     }
+
     return 0;
 }
 
 
-LitteralNumerique* Atome::operator/(LitteralNumerique* b)
+LitteralNumerique* Atome::operator/(Litteral* b)
 {
-    if(b->getType()=="Entier" )
+    if(b->getType()!="Atome" )
     {
-        Entier* my_b =dynamic_cast<Entier*>(b);
-        return (new Fraction(my_b->getEntier(),this->getAtome()));
-    }
-    else if(b->getType()=="Reel" )
-    {
-        Reel* my_b =dynamic_cast<Reel*>(b);
-        return (new Fraction(my_b->getReel(),this->getAtome()));
-    }
-    else if(b->getType()=="Fraction" )
-    {
-        Fraction* my_b =dynamic_cast<Fraction*>(b);
-        return (new Fraction(this->getAtome()*my_b->getDenominateur(),my_b->getNumerateur()));
+        LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            return my_b->operator /(a);
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            return my_b->operator /(a);
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            return my_b->operator /(a);
+        }
+        else if(b->getType()=="Complexe" )
+        {
+            Complexe* my_b =dynamic_cast<Complexe*>(b);
+            return my_b->operator /(a);
+        }
+        else if(b->getType()=="Atome" )
+        {
+            Atome* my_b =dynamic_cast<Atome*>(b);
+            return my_b->operator /(a);
+        }
+
     }
     else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Fraction(my_b->getAtome(),this->getAtome()));
+        if(this->isVariableValide() && my_b->isVariableValide())
+        {
+            LitteralNumerique* a =dynamic_cast<LitteralNumerique*>(this->getVariable());
+            if(my_b->getVariable()->getType()=="Entier" )
+            {
+                Entier* my_b2 =dynamic_cast<Entier*>(my_b->getVariable());
+                return my_b2->operator /(a);
+            }
+            else if(my_b->getVariable()->getType()=="Reel" )
+            {
+                Reel* my_b2 =dynamic_cast<Reel*>(my_b->getVariable());
+                return my_b2->operator /(a);
+            }
+            else if(my_b->getVariable()->getType()=="Fraction" )
+            {
+                Fraction* my_b2 =dynamic_cast<Fraction*>(my_b->getVariable());
+                return my_b2->operator /(a);
+            }
+            else if(my_b->getVariable()->getType()=="Complexe" )
+            {
+                Complexe* my_b2 =dynamic_cast<Complexe*>(my_b->getVariable());
+                return my_b2->operator /(a);
+            }
+            else if(my_b->getVariable()->getType()=="Atome" )
+            {
+                Atome* my_b2 =dynamic_cast<Atome*>(my_b->getVariable());
+                return my_b2->operator /(a);
+            }
+
+
+        }
+
     }
+
     return 0;
 }
 
-*/
+

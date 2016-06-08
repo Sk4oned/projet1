@@ -15,24 +15,23 @@ namespace Exp{
 
         QString m_atome;
         string type="Atome";
-        LitteralNumerique* variable;
-        LitteralProgramme* programme;
+        Litteral* variable;
+
 
     public:
-        Atome(QString atome, LitteralNumerique* var=nullptr, LitteralProgramme* prog=nullptr);
+        Atome(QString atome, Litteral* var=nullptr);
         virtual bool isValide()const{return (m_atome.isEmpty());};
         virtual void affiche(ostream& flux)const;
-        virtual QString& affiche(QString& flux)const;
+        virtual QString& affiche(QString& flux) const;
+        //QString& affiche2(QString& flux);
         QString getAtome(){return m_atome;}
         string getType(){return type;}
         virtual bool isVariableValide()const{return (variable!=nullptr);};
-        virtual bool isProgrammeValide()const{return (programme!=nullptr);};
-        LitteralNumerique* getVariable(){if(isVariableValide())return variable;};
-        LitteralProgramme* getProgramme(){if(isProgrammeValide())return programme;};
-        virtual LitteralNumerique* operator+(LitteralNumerique* b);
-        virtual LitteralNumerique* operator-(LitteralNumerique* b){};
-        virtual LitteralNumerique* operator*(LitteralNumerique* b){};
-        virtual LitteralNumerique* operator/(LitteralNumerique* b){};
+        Litteral* getVariable(){if(isVariableValide())return variable;};
+        virtual LitteralNumerique* operator+(Litteral* b);
+        virtual LitteralNumerique* operator-(Litteral* b);
+        virtual LitteralNumerique* operator*(Litteral* b);
+        virtual LitteralNumerique* operator/(Litteral* b);
     };
 
 
