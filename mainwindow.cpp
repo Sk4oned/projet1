@@ -29,7 +29,7 @@ void MainWindow::on_pushButton_clicked()
 {
 
     QString a="1";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -40,7 +40,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     QString a="2";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -51,7 +51,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_6_clicked()
 {
     QString a="3";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -64,7 +64,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     QString a="4";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -75,7 +75,7 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     QString a="5";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -86,7 +86,7 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::on_pushButton_7_clicked()
 {
     QString a="6";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -99,7 +99,7 @@ void MainWindow::on_pushButton_7_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     QString a="7";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -110,7 +110,7 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_8_clicked()
 {
     QString a="8";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -121,7 +121,7 @@ void MainWindow::on_pushButton_8_clicked()
 void MainWindow::on_pushButton_9_clicked()
 {
     QString a="9";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -132,7 +132,7 @@ void MainWindow::on_pushButton_9_clicked()
 void MainWindow::on_pushButton_10_clicked()
 {
     QString a="0";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -174,7 +174,7 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_18_clicked()
 {
     QString a=".";
-    control.contructionchaine(a);
+    control.constructionchaine(a);
     ui->textEdit->clear();
     ui->textEdit->append(control.affiche());
     ui->textEdit_2->clear();
@@ -244,7 +244,7 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 {
     try{
 
-    control.contructionchaine2(arg1);
+    control.constructionchaine2(arg1);
     ui->textEdit_2->clear();
     ui->textEdit_2->append(control.affiche2());
 
@@ -282,12 +282,6 @@ void MainWindow::on_lineEdit_editingFinished()
     }
 }
 
-void MainWindow::on_pushButton_21_clicked()
-{
-    QDialog* dialog=new QDialog();
-    dialog->show();
-    dialog->exec();
-}
 
 void MainWindow::on_pushButton_22_clicked()
 {
@@ -320,10 +314,25 @@ void MainWindow::on_lineEdit_5_editingFinished()
     ui->textEdit->append(control.affiche());
 }
 
-void MainWindow::on_lineEdit_2_editingFinished()
+void MainWindow::on_pushButton_21_clicked()
+{
+
+    control.creerProgramme(ui->lineEdit_3->text(),ui->lineEdit_6->text());
+    ui->textEdit_4->clear();
+    ui->lineEdit_6->clear();
+    ui->lineEdit_3->clear();
+    ui->textEdit_4->append(control.afficheNomProgramme());
+    ui->textEdit_6->append(control.afficheProgramme());
+}
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
     ui->lineEdit_2->clear();
     ui->textEdit_3->clear();
     ui->textEdit_3->append(control.afficheVariable());
+}
+
+void MainWindow::on_pushButton_19_clicked()
+{
 
 }

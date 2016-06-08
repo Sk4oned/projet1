@@ -29,6 +29,11 @@ void Controleur::checkString()
     {
         plus();
     }
+    else if(q[0]=='[')
+    {
+        LitteralProgramme* v = new LitteralProgramme(q);
+        p.push(v);
+    }
     else if(q[0]=='-')
     {
         moins();
@@ -40,6 +45,10 @@ void Controleur::checkString()
     else if(q[0]=='/')
     {
         diviser();
+    }
+    else if(q=="EVAL")
+    {
+        evaluer();
     }
     else if(q=="NEG")
     {
@@ -131,6 +140,49 @@ void Controleur::checkString()
         QString a("");
         int j=0;
 
+                    if(q.contains('.'))
+                    {
+                        float b;
+                        //istringstream
+                        b=q.toFloat();
+
+                        Reel* v = new Reel(b);
+                        p.push(v);
+                    }
+                    else if(q.contains('/'))
+                    {
+                        QStringList l;
+                        l=q.split("/");
+                        Entier* l1= new Entier(l[0].toInt());
+                        Entier* l2= new Entier(l[1].toInt());
+                        p.push(l1);
+                        p.push(l2);
+                        diviser();
+                    }
+                     else if(q != "")
+                     {
+                           int c;
+                           //istringstream
+                           c=q.toInt();
+
+                           if(q=="0")
+                           {
+                               Entier* v = new Entier(0);
+                               p.push(v);
+                           }
+                           else
+                           {
+                               if(c!=0)
+                               {
+                               Entier* v = new Entier(c);
+                               p.push(v);
+                               }
+
+                            }
+
+                        }
+
+
         for(unsigned int i=0; i< variable.size(); i++)
         {
             Atome* my_var =dynamic_cast<Atome*>(variable[j]);
@@ -139,52 +191,15 @@ void Controleur::checkString()
             {
                 p.push(my_var);
             }
-            else if(q.contains('.') && j==1)
+            else
             {
-                float b;
-                //istringstream
-                b=q.toFloat();
-
-                Reel* v = new Reel(b);
-                p.push(v);
+                p.push(new Atome(q));
             }
-            else if(q.contains('/') && j==1)
-            {
-                QStringList l;
-                l=q.split("/");
-                Entier* l1= new Entier(l[0].toInt());
-                Entier* l2= new Entier(l[1].toInt());
-                p.push(l1);
-                p.push(l2);
-                diviser();
-            }
-             else if(q != "" && j==1)
-             {
-               int c;
-               //istringstream
-               c=q.toInt();
 
-               if(q=="0")
-               {
-                   Entier* v = new Entier(0);
-               }
-               else
-               {
-                   if(c!=0)
-                   {
-                   Entier* v = new Entier(c);
-                   p.push(v);
-                   }
-
-               }
-
-
-            }
         }
+
+
     }
-
-
-            cout << p;
 }
 
 
@@ -462,49 +477,23 @@ QString Controleur::afficheVariable()
     for(unsigned int i=0; i< variable.size(); i++)
     {
         Atome* my_var =dynamic_cast<Atome*>(variable[j]);
-        my_var->affiche(a);
-        a+="\n";
-        j++;
-
-       /* if(variable[j]->   getType()=="Entier")
+        if(my_var->getVariable()->getType()!= "LitteralProgramme")
         {
-            Entier* my_var =dynamic_cast<Entier*>(variable[j]);
-            a+= my_var->affiche(a);
+            my_var->affiche(a);
+            a+="\n";
             j++;
         }
-        else if(variable[j]->getType()=="Reel")
-        {
-            Reel* my_var =dynamic_cast<Reel*>(variable[j]);
-            a+= my_var->affiche(a);
-            j++;
-        }
-        else if(variable[j]->getType()=="Fraction")
-        {
-            Fraction* my_var =dynamic_cast<Fraction*>(variable[j]);
-            a+= my_var->affiche(a);
-            j++;
-        }
-        else if(variable[j]->getType()=="Complexe")
-        {
-            Complexe* my_var =dynamic_cast<Complexe*>(variable[j]);
-            a+= my_var->affiche(a);
-            j++;
-        }*/
-
-
-
-
     }
     return a;
 }
 
-void Controleur::contructionchaine(QString a)
+void Controleur::constructionchaine(QString a)
 {
     chaine =chaine + a;
 
 }
 
-void Controleur::contructionchaine2(QString arg1)
+void Controleur::constructionchaine2(QString arg1)
 {
     chaine =arg1;
 
@@ -800,4 +789,90 @@ void Controleur::ChangeNombrePileAffiche(int n)
 void Controleur::ajouterVariable(Litteral* v)
 {
     variable.push_back(v);
+}
+
+void Controleur::evaluer()
+{
+    Litteral* a = p.pop();
+
+    if(a->getType()=="LitteralProgramme")
+    {
+
+        LitteralProgramme* my_a= dynamic_cast<LitteralProgramme*>(a);
+
+        QStringList l;
+        l=my_a->getProg().split(" ");
+
+        for(int i=1; i< l.size() ; i++)
+        {
+            editChaine(l[i]);
+            checkString();
+        }
+    }
+    else if(a->getType()=="Atome")
+    {
+        Atome* my_a= dynamic_cast<Atome*>(a);
+        if(my_a->getVariable()->getType()=="LitteralProgramme")
+        {
+            LitteralProgramme* my_a2= dynamic_cast<LitteralProgramme*>(my_a->getVariable());
+            p.push(my_a2);
+            evaluer();
+        }
+    }
+}
+
+void Controleur::editChaine(QString m_chaine)
+{
+
+    chaine=m_chaine;
+
+}
+
+QString Controleur::afficheProgramme()
+{
+    QString a("");
+    int j=0;
+
+    for(unsigned int i=0; i< variable.size(); i++)
+    {
+        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+        if(my_var->getVariable()->getType()== "LitteralProgramme")
+        {
+            my_var->affiche(a);
+            a+="\n";
+            j++;
+        }
+
+    }
+
+    return a;
+}
+
+QString Controleur::afficheNomProgramme()
+{
+    QString a("");
+    int j=0;
+
+    for(unsigned int i=0; i< variable.size(); i++)
+    {
+        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+        if(my_var->getVariable()->getType()== "LitteralProgramme")
+        {
+            a+=my_var->getAtome();
+            a+="\n";
+            j++;
+        }
+
+    }
+
+    return a;
+}
+
+void Controleur::creerProgramme(QString nom, QString programme)
+{
+    Atome* prog=new Atome(nom,new LitteralProgramme(programme));
+
+    variable.push_back(prog);
+
+
 }

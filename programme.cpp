@@ -3,6 +3,7 @@
 #include "controleur.h"
 #include <sstream>
 #include <QString>
+#include <QStringList>
 #include "numerique.h"
 #include "entier.h"
 #include "reel.h"
@@ -17,11 +18,9 @@ using namespace Exp;
 
 LitteralProgramme::LitteralProgramme(QString programme)
 {
-    if(this->isValide())
-    {
-        m_programme=programme;
-    }
-    else
+    m_programme=programme;
+
+    if(this->isValide() == false)
     {
         throw PileException("Erreur programme");
     }
@@ -29,8 +28,11 @@ LitteralProgramme::LitteralProgramme(QString programme)
 };
 
 
-bool LitteralProgramme::isValide(){
+bool LitteralProgramme::isValide()const
+{
 
+    if(m_programme=="")
+        throw PileException("Erreur programme");
     if(m_programme[0]=='[' && m_programme.endsWith(']'))
     {
         return true;
@@ -38,16 +40,16 @@ bool LitteralProgramme::isValide(){
     return false;
 }
 
-void LitteralProgramme::affiche(ostream& flux)
+void LitteralProgramme::affiche(ostream& flux)const
 {
-    flux << this->getProg().toStdString();
+    flux << m_programme.toStdString();
 }
 
 
 
-QString& LitteralProgramme::affiche(QString& flux)
+QString& LitteralProgramme::affiche(QString& flux)const
 {
-    flux += this->getProg();
+    flux += m_programme;
     return flux;
 }
 
@@ -58,7 +60,4 @@ ostream& operator<<(ostream& flux,Exp::LitteralProgramme& m)
     return flux;
 }
 
-LitteralNumerique* evaluer()
-{
 
-}

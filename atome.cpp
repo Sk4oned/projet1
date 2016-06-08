@@ -64,6 +64,12 @@ QString& Atome::affiche(QString& flux) const
         my_var->getVariable()->affiche(flux);
         return flux;
     }
+    else if(variable->getType()== "LitteralProgramme")
+    {
+        LitteralProgramme* my_var = dynamic_cast<LitteralProgramme*>(variable);
+        my_var->affiche(flux);
+        return flux;
+    }
 
     return flux="Erreur";
 

@@ -31,15 +31,21 @@ public:
     void swap();
     void clear();
     void edit();
+    void evaluer();
     QString affiche();
     QString affiche2();
     QString afficheVariable();
-    void contructionchaine(QString a);
-    void contructionchaine2(QString arg1);
+    QString afficheProgramme();
+    QString afficheNomProgramme();
+    void constructionchaine(QString a);
+    void constructionchaine2(QString arg1);
     void enregistrePile();
     void chargePile();
     void ChangeNombrePileAffiche(int n);
     void ajouterVariable(Litteral* v);
+    void editChaine(QString m_chaine);
+    void creerProgramme(QString nom, QString programme);
+
 };
 
 
