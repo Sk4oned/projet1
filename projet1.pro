@@ -38,7 +38,8 @@ HEADERS  += mainwindow.h \
     pile.h \
     programme.h \
     litteral.h \
-    numerique.h
+    numerique.h \
+    memento.h
 
 FORMS    += \
     mainwindow.ui

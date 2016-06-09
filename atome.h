@@ -13,23 +13,25 @@ namespace Exp{
 
     class Atome: public Litteral{
 
-        QString nom;
+        QString m_atome;
         string type="Atome";
         Litteral* variable;
 
+
     public:
-        Atome(QString atome, Litteral* prog=nullptr);
-        virtual bool isValide()const{return (variable->isValide());};
+        Atome(QString atome, Litteral* var=nullptr);
+        virtual bool isValide()const{return (m_atome.isEmpty());};
         virtual void affiche(ostream& flux)const;
-        virtual QString& affiche(QString& flux)const;
-        Litteral* getAtome(){return variable;}
+        virtual QString& affiche(QString& flux) const;
+        //QString& affiche2(QString& flux);
+        QString getAtome(){return m_atome;}
         string getType(){return type;}
         virtual bool isVariableValide()const{return (variable!=nullptr);};
         Litteral* getVariable(){if(isVariableValide())return variable;};
-        virtual LitteralNumerique* operator+(LitteralNumerique* b){};
-        virtual LitteralNumerique* operator-(LitteralNumerique* b){};
-        virtual LitteralNumerique* operator*(LitteralNumerique* b){};
-        virtual LitteralNumerique* operator/(LitteralNumerique* b){};
+        virtual LitteralNumerique* operator+(Litteral* b);
+        virtual LitteralNumerique* operator-(Litteral* b);
+        virtual LitteralNumerique* operator*(Litteral* b);
+        virtual LitteralNumerique* operator/(Litteral* b);
     };
 
 

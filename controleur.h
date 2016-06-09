@@ -3,14 +3,18 @@
 #include <QString>
 #include "numerique.h"
 #include "pile.h"
+#include <vector>
 
 using namespace Exp;
 
 class Controleur{
-    Pile p;
+    Pile *p;
     QString chaine;
+    vector <Litteral*> variable;
+
 public:
-    Controleur(Pile a):p(a){}
+    Controleur(Pile* a):p(a){}
+    bool chaineIsValide(){return (chaine!= ""); }
     void checkString();
     void plus();
     void moins();
@@ -27,13 +31,21 @@ public:
     void swap();
     void clear();
     void edit();
+    void evaluer();
     QString affiche();
     QString affiche2();
-    void contructionchaine(QString a);
-    void contructionchaine2(QString arg1);
+    QString afficheVariable();
+    QString afficheProgramme();
+    QString afficheNomProgramme();
+    void constructionchaine(QString a);
+    void constructionchaine2(QString arg1);
     void enregistrePile();
     void chargePile();
     void ChangeNombrePileAffiche(int n);
+    void ajouterVariable(Litteral* v);
+    void editChaine(QString m_chaine);
+    void creerProgramme(QString nom, QString programme);
+
 };
 
 

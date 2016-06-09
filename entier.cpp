@@ -50,16 +50,13 @@ LitteralNumerique* Entier::operator+(LitteralNumerique* b)
     else if(b->getType()=="Fraction" )
     {
         Fraction* my_b =dynamic_cast<Fraction*>(b);
-        int n=this->getEntier()*my_b->getDenominateur()+my_b->getNumerateur();
-        int d=my_b->getDenominateur();
-        reduc_frac(n,d);
-        return (new Fraction(n,d));
+        return (new Fraction(this->getEntier()*my_b->getDenominateur()+my_b->getNumerateur(),my_b->getDenominateur()));
     }
- /*   else if(b->getType()=="Atome" )
+    else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
-        return (new Atome(my_b->getAtome()+this->getEntier()));
-    }*/
+        return (my_b->operator +(this));
+    }
     else if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);
@@ -85,11 +82,7 @@ LitteralNumerique* Entier::operator-(LitteralNumerique* b)
     else if(b->getType()=="Fraction" )
     {
         Fraction* my_b =dynamic_cast<Fraction*>(b);
-        int n=-this->getEntier()*my_b->getDenominateur()+my_b->getNumerateur();
-        int d=my_b->getDenominateur();
-        reduc_frac(n,d);
-
-        return (new Fraction(n,d));
+        return (new Fraction(this->getEntier()*my_b->getDenominateur()-my_b->getNumerateur(),my_b->getDenominateur()));
     }
   /*  else if(b->getType()=="Atome" )
     {
@@ -99,7 +92,7 @@ LitteralNumerique* Entier::operator-(LitteralNumerique* b)
     else if(b->getType()=="Complexe" )
     {
         Complexe* my_b =dynamic_cast<Complexe*>(b);
-        return my_b->operator +(this->operator *(new Entier(-1)));
+        return my_b->operator-(this);
     }
 
     return 0;
@@ -121,20 +114,8 @@ LitteralNumerique* Entier::operator*(LitteralNumerique* b)
     else if(b->getType()=="Fraction" )
     {
         Fraction* my_b =dynamic_cast<Fraction*>(b);
-        int n=this->getEntier()*my_b->getNumerateur();
-        int d=my_b->getDenominateur();
-        reduc_frac(n,d);
-        if (d == 1)
-            {return new Entier(n);}
-        else {return new Fraction(n,d);}
+        return (new Fraction(this->getEntier()*my_b->getNumerateur(),my_b->getDenominateur()));
     }
-
-    else if(b->getType()=="Complexe" )
-    {
-        Complexe* my_b =dynamic_cast<Complexe*>(b);
-        return my_b->operator *(this);
-    }
-    return 0;
  /*   else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
@@ -164,13 +145,13 @@ LitteralNumerique* Entier::operator/(LitteralNumerique* b)
     else if(b->getType()=="Reel" )
     {
         Reel* my_b =dynamic_cast<Reel*>(b);
-        return (new Reel(my_b->getReel()/this->getEntier()));
+        return (new Fraction(my_b->getReel(),this->getEntier()));
     }
     else if(b->getType()=="Fraction" )
     {
         Fraction* my_b =dynamic_cast<Fraction*>(b);
-        int c=my_b->getNumerateur();
-        int d=this->getEntier()*my_b->getDenominateur();
+        int c=this->getEntier()*my_b->getDenominateur();
+        int d=my_b->getNumerateur();
         reduc_frac(c,d);
         if(d==1)
         {
@@ -181,15 +162,6 @@ LitteralNumerique* Entier::operator/(LitteralNumerique* b)
             return (new Fraction(c,d));
         }
     }
-    else if(b->getType()=="Complexe" )
-        {
-            Complexe* my_b =dynamic_cast<Complexe*>(b);
-            //cast !!!!!!!!!!
-            //return new Complexe(...);
-        }
-
-
-
   /*  else if(b->getType()=="Atome" )
     {
         Atome* my_b =dynamic_cast<Atome*>(b);
