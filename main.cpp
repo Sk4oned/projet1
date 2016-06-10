@@ -10,9 +10,13 @@ int main(int argc, char *argv[])
 
     using namespace Exp;
 
-    Pile p;
+    Pile* p= new Pile();
 
     Controleur control(p);
+    control.chargePile();
+
+
+
     /*
     try{
 
@@ -66,6 +70,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w(control);
     w.show();
+
 
 
     return a.exec();

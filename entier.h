@@ -30,12 +30,15 @@ namespace Exp{
         virtual LitteralNumerique* operator-(LitteralNumerique* b);
         virtual LitteralNumerique* operator*(LitteralNumerique* b);
         virtual LitteralNumerique* operator/(LitteralNumerique* b);
+        bool operator>(Litteral* b);
     };
 
 }
 
 
 ostream& operator<<(ostream& flux,Exp::Entier& m);
+
+
 
 
 #endif // ENTIER_H

@@ -42,6 +42,7 @@ public:
     virtual LitteralNumerique* operator-(LitteralNumerique* b);
     virtual LitteralNumerique* operator*(LitteralNumerique* b);
     virtual LitteralNumerique* operator/(LitteralNumerique* b);
+    bool operator>(Litteral* b);
 
 };
 

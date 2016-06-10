@@ -67,6 +67,12 @@ private slots:
 
     void on_lineEdit_5_editingFinished();
 
+    void on_tabWidget_tabBarClicked(int index);
+
+    void on_pushButton_19_clicked();
+
+    void on_spinBox_valueChanged(const QString &arg1);
+
 private:
     Controleur control;
     Ui::MainWindow* ui;
