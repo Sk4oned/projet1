@@ -89,6 +89,14 @@ void Controleur::checkString()
     {
         divEntiere();
     }
+    else if(q=="AND")
+    {
+        et();
+    }
+    else if(q=="OR")
+    {
+        ou();
+    }
     else if(q=="MOD")
     {
         modulo();
@@ -399,7 +407,7 @@ void Controleur::moins()
 
 void Controleur::multiplier()
 {
-    if(p->taille() >= 2)
+    if(p->taille() > 1)
     {
 
         Litteral* a= p->pop();
@@ -646,10 +654,16 @@ void Controleur::neg()
        Fraction* my_a =dynamic_cast<Fraction*>(a);
        p->push(new Fraction(- my_a->getNumerateur(),my_a->getDenominateur()));
     }
+    else if(a->getType()=="Complexe")
+    {
+       Complexe* my_a =dynamic_cast<Complexe*>(a);
+       p->push(new Complexe(my_a->getP_reelle()->operator *(new Entier(-1)),my_a->getP_imaginaire()));
+    }
   /*  else if(a->getType()=="Atome")
     {
        Atome* my_a =dynamic_cast<Atome*>(a);
-       p->push(new Atome(my_a->getAtome(),((Entier(-1)).operator*(my_a->getVariable()))));
+       Entier* my_b= new Entier(-1);
+       p->push(new Atome(my_b->operator*(my_a->getVariable())));
     }*/
 }
 
@@ -928,7 +942,7 @@ void Controleur::enregistreVarEtProg()
 
 }
 
-/*void Controleur::chargeVarEtProg()
+void Controleur::chargeVarEtProg()
 {
     QString fileName = "D:/Documents/LO21/projet1/VariableEtProgramme.xml";
     QFile fileXml(fileName);
@@ -938,50 +952,73 @@ void Controleur::enregistreVarEtProg()
     QXmlStreamReader reader(&fileXml);
     QString text("");
     QXmlStreamWriter writer(&text);
+    QString text2("");
+    QXmlStreamWriter writer2(&text2);
 
-
+/*
 
 
        reader.readElementText();
 
        reader.readNext();
 
-       writer.writeCurrentToken(reader);
+       reader.readNext();
 
-       QStringList l=text.split("\n");
-       //if(l[1].isSimpleText())
-       //p->push(new Entier(l[0].toInt()));
-
-       for(int i=0; i<l.size(); i++)
-       {
-           QStringList m=l[i].split(":");
-           constructionchaine2(m[0]+" "+ m[1]);
-           checkString();
-       }
+       reader.readNext();
 
 
-
-       reader.readNextStartElement();
 
        writer.writeCurrentToken(reader);
 
-
-       QStringList n=text.split("\n");
-       //if(l[1].isSimpleText())
-       //p->push(new Entier(l[0].toInt()));
-
-       for(int i=0; i<n.size(); i++)
+       if(!text.isEmpty())
        {
-           QStringList m=n[i].split(":");
-           constructionchaine2(m[0]+" "+ m[1]+" "+ "STO");
-           checkString();
-       }
+           QStringList l=text.split("\n");
+           //if(l[1].isSimpleText())
+           //p->push(new Entier(l[0].toInt()));
 
+           for(int i=0; i<l.size(); i++)
+           {
+               QStringList m=l[i].split(" : ");
+               if(m.size() == 2)
+               {
+                   creerProgramme(m[0],m[1]);
+               }
+
+
+           }
+        }
+
+        reader.readNext();
+        writer2.writeCurrentToken(reader);
+
+        reader.readNext();
+        writer2.writeCurrentToken(reader);
+
+        if(!text2.isEmpty())
+        {
+            QStringList l=text2.split("\n");
+            //if(l[1].isSimpleText())
+            //p->push(new Entier(l[0].toInt()));
+
+            for(int i=0; i<l.size(); i++)
+            {
+                QStringList m=l[i].split(" : ");
+                if(m.size() == 2)
+                {
+                    constructionchaine2(m[1]+ " " +m[0] + "STO");
+                    checkString();
+                }
+
+
+            }
+         }
+
+*/
 
        fileXml.close();
 
 
-}*/
+}
 
 
 void Controleur::chargePile()
@@ -1010,6 +1047,9 @@ void Controleur::chargePile()
 
        writer.writeCurrentToken(reader);
 
+       if(!text.isEmpty())
+       {
+
             QStringList l=text.split("\n");
             //if(l[1].isSimpleText())
             //p->push(new Entier(l[0].toInt()));
@@ -1020,6 +1060,7 @@ void Controleur::chargePile()
                 constructionchaine2(l[i]);
                 checkString();
             }
+        }
 
 
 
@@ -1198,7 +1239,7 @@ void Controleur::egal()
                     p->push(my_a->getP_imaginaire());
                     p->push(my_b->getP_imaginaire());
                     egal();
-                    //and();
+                    et();
                 }
 
                }
@@ -1224,7 +1265,11 @@ void Controleur::different()
 
 void Controleur::infEgal()
 {
-
+    Litteral* b= p->pop();
+    Litteral* a= p->pop();
+    p->push(b);
+    p->push(a);
+    supEgal();
 }
 
 
@@ -1285,10 +1330,93 @@ void Controleur::supStrict()
 
 void Controleur::supEgal()
 {
+    if(p->taille() > 1)
+    {
+        Litteral* b= p->pop();
+        Litteral* a= p->pop();
+        p->push(a);
+        p->push(b);
+        supStrict();
+        p->push(a);
+        p->push(b);
+        egal();
+        ou();
 
+    }
 }
 
 void Controleur::infStrict()
 {
+    Litteral* b= p->pop();
+    Litteral* a= p->pop();
+    p->push(b);
+    p->push(a);
+    supStrict();
+}
 
+void Controleur::et()
+{
+    Litteral* b= p->pop();
+    Litteral* a= p->pop();
+    if(a->getType() =="Entier" || b->getType()=="Entier")
+    {
+        if (a->getType()=="Entier" && b->getType()!="Entier")
+        {
+            Entier* my_a=dynamic_cast<Entier*>(a);
+            if(my_a->getEntier()==0)
+            {
+                p->push(new Entier(0));
+            }
+            else
+            {
+                p->push(new Entier(1));
+            }
+        }
+        else if (a->getType()!="Entier" && b->getType()=="Entier")
+        {
+            Entier* my_b=dynamic_cast<Entier*>(b);
+            if(my_b->getEntier()==0)
+            {
+                p->push(new Entier(0));
+            }
+            else
+            {
+                p->push(new Entier(1));
+            }
+        }
+        else if (a->getType()=="Entier" && b->getType()=="Entier")
+        {
+            Entier* my_a=dynamic_cast<Entier*>(a);
+            Entier* my_b=dynamic_cast<Entier*>(b);
+            if(my_a->getEntier()==0 || my_b->getEntier()==0)
+            {
+                p->push(new Entier(0));
+            }
+            else
+            {
+                p->push(new Entier(1));
+            }
+        }
+    }
+    else p->push(new Entier(1));
+}
+
+void Controleur::ou()
+{
+    Litteral* b= p->pop();
+    Litteral* a= p->pop();
+    if(a->getType() =="Entier" && b->getType()=="Entier")
+    {
+        Entier* my_a=dynamic_cast<Entier*>(a);
+        Entier* my_b=dynamic_cast<Entier*>(b);
+        if(my_a->getEntier()==0 && my_b->getEntier()==0)
+        {
+        p->push(new Entier(0));
+        }
+        else
+        {
+            p->push(new Entier(1));
+        }
+    }
+    else p->push(new Entier(1));
 }

@@ -21,6 +21,8 @@ public:
     void multiplier();
     void diviser();
     void divEntiere();
+    void et();
+    void ou();
     void modulo();
     void neg();
     void num();
@@ -50,7 +52,7 @@ public:
     void enregistrePile();
     void enregistreVarEtProg();
     void chargePile();
-    void chargeVarEtProg(){};
+    void chargeVarEtProg();
     void ChangeNombrePileAffiche(int n);
     void ajouterVariable(Litteral* v);
     void editChaine(QString m_chaine);
