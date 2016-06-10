@@ -10,7 +10,6 @@ MainWindow::MainWindow(Controleur c,QWidget *parent) : control(c),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow()
@@ -22,6 +21,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_17_clicked()
 {
     control.enregistrePile();
+    control.enregistreVarEtProg();
     close();
 }
 
@@ -329,7 +329,16 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
     ui->lineEdit_2->clear();
     ui->textEdit_3->clear();
+    ui->textEdit_4->clear();
+    ui->textEdit_6->clear();
     ui->textEdit_3->append(control.afficheVariable());
+    ui->textEdit_4->append(control.afficheNomProgramme());
+    ui->textEdit_6->append(control.afficheProgramme());
+    ui->textEdit->clear();
+    ui->textEdit->append(control.affiche());
+    ui->textEdit_2->clear();
+    ui->textEdit_2->append(control.affiche2());
+    ui->lineEdit->setText(control.affiche2());
     //ui->textEdit_3->setReadOnly(true);
 }
 

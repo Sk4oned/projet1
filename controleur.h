@@ -48,7 +48,9 @@ public:
     void constructionchaine(QString a);
     void constructionchaine2(QString arg1);
     void enregistrePile();
+    void enregistreVarEtProg();
     void chargePile();
+    void chargeVarEtProg(){};
     void ChangeNombrePileAffiche(int n);
     void ajouterVariable(Litteral* v);
     void editChaine(QString m_chaine);

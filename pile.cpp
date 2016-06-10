@@ -135,13 +135,13 @@ void Pile::affiche(ostream& flux)
 
 QString Pile::afficheall()
 {
-    QString a("\n");
+    QString a("");
 
     for(int i=0; i<current; i++)
     {
 
-            a += QString::fromStdString(tab[i]->getType());
-            a += QString::fromStdString(" : ");
+            //a += QString::fromStdString(tab[i]->getType());
+            //a += QString::fromStdString(" : ");
             a=tab[i]->affiche(a);
             a += QString::fromStdString("\n");
 
@@ -152,9 +152,7 @@ QString Pile::afficheall()
 
 QString Pile::affiche()
 {
-    QString a("Application So Fucking Fonctionnelle \n");
-
-
+    QString a("");
 
     if(current < nbAffiche)
     {
@@ -179,7 +177,7 @@ QString Pile::affiche()
                     a=tab[i]->affiche(a);
                     a += QString::fromStdString("\n");
              }
-            if(current==nbAffiche+1)
+            if(current>nbAffiche)
             {
                 a += QString::fromStdString("...");
             }

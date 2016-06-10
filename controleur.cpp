@@ -604,6 +604,10 @@ QString Controleur::afficheVariable()
             a+="\n";
             j++;
         }
+        else
+        {
+            j++;
+        }
     }
     return a;
 }
@@ -893,6 +897,93 @@ void Controleur::enregistrePile()
 
 }
 
+void Controleur::enregistreVarEtProg()
+{
+    QString fileName = "D:/Documents/LO21/projet1/VariableEtProgramme.xml";
+    QFile fileXml(fileName);
+
+    if(!fileXml.open(QFile::WriteOnly | QFile::Text))
+        throw PileException("Erreur fichier XML");
+    QXmlStreamWriter writer(&fileXml);
+
+       // Active l'indentation automatique du fichier XML pour une meilleur visibilité
+       writer.setAutoFormatting(true);
+
+       // Insert la norme de codification du fichier XML :
+       writer.writeStartDocument();
+
+
+
+       writer.writeTextElement("Programme",afficheProgramme());
+
+       writer.writeTextElement("Variable",afficheVariable());
+
+
+       // Finalise le document XML
+       writer.writeEndDocument();
+
+       // Fermer le fichier pour bien enregistrer le document et ferme l'élément root
+       fileXml.close();
+
+
+}
+
+/*void Controleur::chargeVarEtProg()
+{
+    QString fileName = "D:/Documents/LO21/projet1/VariableEtProgramme.xml";
+    QFile fileXml(fileName);
+
+    if(!fileXml.open(QFile::ReadOnly | QFile::Text))
+        throw PileException("Erreur fichier XML");
+    QXmlStreamReader reader(&fileXml);
+    QString text("");
+    QXmlStreamWriter writer(&text);
+
+
+
+
+       reader.readElementText();
+
+       reader.readNext();
+
+       writer.writeCurrentToken(reader);
+
+       QStringList l=text.split("\n");
+       //if(l[1].isSimpleText())
+       //p->push(new Entier(l[0].toInt()));
+
+       for(int i=0; i<l.size(); i++)
+       {
+           QStringList m=l[i].split(":");
+           constructionchaine2(m[0]+" "+ m[1]);
+           checkString();
+       }
+
+
+
+       reader.readNextStartElement();
+
+       writer.writeCurrentToken(reader);
+
+
+       QStringList n=text.split("\n");
+       //if(l[1].isSimpleText())
+       //p->push(new Entier(l[0].toInt()));
+
+       for(int i=0; i<n.size(); i++)
+       {
+           QStringList m=n[i].split(":");
+           constructionchaine2(m[0]+" "+ m[1]+" "+ "STO");
+           checkString();
+       }
+
+
+       fileXml.close();
+
+
+}*/
+
+
 void Controleur::chargePile()
 {
     QString fileName = "D:/Documents/LO21/projet1/sauvegarde.xml";
@@ -911,16 +1002,28 @@ void Controleur::chargePile()
 
        reader.readNext();
 
-       fileXml.close();
+       reader.readNext();
+
+       reader.readNext();
+
+
 
        writer.writeCurrentToken(reader);
 
-       for(int i=0; i< text.size(); i++)
-       {
-            QStringList l=text.split(":");
+            QStringList l=text.split("\n");
             //if(l[1].isSimpleText())
             //p->push(new Entier(l[0].toInt()));
-       }
+
+            for(int i=0; i<l.size(); i++)
+            {
+                //QStringList m=l[i].split(":");
+                constructionchaine2(l[i]);
+                checkString();
+            }
+
+
+
+       fileXml.close();
 
 
 }
@@ -989,6 +1092,10 @@ QString Controleur::afficheProgramme()
             a+="\n";
             j++;
         }
+        else
+        {
+            j++;
+        }
 
     }
 
@@ -1007,6 +1114,10 @@ QString Controleur::afficheNomProgramme()
         {
             a+=my_var->getAtome();
             a+="\n";
+            j++;
+        }
+        else
+        {
             j++;
         }
 

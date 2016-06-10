@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
     Controleur control(p);
     control.chargePile();
+    control.chargeVarEtProg();
 
 
 
