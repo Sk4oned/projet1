@@ -9,12 +9,75 @@
 #include "entier.h"
 #include "fraction.h"
 #include "reel.h"
+#include "atome.h"
+#include "programme.h"
+#include "expression.h"
+
 
 using namespace std;
 using namespace Exp;
 
+/*
+Pile::Pile(Pile const& objet)
+{
+    nb=0;
+    nbMax=0;
+    nbAffiche=4;
+    current=0;
+
+    Litteral* tab[100];
+
+    for(int i=0; i<100; i++)
+    {
+        Litteral* a= objet.tab[i];
+
+
+        if(a->getType()=="Entier")
+        {
+            Entier* b=dynamic_cast<Entier*>(a);
+            tab[i]=new Entier(b->getEntier());
+        }
+        else if(a->getType()=="Reel")
+        {
+            Reel* b=dynamic_cast<Reel*>(a);
+            tab[i]=new Reel(b->getReel());
+        }
+        else if(a->getType()=="Fraction")
+        {
+            Fraction* b=dynamic_cast<Fraction*>(a);
+            tab[i]=new Fraction(b->getNumerateur(), b->getDenominateur());
+        }
+        else if(a->getType()=="Complexe")
+        {
+            Complexe* b=dynamic_cast<Complexe*>(a);
+            tab[i]=new Complexe(b->getP_reelle(), b->getP_imaginaire());
+        }
+        else if(a->getType()=="Atome")
+        {
+            Atome* b=dynamic_cast<Atome*>(a);
+            tab[i]=new Atome(b->getAtome(),b->getVariable());
+        }
+        else if(a->getType()=="LitteralProgramme")
+        {
+            LitteralProgramme* b=dynamic_cast<LitteralProgramme*>(a);
+            tab[i]=new LitteralProgramme(b->getProg());
+        }
+        else if(a->getType()=="LitteralExpression")
+        {
+            LitteralExpression* b=dynamic_cast<LitteralExpression*>(a);
+            tab[i]=new LitteralExpression(b->getProg());
+        }
+
+
+    }
+
+}
+*/
+
+
 QString& PileException::affiche()
 {
+
         return m_phrase;
 }
 
@@ -111,7 +174,6 @@ void Pile::push(Litteral* e)
     tab[current]=simplifier(e);
     current++;
     nb++;
-
 }
 
 Litteral* Pile::pop()

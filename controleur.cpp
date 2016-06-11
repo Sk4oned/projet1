@@ -15,17 +15,70 @@
 #include <QFile>
 #include <vector>
 #include <iterator>
+#include <windows.h>
+#include <QDialog>
+#include "mainwindow.h"
 
 using namespace Exp;
 
 
-void Controleur::checkString()
+bool Controleur::checkString()
 {
         QString q= chaine;
         chaine="";
 
 
-    if(q[0]=='+')
+        if(q.contains("STO"))
+        {
+            if(q.contains('['))
+            {   QString l=q;
+                int a =q.indexOf(']') + 1;
+                QString b=q.remove(a,q.size());
+                QString c=l.remove(0,a);
+                QStringList d= c.split(" ");
+                LitteralProgramme* v = new LitteralProgramme(b);
+                Atome* at= new Atome(d[1], v);
+                ajouterVariable(at);
+            }
+            else if(q.contains('.'))
+            {
+                QStringList l;
+                l=q.split(" ");
+                float b;
+                //istringstream
+                b=l[0].toFloat();
+                Reel* v = new Reel(b);
+                Atome* at= new Atome(l[1], v);
+                ajouterVariable(at);
+            }
+            else if(q.contains('/'))
+            {
+                QStringList l;
+                l=q.split(" ");
+                QStringList m;
+                m=l[0].split("/");
+                Entier* m1= new Entier(m[0].toInt());
+                Entier* m2= new Entier(m[1].toInt());
+                p->push(m1);
+                p->push(m2);
+                diviser();
+                Atome* at= new Atome(l[1], p->pop());
+                ajouterVariable(at);
+            }
+            else
+            {
+                QStringList l;
+                l=q.split(" ");
+                int c;
+                //istringstream
+                c=l[0].toInt();
+                Entier* v = new Entier(c);
+                Atome* at= new Atome(l[1], v);
+                ajouterVariable(at);
+
+            }
+    }
+    else if(q[0]=='+')
     {
         plus();
     }
@@ -147,46 +200,18 @@ void Controleur::checkString()
     }
     else if(q=="EDIT")
     {
+        Litteral* a=p->pop();
 
-    }
-    else if(q.contains("STO"))
-    {
-        QStringList l;
-        l=q.split(" ");
-
-        if(l[0].contains('.'))
-            {
-                float b;
-                //istringstream
-                b=l[0].toFloat();
-                Reel* v = new Reel(b);
-                Atome* at= new Atome(l[1], v);
-                ajouterVariable(at);
-            }
-            else if(l[0].contains('/'))
-            {
-                QStringList m;
-                m=l[0].split("/");
-                Entier* m1= new Entier(m[0].toInt());
-                Entier* m2= new Entier(m[1].toInt());
-                p->push(m1);
-                p->push(m2);
-                diviser();
-                Atome* at= new Atome(l[1], p->pop());
-                ajouterVariable(at);
-            }
-            else
-            {
-                        int c;
-                        //istringstream
-                        c=l[0].toInt();
-                        Entier* v = new Entier(c);
-                        Atome* at= new Atome(l[1], v);
-                        ajouterVariable(at);
-
-            }
-
-
+        if(a->getType()=="LitteralProgramme")
+        {
+            chaine=a->affiche(chaine);
+            return true;
+        }
+        else
+        {
+            throw PileException("EDIT NE PEUT ETRE UTILISE QUE SUR UN LITTERALPROGRAMME");
+            return false;
+        }
 
     }
     else if(q.isSimpleText())
@@ -846,11 +871,6 @@ void Controleur::clear()
 
 }
 
-void Controleur::edit()
-{
-
-}
-
 // Complexe
 
 void Controleur::complexe()
@@ -1129,9 +1149,37 @@ QString Controleur::afficheProgramme()
         Atome* my_var =dynamic_cast<Atome*>(variable[j]);
         if(my_var->getVariable()->getType()== "LitteralProgramme")
         {
-            my_var->affiche(a);
+            my_var->getVariable()->affiche(a);
             a+="\n";
             j++;
+        }
+        else
+        {
+            j++;
+        }
+
+    }
+
+    return a;
+}
+
+QString Controleur::afficheProgrammeRecherche(QString selection)
+{
+    QString a("");
+    int j=0;
+
+    for(unsigned int i=0; i< variable.size(); i++)
+    {
+        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+        if(my_var->getVariable()->getType()== "LitteralProgramme")
+        {
+                j++;
+                if( selection == my_var->getAtome() )
+                {
+                    my_var->getVariable()->affiche(a);
+                    return a;
+                }
+
         }
         else
         {
@@ -1419,4 +1467,78 @@ void Controleur::ou()
         }
     }
     else p->push(new Entier(1));
+}
+
+bool Controleur::supprVariable(QString id)
+{
+    int j=0;
+
+    for (vector<Litteral*>::iterator it = variable.begin() ; it != variable.end(); it++)
+    {
+            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+            j++;
+            if(my_var->getType()!="LitteralProgramme")
+            {
+                if( id == my_var->getAtome() )
+                {
+                    variable.erase(it);
+                    j--;
+                    return true;
+                }
+            }
+
+
+    }
+}
+
+bool Controleur::supprProgramme(QString id)
+{
+    int j=0;
+
+    for (vector<Litteral*>::iterator it = variable.begin() ; it != variable.end(); it++)
+    {
+            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+            j++;
+
+            if(my_var->getVariable()->getType()=="LitteralProgramme")
+            {
+                if( id == my_var->getAtome() )
+                {
+                    variable.erase(it);
+                    j--;
+                    return true;
+                }
+            }
+
+    }
+
+}
+
+
+
+void Controleur::Bip()
+{
+    if(beep==true)
+    {
+        Beep(1000,500); //1000HZ, 500ms
+    }
+
+}
+
+void Controleur::changeBeepStatut()
+{
+    if(beep==true)
+    {
+        beep=false;
+    }
+    else
+    {
+        beep=true;
+    }
+
+}
+
+QString& Controleur::getchaine()
+{
+    return chaine;
 }

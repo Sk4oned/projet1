@@ -46,6 +46,7 @@ namespace Exp{
         QString affiche();
         QString afficheall();
         Litteral* simplifier(Litteral* e);
+        Pile(Pile const& objet);
 
     };
 

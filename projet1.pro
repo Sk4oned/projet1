@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     pile.cpp \
     maths.cpp \
     programme.cpp \
-    numerique.cpp
+    numerique.cpp \
+    dialog.cpp
 
 HEADERS  += mainwindow.h \
     controleur.h \
@@ -39,7 +40,9 @@ HEADERS  += mainwindow.h \
     programme.h \
     litteral.h \
     numerique.h \
-    memento.h
+    memento.h \
+    dialog.h
 
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    dialog.ui
