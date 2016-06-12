@@ -48,6 +48,8 @@ public:
     void infStrict();
     void supEgal();
     void supStrict();
+    void POW();
+    void SQRT();
     QString top();
     QString affiche();
     QString affiche2();

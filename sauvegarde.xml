@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DPile>
-    <ElementPile>Entier : 58</ElementPile>
-    <ElementPile>Entier : 9</ElementPile>
+    <ElementPile>Entier : 35</ElementPile>
+    <ElementPile>Entier : 10</ElementPile>
+    <ElementPile>Entier : 35</ElementPile>
+    <ElementPile>Entier : 15</ElementPile>
+    <ElementPile>Entier : 3</ElementPile>
     <Beep>BIP : false</Beep>
     <Clavier>CLAVIER : true</Clavier>
     <NombreElementAAfficher>NBPILEAFFICHE : 5</NombreElementAAfficher>

@@ -156,6 +156,14 @@ void Controleur::checkString()
     {
         ou();
     }
+    else if(q=="POW")
+    {
+        POW();
+    }
+    else if(q=="SQRT")
+    {
+        SQRT();
+    }
     else if(q=="MOD")
     {
         modulo();
@@ -1214,7 +1222,10 @@ void Controleur::evaluer()
 
         LitteralExpression* my_a= dynamic_cast<LitteralExpression*>(a);
         constructionchaine2(my_a->toPostfixe());
+        constructionchaine2("[ " + chaine + " ]");
         checkString();
+        evaluer();
+
     }
     else if(a->getType()=="Atome")
     {
@@ -1660,6 +1671,161 @@ bool Controleur::getBipStatut()
    return beep;
 }
 
+void Controleur::POW()
+{
+    Litteral* a=p->pop();
+    Litteral* b=p->pop();
+
+    if(a->getType()=="LitteralExpression" || a->getType()=="LitteralProgramme" || a->getType()=="Atome")
+    {
+        throw PileException("POW ne peut être utilisé que sur des LitteralNumérique");
+    }
+    else
+    {
+        if(a->getType()=="Entier")
+        {
+            Entier* ent=dynamic_cast<Entier*>(a);
+
+                if(ent->getEntier()>0)
+                {
+                    p->push(b);
+                    for(int i=1; i<ent->getEntier(); i++)
+                    {
+
+                        p->push(b);
+                        multiplier();
+
+                    }
+                }
+                else if(ent->getEntier()==0)
+                {
+                    p->push(new Entier(1));
+                }
+                else
+                {
+                   throw PileException("La puissance doit être un entier POSITIF");
+                }
 
 
+            }
+            else
+            {
+               throw PileException("La puissance doit être un entier");
+            }
+
+    }
+
+}
+
+void Controleur::SQRT()
+{
+    Litteral* b=p->pop();
+
+    if(b->getType()=="LitteralExpression" || b->getType()=="LitteralProgramme" || b->getType()=="Atome" || b->getType()=="Complexe")
+    {
+        throw PileException("SQRT ne peut être utilisé que sur des LitteralNumérique sauf Complexe");
+    }
+    else
+    {
+        if(b->getType()=="Entier" )
+        {
+            Entier* my_b =dynamic_cast<Entier*>(b);
+            p->push( new Reel(sqrt(my_b->getEntier())));
+
+        }
+        else if(b->getType()=="Reel" )
+        {
+            Reel* my_b =dynamic_cast<Reel*>(b);
+            p->push( new Reel(sqrt(my_b->getReel())));
+
+        }
+        else if(b->getType()=="Fraction" )
+        {
+            Fraction* my_b =dynamic_cast<Fraction*>(b);
+            p->push(new Entier(my_b->getNumerateur()));
+            SQRT();
+            p->push(new Entier(my_b->getDenominateur()));
+            SQRT();
+
+            Litteral* a=p->pop();
+            Litteral* c=p->pop();
+
+            if(a->getType()=="Entier" )
+            {
+                Entier* my_a =dynamic_cast<Entier*>(a);
+
+                if(c->getType()=="Entier" )
+                {
+                    Entier* my_c =dynamic_cast<Entier*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Reel" )
+                {
+                    Reel* my_c =dynamic_cast<Reel*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Fraction" )
+                {
+                    Fraction* my_c =dynamic_cast<Fraction*>(c);
+                    p->push( my_a->operator /(my_c));
+                }
+
+
+            }
+            else if(a->getType()=="Reel" )
+            {
+                Reel* my_a =dynamic_cast<Reel*>(a);
+
+                if(c->getType()=="Entier" )
+                {
+                    Entier* my_c =dynamic_cast<Entier*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Reel" )
+                {
+                    Reel* my_c =dynamic_cast<Reel*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Fraction" )
+                {
+                    Fraction* my_c =dynamic_cast<Fraction*>(c);
+                    p->push( my_a->operator /(my_c));
+                }
+
+
+            }
+            else if(a->getType()=="Fraction" )
+            {
+                Fraction* my_a =dynamic_cast<Fraction*>(a);
+
+                if(c->getType()=="Entier" )
+                {
+                    Entier* my_c =dynamic_cast<Entier*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Reel" )
+                {
+                    Reel* my_c =dynamic_cast<Reel*>(c);
+                    p->push( my_a->operator /(my_c));
+
+                }
+                else if(c->getType()=="Fraction" )
+                {
+                    Fraction* my_c =dynamic_cast<Fraction*>(c);
+                    p->push( my_a->operator /(my_c));
+                }
+
+            }
+
+
+
+        }
+
+    }
+}
 

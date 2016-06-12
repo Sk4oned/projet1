@@ -8,6 +8,7 @@
 #include "maths.h"
 #include "fraction.h"
 #include "complexe.h"
+#include <QStringList>
 
 LitteralExpression::LitteralExpression(QString programme)
 {
@@ -38,15 +39,14 @@ QString& LitteralExpression::affiche(QString& flux)const
 
 QString LitteralExpression::toPostfixe()
 {
-    if(isValide())
-    {
+
         QString postfixe("");
         QString operateur("");
         QString chaine("");
 
-        for(int i=1; i< m_expression.size()-1; i++)
-        {
 
+        for(int i=1; i<m_expression.size()-1; i++)
+        {
            if(m_expression[i]=='*')
            {
                operateur+=" *";
@@ -68,10 +68,6 @@ QString LitteralExpression::toPostfixe()
                postfixe+=" " + m_expression[i];
            }
 
-
-
-
-
         }
 
         chaine= postfixe+operateur;
@@ -82,28 +78,7 @@ QString LitteralExpression::toPostfixe()
 
 
 
-     }
 
-        /*
-
-        if(m_expression.contains('('))
-        {
-
-            for(int i=0; i< m_expression.size(); i++)
-            {
-
-
-
-
-            }
-        }
-
-            */
-
-    else
-    {
-        throw PileException("L'expression n'est pas valide");
-    }
 
 }
 
