@@ -26,16 +26,50 @@ namespace Exp{
         //virtual Entier* operator-(Entier* a);
         //virtual Fraction* operator/(Entier* a);
         void setEntier(int a){this->m_entier=a;}
+
+        /*!
+            *  \brief Méthode qui gère l'addition d'un LitteralNumerique avec un entier
+            *
+            *
+            */
         virtual LitteralNumerique* operator+(LitteralNumerique* b);
+
+        /*!
+            *  \brief Méthode qui gère la soustraction d'un LitteralNumerique avec un entier
+            *
+            *
+            */
         virtual LitteralNumerique* operator-(LitteralNumerique* b);
+
+        /*!
+            *  \brief Méthode qui gère la multiplication d'un LitteralNumerique avec un entier
+            *
+            *
+            */
         virtual LitteralNumerique* operator*(LitteralNumerique* b);
+
+        /*!
+            *  \brief Méthode qui gère la division d'un LitteralNumerique avec un entier
+            *
+            *
+            */
         virtual LitteralNumerique* operator/(LitteralNumerique* b);
+
+        /*!
+            *  \brief Méthode qui gère la  comparaison d'un Litteral avec un entier
+            *
+            *
+            */
         bool operator>(Litteral* b);
     };
 
 }
 
-
+/*!
+    *  \brief Surcharge de l'opérateur << pour afficher des Entiers dans la console
+    *
+    *
+    */
 ostream& operator<<(ostream& flux,Exp::Entier& m);
 
 

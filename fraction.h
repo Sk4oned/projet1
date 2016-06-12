@@ -30,6 +30,11 @@ class Fraction: public LitteralNumerique{
 
 public:
 
+    /*!
+        *  \brief Constructeur de Fraction
+        *
+        *
+        */
     Fraction(int n, int d=1);
     virtual bool isValide()const;
     virtual void affiche(ostream& flux)const;
@@ -48,8 +53,18 @@ public:
 
 }
 
+/*!
+    *  \brief Surcharge de l'opérateur << pour afficher des Fractions dans la console
+    *
+    *
+    */
 ostream& operator<<(ostream& flux,Exp::Fraction& m);
 
+/*!
+    *  \brief Surcharge de l'opérateur << pour afficher des  Exceptions de Fractions dans la console
+    *
+    *
+    */
 ostream& operator<<(ostream& flux,Exp::FractionException& m);
 
 
