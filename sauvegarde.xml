@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Pile>1
-2
-3
-4
-5
-6
-2
-6
-7
-</Pile>
+<DPile>
+    <ElementPile>Entier : 58</ElementPile>
+    <ElementPile>Entier : 9</ElementPile>
+    <Beep>BIP : false</Beep>
+    <Clavier>CLAVIER : true</Clavier>
+    <NombreElementAAfficher>NBPILEAFFICHE : 5</NombreElementAAfficher>
+</DPile>

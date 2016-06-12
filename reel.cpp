@@ -17,7 +17,17 @@ void Reel::affiche(ostream& flux) const
 
 QString& Reel::affiche(QString& flux) const
 {
-    flux += QString::number(m_r);
+    if(m_r<1 && m_r>-1)
+    {
+        flux += QString::number(m_r).remove(0,1);
+    }
+    else
+    {
+        flux += QString::number(m_r);
+    }
+
+
+
     return flux;
 }
 

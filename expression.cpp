@@ -9,3 +9,112 @@
 #include "fraction.h"
 #include "complexe.h"
 
+LitteralExpression::LitteralExpression(QString programme)
+{
+    m_expression=programme;
+}
+
+bool LitteralExpression::isValide() const
+{
+    if(m_expression[0]=='\'')
+    {
+       return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void LitteralExpression::affiche(ostream& flux)const
+{
+    flux << m_expression.toStdString();
+}
+
+QString& LitteralExpression::affiche(QString& flux)const
+{
+    flux+= m_expression;
+}
+
+QString LitteralExpression::toPostfixe()
+{
+    if(isValide())
+    {
+        QString postfixe("");
+        QString operateur("");
+        QString chaine("");
+
+        for(int i=1; i< m_expression.size()-1; i++)
+        {
+
+           if(m_expression[i]=='*')
+           {
+               operateur+=" *";
+           }
+           else if(m_expression[i]=='/')
+           {
+               operateur+=" /";
+           }
+           else if(m_expression[i]=='+')
+           {
+               operateur+=" +";
+           }
+           else if(m_expression[i]=='-')
+           {
+               operateur+=" -";
+           }
+           else
+           {
+               postfixe+=" " + m_expression[i];
+           }
+
+
+
+
+
+        }
+
+        chaine= postfixe+operateur;
+
+        return chaine;
+
+
+
+
+
+     }
+
+        /*
+
+        if(m_expression.contains('('))
+        {
+
+            for(int i=0; i< m_expression.size(); i++)
+            {
+
+
+
+
+            }
+        }
+
+            */
+
+    else
+    {
+        throw PileException("L'expression n'est pas valide");
+    }
+
+}
+
+bool LitteralExpression::isNumber(QString a)
+{
+    for(int i=0; i< 10; i++)
+    {
+        if( a == QString::number(i))
+        {
+            return true;
+        }
+    }
+
+}

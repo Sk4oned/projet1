@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DProgramme>
+    <NomProgramme>MPOI</NomProgramme>
+    <Programme>[ 2 5 + ]</Programme>
+    <NomProgramme>TOIL</NomProgramme>
+    <Programme>[ 5 6 * ]</Programme>
+    <NomProgramme>MONPROGRAMME</NomProgramme>
+    <Programme>[ 2 4 6  / - ]</Programme>
+</DProgramme>

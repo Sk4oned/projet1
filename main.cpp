@@ -3,6 +3,10 @@
 #include "controleur.h"
 #include "numerique.h"
 #include <sstream>
+#include <iostream>
+#include <fraction.h>
+#include <entier.h>
+#include "dialog.h"
 
 
 int main(int argc, char *argv[])
@@ -13,8 +17,9 @@ int main(int argc, char *argv[])
     Pile* p= new Pile();
 
     Controleur control(p);
-    control.chargePile();
-    control.chargeVarEtProg();
+
+
+
 
 
 

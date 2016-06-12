@@ -15,6 +15,10 @@
 #include <QFile>
 #include <vector>
 #include <iterator>
+#include <windows.h>
+#include <QDialog>
+#include "mainwindow.h"
+#include "expression.h"
 
 using namespace Exp;
 
@@ -25,9 +29,64 @@ void Controleur::checkString()
         chaine="";
 
 
-    if(q[0]=='+')
+        if(q.contains("STO"))
+        {
+            if(q.contains('['))
+            {   QString l=q;
+                int a =q.indexOf(']') + 1;
+                QString b=q.remove(a,q.size());
+                QString c=l.remove(0,a);
+                QStringList d= c.split(" ");
+                LitteralProgramme* v = new LitteralProgramme(b);
+                Atome* at= new Atome(d[1], v);
+                ajouterVariable(at);
+            }
+            else if(q.contains('.'))
+            {
+                QStringList l;
+                l=q.split(" ");
+                float b;
+                //istringstream
+                b=l[0].toFloat();
+                Reel* v = new Reel(b);
+                Atome* at= new Atome(l[1], v);
+                ajouterVariable(at);
+            }
+            else if(q.contains('/'))
+            {
+                QStringList l;
+                l=q.split(" ");
+                QStringList m;
+                m=l[0].split("/");
+                Entier* m1= new Entier(m[0].toInt());
+                Entier* m2= new Entier(m[1].toInt());
+                p->push(m1);
+                p->push(m2);
+                diviser();
+                Atome* at= new Atome(l[1], p->pop());
+                ajouterVariable(at);
+            }
+            else
+            {
+                QStringList l;
+                l=q.split(" ");
+                int c;
+                //istringstream
+                c=l[0].toInt();
+                Entier* v = new Entier(c);
+                Atome* at= new Atome(l[1], v);
+                ajouterVariable(at);
+
+            }
+    }
+    else if(q[0]=='+')
     {
         plus();
+    }
+    else if(q[0]=='\'')
+    {
+        LitteralExpression* v = new LitteralExpression(q);
+        p->push(v);
     }
     else if(q[0]=='[')
     {
@@ -147,49 +206,9 @@ void Controleur::checkString()
     }
     else if(q=="EDIT")
     {
-
+        chaine=q;
     }
-    else if(q.contains("STO"))
-    {
-        QStringList l;
-        l=q.split(" ");
-
-        if(l[0].contains('.'))
-            {
-                float b;
-                //istringstream
-                b=l[0].toFloat();
-                Reel* v = new Reel(b);
-                Atome* at= new Atome(l[1], v);
-                ajouterVariable(at);
-            }
-            else if(l[0].contains('/'))
-            {
-                QStringList m;
-                m=l[0].split("/");
-                Entier* m1= new Entier(m[0].toInt());
-                Entier* m2= new Entier(m[1].toInt());
-                p->push(m1);
-                p->push(m2);
-                diviser();
-                Atome* at= new Atome(l[1], p->pop());
-                ajouterVariable(at);
-            }
-            else
-            {
-                        int c;
-                        //istringstream
-                        c=l[0].toInt();
-                        Entier* v = new Entier(c);
-                        Atome* at= new Atome(l[1], v);
-                        ajouterVariable(at);
-
-            }
-
-
-
-    }
-    else if(q.isSimpleText())
+    else
     {
         QString a("");
         int j=0;
@@ -846,11 +865,6 @@ void Controleur::clear()
 
 }
 
-void Controleur::edit()
-{
-
-}
-
 // Complexe
 
 void Controleur::complexe()
@@ -891,131 +905,191 @@ void Controleur::enregistrePile()
         throw PileException("Erreur fichier XML");
     QXmlStreamWriter writer(&fileXml);
 
-       // Active l'indentation automatique du fichier XML pour une meilleur visibilité
-       writer.setAutoFormatting(true);
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument();
 
-       // Insert la norme de codification du fichier XML :
-       writer.writeStartDocument();
+    QStringList afPile=affiche().split("\n");
 
+    writer.writeStartElement("DPile");
 
+    for(int i=0; i<afPile.size()-1; i++)
+    {
+        writer.writeTextElement("ElementPile",afPile[i]);
+    }
 
-       writer.writeTextElement("Pile",p->afficheall());
+    QString b= beep ? "true" : "false";
+    QString b2= "BIP : " + b;
+    QString c= clavier ? "true" : "false";
+    QString c2=  "CLAVIER : " + c;
+    QString nbAf= "NBPILEAFFICHE : " + QString::number(p->getNbItemsToAffiche());
 
+    writer.writeTextElement("Beep",b2);
+    writer.writeTextElement("Clavier",c2);
+    writer.writeTextElement("NombreElementAAfficher",nbAf);
 
-       // Finalise le document XML
-       writer.writeEndDocument();
+    writer.writeEndElement();
 
-       // Fermer le fichier pour bien enregistrer le document et ferme l'élément root
-       fileXml.close();
+    writer.writeEndDocument();
+
+    fileXml.close();
 
 
 }
 
 void Controleur::enregistreVarEtProg()
 {
-    QString fileName = "D:/Documents/LO21/projet1/VariableEtProgramme.xml";
+    QString fileName = "D:/Documents/LO21/projet1/Programme.xml";
     QFile fileXml(fileName);
 
     if(!fileXml.open(QFile::WriteOnly | QFile::Text))
         throw PileException("Erreur fichier XML");
     QXmlStreamWriter writer(&fileXml);
 
-       // Active l'indentation automatique du fichier XML pour une meilleur visibilité
        writer.setAutoFormatting(true);
-
-       // Insert la norme de codification du fichier XML :
        writer.writeStartDocument();
 
+       QStringList afNomProgramme=afficheNomProgramme().split("\n");
+       QStringList afProgramme=afficheProgramme().split("\n");
 
+       writer.writeStartElement("DProgramme");
 
-       writer.writeTextElement("Programme",afficheProgramme());
+       for(int i=0; i<afProgramme.size()-1; i++)
+       {
+           writer.writeTextElement("NomProgramme",afNomProgramme[i]);
+           writer.writeTextElement("Programme",afProgramme[i]);
+       }
 
-       writer.writeTextElement("Variable",afficheVariable());
+       writer.writeEndElement();
 
-
-       // Finalise le document XML
        writer.writeEndDocument();
 
-       // Fermer le fichier pour bien enregistrer le document et ferme l'élément root
        fileXml.close();
 
+
+       QString fileName2 = "D:/Documents/LO21/projet1/Variable.xml";
+       QFile fileXml2(fileName2);
+
+       if(!fileXml2.open(QFile::WriteOnly | QFile::Text))
+           throw PileException("Erreur fichier XML");
+       QXmlStreamWriter writer2(&fileXml2);
+
+          writer2.setAutoFormatting(true);
+          writer2.writeStartDocument();
+
+          QStringList afVariable=afficheVariable().split("\n");
+
+          writer2.writeStartElement("DVariable");
+
+          for(int j=0; j<afVariable.size()-1; j++)
+          {
+              writer2.writeTextElement("Variable",afVariable[j]);
+          }
+
+          writer2.writeEndElement();
+
+          writer2.writeEndDocument();
+
+          fileXml2.close();
 
 }
 
 void Controleur::chargeVarEtProg()
 {
-    QString fileName = "D:/Documents/LO21/projet1/VariableEtProgramme.xml";
+    QString fileName = "D:/Documents/LO21/projet1/Programme.xml";
     QFile fileXml(fileName);
 
     if(!fileXml.open(QFile::ReadOnly | QFile::Text))
         throw PileException("Erreur fichier XML");
+
     QXmlStreamReader reader(&fileXml);
-    QString text("");
-    QXmlStreamWriter writer(&text);
-    QString text2("");
-    QXmlStreamWriter writer2(&text2);
 
-/*
+    reader.readNextStartElement();
 
+    QString m_nom("");
+    QString m_programme("");
 
-       reader.readElementText();
-
-       reader.readNext();
-
-       reader.readNext();
-
-       reader.readNext();
+    while(!reader.atEnd())
+    {
 
 
 
-       writer.writeCurrentToken(reader);
+            if(reader.name()=="NomProgramme")
+            {
+                m_nom=reader.readElementText();
+                reader.readNextStartElement();
+                reader.readNext();
+                m_programme=reader.text().toString();
+                reader.readNext();
 
-       if(!text.isEmpty())
-       {
-           QStringList l=text.split("\n");
-           //if(l[1].isSimpleText())
-           //p->push(new Entier(l[0].toInt()));
-
-           for(int i=0; i<l.size(); i++)
-           {
-               QStringList m=l[i].split(" : ");
-               if(m.size() == 2)
-               {
-                   creerProgramme(m[0],m[1]);
+              if(m_nom!="" && m_programme!="")
+              {
+                 creerProgramme(m_nom,m_programme);
+                 reader.readNext();
+                 QString m_nom("");
+                 QString m_programme("");
                }
 
 
-           }
-        }
-
-        reader.readNext();
-        writer2.writeCurrentToken(reader);
-
-        reader.readNext();
-        writer2.writeCurrentToken(reader);
-
-        if(!text2.isEmpty())
-        {
-            QStringList l=text2.split("\n");
-            //if(l[1].isSimpleText())
-            //p->push(new Entier(l[0].toInt()));
-
-            for(int i=0; i<l.size(); i++)
+            }
+            else
             {
-                QStringList m=l[i].split(" : ");
-                if(m.size() == 2)
+                reader.readNext();
+
+            }
+
+    }
+
+
+    fileXml.close();
+
+
+
+    QString fileName2 = "D:/Documents/LO21/projet1/Variable.xml";
+    QFile fileXml2(fileName2);
+
+    if(!fileXml2.open(QFile::ReadOnly | QFile::Text))
+        throw PileException("Erreur fichier XML");
+
+    QXmlStreamReader reader2(&fileXml2);
+
+    reader2.readNextStartElement();
+
+
+    QString m_variable("");
+
+    while(!reader2.atEnd())
+    {
+
+
+
+            if(reader2.name()=="DVariable" || reader2.name()=="Variable")
+            {
+                m_variable=reader2.text().toString();
+                reader2.readNextStartElement();
+                m_variable=reader2.text().toString();
+                reader2.readNext();
+                m_variable=reader2.text().toString();
+                reader2.readNext();
+                QStringList m= m_variable.split(" : ");
+                if(m.size()>1)
                 {
-                    constructionchaine2(m[1]+ " " +m[0] + "STO");
+                    constructionchaine2(m[1]+ " " +m[0] + " STO");
                     checkString();
+                    reader.readNext();
                 }
 
 
             }
-         }
+            else
+            {
+                reader2.readNext();
 
-*/
+            }
 
-       fileXml.close();
+    }
+
+
+    fileXml2.close();
 
 
 }
@@ -1023,49 +1097,84 @@ void Controleur::chargeVarEtProg()
 
 void Controleur::chargePile()
 {
-    QString fileName = "D:/Documents/LO21/projet1/sauvegarde.xml";
-    QFile fileXml(fileName);
 
-    if(!fileXml.open(QFile::ReadOnly | QFile::Text))
+
+    QString fileName2 = "D:/Documents/LO21/projet1/sauvegarde.xml";
+    QFile fileXml2(fileName2);
+
+    if(!fileXml2.open(QFile::ReadOnly | QFile::Text))
         throw PileException("Erreur fichier XML");
-    QXmlStreamReader reader(&fileXml);
-    QString text("");
-    QXmlStreamWriter writer(&text);
+
+    QXmlStreamReader reader2(&fileXml2);
+
+    reader2.readNextStartElement();
 
 
+    QString m_variable("");
 
+    while(!reader2.atEnd())
+    {
 
-       reader.readElementText();
-
-       reader.readNext();
-
-       reader.readNext();
-
-       reader.readNext();
-
-
-
-       writer.writeCurrentToken(reader);
-
-       if(!text.isEmpty())
-       {
-
-            QStringList l=text.split("\n");
-            //if(l[1].isSimpleText())
-            //p->push(new Entier(l[0].toInt()));
-
-            for(int i=0; i<l.size(); i++)
+            if(reader2.name()=="DPile")
             {
-                //QStringList m=l[i].split(":");
-                constructionchaine2(l[i]);
-                checkString();
+                m_variable=reader2.text().toString();
+                reader2.readNextStartElement();
             }
-        }
+            else if(1)
+            {
+                reader2.readNext();
+                m_variable=reader2.text().toString();
+
+            }
+
+            if(reader2.text()!= "\n")
+            {
+                QStringList m= m_variable.split(" : ");
+                if(m.size()>1)
+                {
+
+                    if(m[0]== "BIP")
+                    {
+                        if(m[1]=="false")
+                        {
+                            beep=false;
+                        }
+                        else
+                        {
+                            beep=true;
+                        }
+
+                    }
+                    else if(m[0]== "CLAVIER")
+                    {
+                        if(m[1]=="false")
+                        {
+                            clavier=false;
+                        }
+                        else
+                        {
+                            clavier=true;
+                        }
+                    }
+                    else if(m[0]== "NBPILEAFFICHE")
+                    {
+                        ChangeNombrePileAffiche(m[1].toInt());
+                    }
+                    else
+                    {
+                        constructionchaine2(m[1]);
+                        checkString();
+                        m_variable="";
+                    }
+
+                }
+
+            }
+
+    }
 
 
-
-       fileXml.close();
-
+    fileXml2.close();
 
 }
 
@@ -1100,6 +1209,13 @@ void Controleur::evaluer()
             checkString();
         }
     }
+    else if(a->getType()=="LitteralExpression")
+    {
+
+        LitteralExpression* my_a= dynamic_cast<LitteralExpression*>(a);
+        constructionchaine2(my_a->toPostfixe());
+        checkString();
+    }
     else if(a->getType()=="Atome")
     {
         Atome* my_a= dynamic_cast<Atome*>(a);
@@ -1129,9 +1245,37 @@ QString Controleur::afficheProgramme()
         Atome* my_var =dynamic_cast<Atome*>(variable[j]);
         if(my_var->getVariable()->getType()== "LitteralProgramme")
         {
-            my_var->affiche(a);
+            my_var->getVariable()->affiche(a);
             a+="\n";
             j++;
+        }
+        else
+        {
+            j++;
+        }
+
+    }
+
+    return a;
+}
+
+QString Controleur::afficheProgrammeRecherche(QString selection)
+{
+    QString a("");
+    int j=0;
+
+    for(unsigned int i=0; i< variable.size(); i++)
+    {
+        Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+        if(my_var->getVariable()->getType()== "LitteralProgramme")
+        {
+                j++;
+                if( selection == my_var->getAtome() )
+                {
+                    my_var->getVariable()->affiche(a);
+                    return a;
+                }
+
         }
         else
         {
@@ -1420,3 +1564,102 @@ void Controleur::ou()
     }
     else p->push(new Entier(1));
 }
+
+bool Controleur::supprVariable(QString id)
+{
+    int j=0;
+
+    for (vector<Litteral*>::iterator it = variable.begin() ; it != variable.end(); it++)
+    {
+            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+            j++;
+            if(my_var->getType()!="LitteralProgramme")
+            {
+                if( id == my_var->getAtome() )
+                {
+                    variable.erase(it);
+                    j--;
+                    return true;
+                }
+            }
+
+
+    }
+}
+
+bool Controleur::supprProgramme(QString id)
+{
+    int j=0;
+
+    for (vector<Litteral*>::iterator it = variable.begin() ; it != variable.end(); it++)
+    {
+            Atome* my_var =dynamic_cast<Atome*>(variable[j]);
+            j++;
+
+            if(my_var->getVariable()->getType()=="LitteralProgramme")
+            {
+                if( id == my_var->getAtome() )
+                {
+                    variable.erase(it);
+                    j--;
+                    return true;
+                }
+            }
+
+    }
+
+}
+
+
+
+void Controleur::Bip()
+{
+    if(beep==true)
+    {
+        Beep(1000,500); //1000HZ, 500ms
+    }
+
+}
+
+void Controleur::changeBeepStatut()
+{
+    if(beep==true)
+    {
+        beep=false;
+    }
+    else
+    {
+        beep=true;
+    }
+
+}
+
+QString& Controleur::getchaine()
+{
+    return chaine;
+}
+
+QString Controleur::top()
+{
+    return p->top();
+}
+
+void Controleur::changeClavierStatut(bool etat)
+{
+   clavier=etat;
+}
+
+
+bool Controleur::getClavierStatut()
+{
+   return clavier;
+}
+
+bool Controleur::getBipStatut()
+{
+   return beep;
+}
+
+
+
+

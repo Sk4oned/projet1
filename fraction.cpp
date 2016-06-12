@@ -10,6 +10,7 @@
 #include "atome.h"
 #include "complexe.h"
 #include "maths.h"
+#include <windows.h>
 
 
 using namespace std;
@@ -23,6 +24,7 @@ Fraction::Fraction(int n, int d)
 
     if(isValide()!=true)
     {
+
         throw FractionException("Erreur denominateur = 0");
     }
 

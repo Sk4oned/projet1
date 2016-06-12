@@ -4,7 +4,9 @@
 #include <QMainWindow>
 #include <controleur.h>
 #include <QLabel>
-#include <QDialog>
+#include "dialog.h"
+
+
 
 
 namespace Ui {
@@ -16,8 +18,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    friend class Dialog;
+
     explicit MainWindow(Controleur c,QWidget *parent = 0);
     ~MainWindow();
+
 
 
 private slots:
@@ -59,8 +64,6 @@ private slots:
 
     void on_lineEdit_editingFinished();
 
-    void on_pushButton_21_clicked();
-
     void on_pushButton_22_clicked();
 
     void on_lineEdit_5_textChanged(const QString &arg1);
@@ -71,7 +74,35 @@ private slots:
 
     void on_pushButton_19_clicked();
 
-    void on_spinBox_valueChanged(const QString &arg1);
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_23_clicked();
+
+    void on_lineEdit_cursorPositionChanged(int arg1, int arg2);
+
+    void on_lineEdit_selectionChanged();
+
+    void on_lineEdit_returnPressed();
+
+    void on_pushButton_45_clicked();
+
+    void on_lineEdit_2_returnPressed();
+
+    void on_pushButton_46_clicked();
+
+    void on_lineEdit_7_returnPressed();
+
+    void on_pushButton_24_clicked();
+
+    void on_pushButton_26_clicked();
+
+    void on_pushButton_21_clicked();
+
+    void on_pushButton_25_clicked();
+
+    void on_pushButton_27_clicked();
+
+    void actualiser();
 
 private:
     Controleur control;

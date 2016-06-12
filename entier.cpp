@@ -16,6 +16,7 @@ void Entier::affiche(ostream& flux) const
     flux << m_entier;
 }
 
+
 QString& Entier::affiche(QString& flux) const
 {
     flux+= QString::number(m_entier);

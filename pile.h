@@ -38,7 +38,7 @@ namespace Exp{
         bool estVide() const { return nb==0; }
         unsigned int taille() const { return nb; }
         void affiche(ostream& flux);
-        Reel& top() const;
+        QString top() const;
         unsigned int getNbItemsToAffiche()const { return nbAffiche; }
         void setNbItemsToAffiche(int n) { nbAffiche=n; }
         void setMessage(const string& m) { message=m; }
@@ -46,6 +46,7 @@ namespace Exp{
         QString affiche();
         QString afficheall();
         Litteral* simplifier(Litteral* e);
+        Pile(Pile const& objet);
 
     };
 

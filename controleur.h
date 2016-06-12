@@ -8,14 +8,20 @@
 using namespace Exp;
 
 class Controleur{
+    friend class Dialog;
+
     Pile *p;
     QString chaine;
     vector <Litteral*> variable;
+    bool beep=true;
+    bool actualise=false;
+    bool clavier=true;
 
 public:
     Controleur(Pile* a):p(a){}
     bool chaineIsValide(){return (chaine!= ""); }
     void checkString();
+    QString& getchaine();
     void plus();
     void moins();
     void multiplier();
@@ -34,7 +40,7 @@ public:
     void drop();
     void swap();
     void clear();
-    void edit();
+    void edit(Litteral* a);
     void evaluer();
     void egal();
     void different();
@@ -42,11 +48,13 @@ public:
     void infStrict();
     void supEgal();
     void supStrict();
+    QString top();
     QString affiche();
     QString affiche2();
     QString afficheVariable();
     QString afficheProgramme();
     QString afficheNomProgramme();
+    QString afficheProgrammeRecherche(QString selection);
     void constructionchaine(QString a);
     void constructionchaine2(QString arg1);
     void enregistrePile();
@@ -57,6 +65,13 @@ public:
     void ajouterVariable(Litteral* v);
     void editChaine(QString m_chaine);
     void creerProgramme(QString nom, QString programme);
+    bool supprVariable(QString id);
+    bool supprProgramme(QString id);
+    void changeBeepStatut();
+    void changeClavierStatut(bool);
+    bool getBipStatut();
+    bool getClavierStatut();
+    void Bip();
 
 };
 
